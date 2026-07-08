@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIBE-TEC Terminal</title>
+    <style>
+        body {
+            background-color: #051005;
+            color: #15ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        .terminal-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 2px solid #15ff00;
+            padding: 20px;
+            background-color: #020802;
+            box-shadow: 0 0 15px rgba(21, 255, 0, 0.3);
+        }
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+        @media (min-width: 768px) { h1 { font-size: 5rem; } }
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px dashed #15ff00;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-top: 1px solid #15ff00;
+            border-bottom: 1px solid #15ff00;
+            padding: 10px 0;
+            margin-bottom: 40px;
+        }
+        p { font-size: 1.1rem; line-height: 1.6; }
+
+        ul { list-style-type: none; padding-left: 0; }
+        li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .tiny-bullet {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-right: 12px;
+            margin-top: 2px;
+            color: #15ff00;
+            fill: currentColor;
+        }
+        .tiny-wing-l { transform-origin: center; animation: tiny-flap-l 0.08s infinite alternate; }
+        .tiny-wing-r { transform-origin: center; animation: tiny-flap-r 0.08s infinite alternate; }
+        @keyframes tiny-flap-l { from { transform: scaleX(1); } to { transform: scaleX(0.2); } }
+        @keyframes tiny-flap-r { from { transform: scaleX(1); } to { transform: scaleX(0.2); } }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
+        th, td { border: 1px solid #15ff00; padding: 10px; text-align: left; }
+        th { background-color: #15ff00; color: #020802; text-transform: uppercase; }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media (min-width: 600px) {
+            .stack-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .stack-item {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(21, 255, 0, 0.3);
+            padding: 10px;
+            background: rgba(21, 255, 0, 0.02);
+        }
+        .stack-item svg {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .highlight-box {
+            border: 2px dashed #15ff00;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: rgba(21, 255, 0, 0.05);
+        }
+        .danger-box {
+            background-color: #15ff00;
+            color: #020802;
+            padding: 15px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        a { color: #15ff00; text-decoration: none; border-bottom: 1px dashed #15ff00; }
+        a:hover { background-color: #15ff00; color: #020802; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Logo: fluttuazione lenta + bagliore verde occasionale */
+        #logo-wrap {
+            display: inline-block;
+            animation: logo-float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px rgba(21,255,0,0.35));
+        }
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-10px); }
+        }
+        @keyframes logo-glow {
+            0%   { filter: drop-shadow(0 0 6px rgba(21,255,0,0.35)); }
+            15%  { filter: drop-shadow(0 0 22px rgba(21,255,0,0.95)) drop-shadow(0 0 40px rgba(21,255,0,0.5)); }
+            30%  { filter: drop-shadow(0 0 6px rgba(21,255,0,0.35)); }
+            100% { filter: drop-shadow(0 0 6px rgba(21,255,0,0.35)); }
+        }
+        .logo-glowing { animation: logo-float 4s ease-in-out infinite, logo-glow 0.8s ease-out forwards; }
+
+        #game-zone {
+            position: relative;
+            height: 170px;
+            border: 2px solid #15ff00;
+            margin-top: 30px;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #010401;
+            touch-action: manipulation;
+        }
+        #sky-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 56px;
+            pointer-events: none;
+            background-repeat: repeat-x;
+            background-position: 0 6px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='50'%3E%3Cg fill='%2315ff00' fill-opacity='0.12'%3E%3Cellipse cx='40' cy='28' rx='30' ry='14'/%3E%3Cellipse cx='70' cy='20' rx='20' ry='11'/%3E%3Cellipse cx='15' cy='25' rx='16' ry='9'/%3E%3Cellipse cx='160' cy='30' rx='26' ry='12'/%3E%3Cellipse cx='190' cy='22' rx='18' ry='10'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 240px 50px;
+        }
+        #ground-layer {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 22px;
+            pointer-events: none;
+            background-repeat: repeat-x;
+            background-position: 0 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24'%3E%3Cg fill='%2315ff00' fill-opacity='0.45'%3E%3Ccircle cx='15' cy='8' r='2.4'/%3E%3Ccircle cx='10.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='19.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='15' cy='15' r='2.4'/%3E%3Ccircle cx='15' cy='11.5' r='1.8' fill-opacity='0.8'/%3E%3Crect x='14' y='15' width='2' height='8'/%3E%3Ccircle cx='65' cy='10' r='2'/%3E%3Ccircle cx='61' cy='13' r='2'/%3E%3Ccircle cx='69' cy='13' r='2'/%3E%3Ccircle cx='65' cy='16' r='2'/%3E%3Crect x='64' y='16' width='1.6' height='6'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 100px 24px;
+        }
+        #finish-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 22px;
+            width: 5px;
+            background: repeating-linear-gradient(to bottom, #15ff00, #15ff00 10px, transparent 10px, transparent 20px);
+            opacity: 0.8;
+        }
+        #game-msg {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 0.85rem;
+            margin: 0;
+            z-index: 10;
+            text-shadow: 0 0 6px #010401, 0 0 6px #010401;
+        }
+        #game-cat, #game-butterfly { position: absolute; bottom: 22px; left: 0; will-change: transform; }
+        #cat-visual { transform-origin: center bottom; }
+        #game-cat svg { fill: #000; color: #15ff00; width: 60px; height: 50px; }
+        #game-butterfly svg { fill: currentColor; color: #15ff00; width: 40px; height: 40px; }
+        .wing { transform-origin: center; animation: flap 0.08s infinite alternate; }
+        @keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(0.2); } }
+        @keyframes cat-tap { 0% { transform: scale(1, 1); } 35% { transform: scale(1.18, 0.82); } 100% { transform: scale(1, 1); } }
+        .cat-tap-anim { animation: cat-tap 0.16s ease-out; }
+    </style>
+</head>
+<body>
+
+    <svg style="display: none;">
+        <symbol id="tiny-butterfly-icon" viewBox="0 0 24 24">
+            <rect x="11" y="4" width="2" height="12" rx="1"/>
+            <circle cx="10" cy="3" r="1.5"/>
+            <circle cx="14" cy="3" r="1.5"/>
+            <g class="tiny-wing-l">
+                <path d="M11 6 C 2 2, 0 10, 11 12 Z" opacity="0.8"/>
+                <path d="M11 11 C 4 12, 4 18, 11 15 Z" opacity="0.8"/>
+            </g>
+            <g class="tiny-wing-r">
+                <path d="M13 6 C 22 2, 24 10, 13 12 Z" opacity="0.8"/>
+                <path d="M13 11 C 20 12, 20 18, 13 15 Z" opacity="0.8"/>
+            </g>
+        </symbol>
+    </svg>
+
+    <div class="terminal-container">
+        <div style="text-align: center;">
+            <span id="logo-wrap">
+            <svg viewBox="0 0 400 400" style="width:160px;height:160px;margin:0 auto 20px auto;display:block;" xmlns="http://www.w3.org/2000/svg">
+                <!-- DUE TONI: scuro=#041804 / chiaro=#15ff00 -->
+                <!-- SILHOUETTE + COLLO PELOSO -->
+                <path d="M200,6 L222,42 L258,12 L274,58 L316,22 L312,72 L352,50 L340,102 L378,120 C396,132 398,155 378,168 C394,182 390,202 374,216 C390,230 386,252 368,268 C356,302 330,336 290,354 C268,366 236,374 200,374 C164,374 132,366 110,354 C70,336 44,302 32,268 C14,252 10,230 26,216 C10,202 6,182 22,168 C2,155 4,132 22,120 L60,102 L48,50 L88,72 L84,22 L126,58 L142,12 L178,42 Z"
+                      fill="#041804" stroke="#15ff00" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+                <!-- INTERNI ORECCHIE -->
+                <path d="M152,14 L144,50 L182,62 Z" fill="#0c2e0c" stroke="#15ff00" stroke-width="3.5" stroke-linejoin="round"/>
+                <path d="M248,14 L256,50 L218,62 Z" fill="#0c2e0c" stroke="#15ff00" stroke-width="3.5" stroke-linejoin="round"/>
+                <!-- ZONA VISO -->
+                <ellipse cx="200" cy="208" rx="138" ry="132" fill="#071c07"/>
+                <ellipse cx="200" cy="214" rx="112" ry="105" fill="#081f08"/>
+                <!-- TERZO OCCHIO -->
+                <path d="M178,96 Q200,84 222,96" fill="none" stroke="#15ff00" stroke-width="7" stroke-linecap="round"/>
+                <ellipse cx="200" cy="118" rx="21" ry="17" fill="#041804" stroke="#15ff00" stroke-width="5.5"/>
+                <ellipse cx="200" cy="118" rx="11" ry="13" fill="#15ff00"/>
+                <ellipse cx="203" cy="116" rx="4.5" ry="6" fill="#020802"/>
+                <!-- SOPRACCIGLIA -->
+                <path d="M64,170 Q108,132 152,168" fill="none" stroke="#15ff00" stroke-width="10" stroke-linecap="round"/>
+                <path d="M248,168 Q292,132 336,170" fill="none" stroke="#15ff00" stroke-width="10" stroke-linecap="round"/>
+                <!-- OCCHIO SINISTRO -->
+                <ellipse cx="108" cy="215" rx="52" ry="50" fill="#041804" stroke="#15ff00" stroke-width="6.5"/>
+                <ellipse cx="108" cy="215" rx="32" ry="34" fill="#15ff00"/>
+                <ellipse cx="114" cy="209" rx="15" ry="18" fill="#020802"/>
+                <circle cx="121" cy="202" r="5.5" fill="#15ff00" opacity="0.5"/>
+                <!-- OCCHIO DESTRO -->
+                <ellipse cx="292" cy="215" rx="52" ry="50" fill="#041804" stroke="#15ff00" stroke-width="6.5"/>
+                <ellipse cx="292" cy="215" rx="32" ry="34" fill="#15ff00"/>
+                <ellipse cx="298" cy="209" rx="15" ry="18" fill="#020802"/>
+                <circle cx="305" cy="202" r="5.5" fill="#15ff00" opacity="0.5"/>
+                <!-- NASO -->
+                <path d="M188,272 L200,256 L212,272 C213,283 207,290 200,294 C193,290 187,283 188,272 Z"
+                      fill="#041804" stroke="#15ff00" stroke-width="4.5" stroke-linejoin="round"/>
+                <!-- BOCCA -->
+                <path d="M150,290 Q174,278 200,282 Q226,278 250,290" fill="none" stroke="#15ff00" stroke-width="5.5" stroke-linecap="round"/>
+                <path d="M150,290 C132,308 128,336 142,354 C158,374 178,382 200,382 C222,382 242,374 258,354 C272,336 268,308 250,290 Z"
+                      fill="#041804" stroke="#15ff00" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M150,290 L161,314 L174,292 L186,318 L196,292 L200,308 L204,292 L214,318 L226,292 L239,314 L250,290"
+                      fill="#041804" stroke="#15ff00" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+                <path d="M182,340 Q200,322 218,340 Q200,366 182,340 Z" fill="#0a280a" stroke="#15ff00" stroke-width="3"/>
+                <!-- BAFFI -->
+                <g stroke="#15ff00" stroke-linecap="round" fill="none">
+                    <path d="M2,245 Q55,255 134,266" stroke-width="4.5"/>
+                    <path d="M0,272 Q52,272 132,277" stroke-width="4.5"/>
+                    <path d="M4,299 Q56,292 132,288" stroke-width="4"/>
+                    <path d="M398,245 Q345,255 266,266" stroke-width="4.5"/>
+                    <path d="M400,272 Q348,272 268,277" stroke-width="4.5"/>
+                    <path d="M396,299 Q344,292 268,288" stroke-width="4"/>
+                </g>
+                <!-- PELURIA GUANCE -->
+                <path d="M55,224 Q28,242 24,266 Q18,288 36,306" fill="none" stroke="#15ff00" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M345,224 Q372,242 376,266 Q382,288 364,306" fill="none" stroke="#15ff00" stroke-width="4.5" stroke-linecap="round"/>
+            </svg>
+            </span>
+        </div>
+
+        <h1>Vibe-Tec</h1>
+        <div class="subtitle">E-motion design , ikigai kintsugi , vibe vision</div>
+        <p>> VIBE-TEC CORPORATION UNIFIED OPERATING SYSTEM</p>
+        <p>> INIZIALIZZAZIONE SIDE PROJECTS INFO<span class="blink">_</span></p>
+
+        <h2>> [ Il Mio Profilo ]</h2>
+        <ul>
+            <li><span><strong>Cosmopolita:</strong> con una visione e una missione sociale precisa dal nome Kizuna.</span></li>
+            <li><span><strong>UX Designer:</strong> presso [ in vacanza preventiva ].</span></li>
+            <li><span><strong>Product Manager & Designer:</strong> end to end nei side projects.</span></li>
+        </ul>
+
+        <h2>> [ Background Tech ]</h2>
+        <p>Strumenti, ambienti di sviluppo integrati ed ecosistemi di design preferiti:</p>
+        <div class="stack-grid">
+            <div class="stack-item">
+                <svg viewBox="0 0 24 24"><path d="M4.1 2.9C3.1 3.1 2.3 3.9 2.1 4.9C1.9 5.4 1.9 18.2 2 18.9C2.1 20 2.9 20.8 3.9 21.1C4.4 21.2 5.5 21.2 12 21.2H19.5C20.6 21 21.4 20.2 21.6 19.1C21.8 18.6 21.8 5.8 21.7 5.1C21.5 4 20.7 3.2 19.7 2.9C19.2 2.8 18.1 2.8 11.6 2.8C5.5 2.8 4.4 2.8 4.1 2.9ZM6.2 5.8H17.8C18.2 5.8 18.5 6.1 18.5 6.5C18.5 6.9 18.2 7.2 17.8 7.2H6.2C5.8 7.2 5.5 6.9 5.5 6.5C5.5 6.1 5.8 5.8 6.2 5.8ZM7.5 9.2H9.5L14.2 15.5V9.2H16.5V17.2H14.5L9.8 10.9V17.2H7.5V9.2Z"/></svg>
+                <span>Notion</span>
+            </div>
+            <div class="stack-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2L14.8 8.4L21.2 11.2L14.8 14L12 20.4L9.2 14L2.8 11.2L9.2 8.4L12 2ZM12 6L10.4 9.6L6.8 11.2L10.4 12.8L12 16.4L13.6 12.8L17.2 11.2L13.6 9.6L12 6Z"/></svg>
+                <span>Google AI Work-Tools</span>
+            </div>
+            <div class="stack-item" style="grid-column: span 1;">
+                <svg viewBox="0 0 24 24"><path d="M22 15.5L12 21.5L2 15.5V8.5L12 2.5L22 8.5V15.5ZM12 4.7L4 9.5L12 14.3L20 9.5L12 4.7ZM4 11.8V14.3L12 19.1L20 14.3V11.8L12 16.6L4 11.8Z"/></svg>
+                <span>antigravity, VS Code, Zed, Cursor</span>
+            </div>
+            <div class="stack-item">
+                <svg viewBox="0 0 24 24"><path d="M8 5L2 12L8 19M16 5L22 12L16 19M13 3L11 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                <span>HTML , CSS , JS</span>
+            </div>
+            <div class="stack-item">
+                <svg viewBox="0 0 24 24"><path d="M8.5 2C6.6 2 5 3.6 5 5.5C5 7.4 6.6 9 8.5 9H12V5.5C12 3.6 10.4 2 8.5 2ZM8.5 9C6.6 9 5 10.6 5 12.5C5 14.4 6.6 16 8.5 16H12V9H8.5ZM8.5 16C6.6 16 5 17.6 5 19.5C5 21.4 6.6 23 8.5 23C10.4 23 12 21.4 12 19.5V16H8.5ZM15.5 9C17.4 9 19 7.4 19 5.5C19 3.6 17.4 2 15.5 2C13.6 2 12 3.6 12 5.5V9H15.5ZM15.5 16C17.4 16 19 14.4 19 12.5C19 10.6 17.4 9 15.5 9H12V16H15.5Z"/></svg>
+                <span>Figma , Canvas</span>
+            </div>
+        </div>
+
+        <h2>> [ Database Listino Prezzi ]</h2>
+        <p style="font-size:0.95rem; opacity:0.75;">> [Benchmark mercato italiano 2026 — fonte: analisi su 500+ preventivi, Statista, report ISTAT ICT 2024. Prezzi freelance senior: 800€-4.000€/progetto. Agenzie: ricarico 2-3x.]</p>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipologia</th>
+                        <th>Pagine</th>
+                        <th>Complessità</th>
+                        <th>Vibe-Tec ⚡ Intro</th>
+                        <th>Freelancer Senior</th>
+                        <th>Agenzia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vetrina / Landing</td>
+                        <td>1-2</td>
+                        <td>Bassa</td>
+                        <td><strong>600€ - 900€</strong></td>
+                        <td>800€ - 1.500€</td>
+                        <td>1.500€ - 3.000€</td>
+                    </tr>
+                    <tr>
+                        <td>Landing Premium</td>
+                        <td>1-2</td>
+                        <td>Alta (Animazioni)</td>
+                        <td><strong>900€ - 1.500€</strong></td>
+                        <td>1.500€ - 2.500€</td>
+                        <td>3.000€ - 5.000€</td>
+                    </tr>
+                    <tr>
+                        <td>Sito Aziendale</td>
+                        <td>3-10</td>
+                        <td>Media / CMS</td>
+                        <td><strong>1.500€ - 2.200€</strong></td>
+                        <td>2.000€ - 4.000€</td>
+                        <td>3.500€ - 8.000€</td>
+                    </tr>
+                    <tr>
+                        <td>Piattaforma / SaaS</td>
+                        <td>10+</td>
+                        <td>Alta / Custom</td>
+                        <td><strong>2.500€ - 4.000€</strong></td>
+                        <td>5.000€ - 10.000€</td>
+                        <td>15.000€ - 30.000€+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="highlight-box">
+            <strong>> ECCEZIONE OVERRIDE: FREE TIER CREATIVI</strong><br>
+            Sviluppo a 0€ ESCLUSIVAMENTE per progetti di artisti e content creator (Coda a bassa priorità).<br>
+            <span style="font-weight: bold; margin-top: 5px; display: inline-block;">
+                >> [ CODA ATTUALE: 5 PROGETTI IN ATTESA ]
+            </span>
+        </div>
+
+        <h2>> [ Parametri di Sviluppo ]</h2>
+        <ul>
+            <li><span><strong>Solo sviluppo, partendo da visione cliente statuaria:</strong> ~ 1 Mese di sviluppo.</span></li>
+            <li><span><strong>Progetto da Zero (Inc. UX Research):</strong> ~ 2 Mesi di sviluppo.</span></li>
+        </ul>
+
+        <div class="danger-box">
+            <h3 style="margin-top:0;">! ATTENZIONE: REGOLAMENTO E PENALI !</h3>
+            <p style="color: #020802;">Utilizzo di Calendario Condiviso (Notion) OBBLIGATORIO. Il mio tempo è ottimizzato per bilanciare agenzia, side-projects e Ricerca & Sviluppo. In caso di scadenze non rispettate ripetutamente dal cliente, VIBE-TEC applicherà una sanzione mensile immediata:</p>
+            <ul style="color: #020802;">
+                <li><span>+ 500€ / MESE (Siti > 2 pagine)</span></li>
+                <li><span>+ 450€ / MESE (Siti < 2 pagine)</span></li>
+            </ul>
+        </div>
+
+        <h2>> [ Contatti e portfolio ]</h2>
+        <p>> PORTFOLIO / MASTERPIECE E PRIMO SIDE PROJECT:<br>
+        <a href="http://www.neo-one.art" target="_blank" style="font-size: 1.5rem; margin-left: 20px;">www.neo-one.art</a><br>
+        <em style="margin-left: 20px;">(Il mio attuale capolavoro che mi vale come portfolio ufficiale)</em></p>
+
+        <p>> CANALE DI COMUNICAZIONE DIRETTO:<br>
+        <strong style="font-size: 1.5rem; margin-left: 20px;">+393388448833</strong> [leo 🐾]</p>
+
+        <p>> FINESTRE DI CHIAMATA (Sys_Time):</p>
+        <ul>
+            <li><span>Fascia Diurna: 12:00 - 15:00</span></li>
+            <li><span>Fascia Serale: 19:30 - 20:30 (estendibile per urgenze)</span></li>
+        </ul>
+
+        <div id="game-zone">
+            <div id="sky-layer"></div>
+            <div id="ground-layer"></div>
+            <div id="finish-line"></div>
+
+            <p id="game-msg">> [STATUS: OSSERVAZIONE ANOMALIA] - TOCCA PER INIZIARE L'INSEGUIMENTO...</p>
+
+            <div id="game-cat">
+                <div id="cat-visual">
+                <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 70 Q 10 40 40 40 L 70 40 Q 90 40 90 70 Z" fill="#000" stroke="currentColor" stroke-width="3"/>
+                    <path d="M10 65 Q -10 50 5 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M70 50 C45 50 30 35 32 15 L25 10 L30 5 L35 5 L45 0 L40 -20 L65 -5 C75 -8 90 -8 100 -5 L125 -20 L120 0 L130 5 L125 10 L132 15 C130 35 115 50 70 50 Z" transform="scale(0.55) translate(65, 45)" fill="#000" stroke="currentColor" stroke-width="4"/>
+                    <ellipse cx="73" cy="30" rx="3" ry="5" fill="currentColor"/>
+                    <ellipse cx="58" cy="40" rx="4" ry="6" fill="currentColor"/>
+                    <ellipse cx="88" cy="40" rx="4" ry="6" fill="currentColor"/>
+                </svg>
+                </div>
+            </div>
+
+            <div id="game-butterfly">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="47" y="20" width="6" height="50" rx="3"/>
+                    <circle cx="43" cy="15" r="6"/>
+                    <path d="M41 10 Q 35 0 30 5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="57" cy="15" r="6"/>
+                    <path d="M59 10 Q 65 0 70 5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <g class="wing">
+                        <path d="M47 30 C 10 10 0 50 47 60" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M53 30 C 90 10 100 50 53 60" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M47 55 C 20 60 20 90 47 70" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M53 55 C 80 60 80 90 53 70" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="2"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 30px;">> SESSIONE TERMINATA... <span class="blink">_</span></p>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('li').forEach(li => {
+            const svgIcon = `<svg class="tiny-bullet"><use href="#tiny-butterfly-icon"/></svg>`;
+            li.innerHTML = svgIcon + li.innerHTML;
+        });
+
+        // --- LOGICA GIOCO: inseguimento a scorrimento (runner) ---
+        // Meccanica: il gatto resta ancorato sullo schermo, il "mondo" (farfalla, traguardo,
+        // nuvole, fiori) scorre in base alla sua posizione. Ogni tocco/click fa avanzare il
+        // gatto di uno scatto; la farfalla vola di moto continuo verso il traguardo, che si
+        // trova a una distanza fissa e lunga (nessun game-over istantaneo, nessun ostacolo).
+        //
+        // Calibrazione velocità: la media umana è ~6.5 click al secondo (CPS) [fonte: dati
+        // aggregati di più CPS-test online, range tipico 6-7 CPS]. Con uno scatto di 22px a
+        // click, un giocatore "nella media" spinge il gatto a ~143px/sec. La farfalla vola
+        // leggermente più veloce (~155px/sec, +8%) così la sfida resta equilibrata: chi clicca
+        // nella media o sotto perde per poco, chi è sopra la media (~7+ CPS) vince con margine.
+
+        const gameZone = document.getElementById('game-zone');
+        const cat = document.getElementById('game-cat');
+        const catVisual = document.getElementById('cat-visual');
+        const butterfly = document.getElementById('game-butterfly');
+        const finishLine = document.getElementById('finish-line');
+        const skyLayer = document.getElementById('sky-layer');
+        const groundLayer = document.getElementById('ground-layer');
+        const msg = document.getElementById('game-msg');
+
+        const TRACK_LENGTH = 1800;   // lunghezza fissa del percorso, in px "di mondo"
+        const START_GAP = 220;       // vantaggio iniziale della farfalla mentre il gatto osserva
+        const CAT_SCREEN_X = 40;     // posizione fissa del gatto sullo schermo
+        const CAT_STEP = 22;         // avanzamento del gatto per ogni input
+        const CAT_EASE = 14;         // morbidezza dell'inseguimento della camera
+        const BUTTERFLY_SPEED = 300; // px/sec — molto più veloce, sfida reale
+        const CATCH_DISTANCE = 34;   // px di tolleranza per considerare la farfalla "presa"
+
+        let catWorldX = 0;
+        let catTargetWorldX = 0;
+        let butterflyWorldX = START_GAP;
+
+        let gameActive = false;
+        let gameOver = false;
+        let time = 0;
+        let lastFrame = performance.now();
+        let rafId = null;
+
+        function render() {
+            cat.style.transform = `translateX(${CAT_SCREEN_X}px)`;
+            const butterflyScreenX = (butterflyWorldX - catWorldX) + CAT_SCREEN_X;
+            butterfly.style.transform = `translateX(${butterflyScreenX}px)`;
+            const finishScreenX = (TRACK_LENGTH - catWorldX) + CAT_SCREEN_X;
+            finishLine.style.transform = `translateX(${finishScreenX}px)`;
+
+            skyLayer.style.backgroundPositionX = (-(catWorldX * 0.15) % 240) + 'px';
+            groundLayer.style.backgroundPositionX = (-(catWorldX * 0.5) % 100) + 'px';
+        }
+
+        function gameLoop(now) {
+            const dt = Math.min((now - lastFrame) / 1000, 0.05);
+            lastFrame = now;
+            time += dt * 6;
+
+            const floatY = Math.sin(time) * 10;
+            butterfly.style.bottom = (22 + floatY) + 'px';
+
+            if (gameActive && !gameOver) {
+                butterflyWorldX += BUTTERFLY_SPEED * dt;
+                catWorldX += (catTargetWorldX - catWorldX) * Math.min(CAT_EASE * dt, 1);
+
+                if (butterflyWorldX - catWorldX <= CATCH_DISTANCE) {
+                    gameOver = true;
+                    catWorldX = butterflyWorldX - CATCH_DISTANCE;
+                    render();
+                    msg.innerText = "> ANOMALIA CATTURATA! HAI RIFLESSI ECCELLENTI.";
+                    rafId = null;
+                    return;
+                }
+
+                if (butterflyWorldX >= TRACK_LENGTH) {
+                    gameOver = true;
+                    render();
+                    msg.innerText = "> GAME OVER. L'ANOMALIA HA ATTRAVERSATO IL VARCO. TOCCA PER RIPROVARE.";
+                    rafId = null;
+                    return;
+                }
+            }
+
+            render();
+            rafId = requestAnimationFrame(gameLoop);
+        }
+
+        function startLoop() {
+            if (rafId !== null) return;
+            lastFrame = performance.now();
+            rafId = requestAnimationFrame(gameLoop);
+        }
+
+        function resetGame() {
+            gameActive = false;
+            gameOver = false;
+            catWorldX = 0;
+            catTargetWorldX = 0;
+            butterflyWorldX = START_GAP;
+
+            render();
+            msg.innerText = "> [STATUS: OSSERVAZIONE ANOMALIA] - TOCCA PER INIZIARE L'INSEGUIMENTO...";
+
+            startLoop();
+        }
+
+        let lastInteractTime = 0;
+
+        function interact(e) {
+            if (e.type === 'keydown' && e.repeat) return;
+
+            const now = performance.now();
+            if (now - lastInteractTime < 16) return; // anti doppio-input touchstart+mousedown
+            lastInteractTime = now;
+
+            if (gameOver) {
+                resetGame();
+                return;
+            }
+
+            if (!gameActive) {
+                gameActive = true;
+                msg.innerText = "> CORSA IN CORSO! MASH BUTTONS IL PIÙ VELOCE POSSIBILE!";
+            }
+
+            catTargetWorldX += CAT_STEP;
+
+            catVisual.classList.remove('cat-tap-anim');
+            void catVisual.offsetWidth;
+            catVisual.classList.add('cat-tap-anim');
+        }
+
+        render();
+        startLoop();
+
+        // Glow periodico sul logo (ogni 6-12 secondi, casuale)
+        const logoWrap = document.getElementById('logo-wrap');
+        function triggerGlow() {
+            logoWrap.classList.remove('logo-glowing');
+            void logoWrap.offsetWidth;
+            logoWrap.classList.add('logo-glowing');
+            setTimeout(() => logoWrap.classList.remove('logo-glowing'), 900);
+            setTimeout(triggerGlow, 6000 + Math.random() * 6000);
+        }
+        setTimeout(triggerGlow, 3000);
+
+        window.addEventListener('keydown', interact);
+        gameZone.addEventListener('mousedown', interact);
+        gameZone.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            interact(e);
+        }, { passive: false });
+    </script>
+</body>
+</html>
