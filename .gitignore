@@ -3,3 +3,7 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+node_modules/
+generate_*.py
+download_pipboy_sound.py
+svg_converter.js
