@@ -55,14 +55,19 @@ document.addEventListener("DOMContentLoaded", () => {
         introVideo.addEventListener('ended', startTransition);
         // Avvio automatico in mute per garantire riproduzione istantanea su tutti i browser
         introVideo.muted = true;
-        introVideo.play().catch(e => {
+        introVideo.play().then(() => {
+            if (window.pipAudio && window.pipAudio.startRadio) window.pipAudio.startRadio();
+        }).catch(e => {
             console.warn("Autoplay video:", e);
         });
     }
 
     // Evento 2: Click sul pulsante SKIP
     if (skipBtn) {
-        skipBtn.addEventListener('click', startTransition);
+        skipBtn.addEventListener('click', () => {
+            if (window.pipAudio && window.pipAudio.startRadio) window.pipAudio.startRadio();
+            startTransition();
+        });
     }
 
     // Evento 3: Pressione del tasto [ESC] sulla tastiera

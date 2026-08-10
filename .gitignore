@@ -7,3 +7,4 @@ node_modules/
 generate_*.py
 download_pipboy_sound.py
 svg_converter.js
+scratch/

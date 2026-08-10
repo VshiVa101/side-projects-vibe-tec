@@ -49,12 +49,51 @@ window.pipAudio = {
     playFocus: () => playDOMSound('sfx-focus'),
     playHighlight: () => playDOMSound('sfx-highlight'),
     playSelect: () => playDOMSound('sfx-select'),
-    playTab: () => playDOMSound('sfx-tab')
+    playTab: () => playDOMSound('sfx-tab'),
+    toggleRadio: function() {
+        const bgTrack = document.getElementById('bg-radio-track');
+        const toggleBtn = document.getElementById('radio-toggle-btn');
+        if (!bgTrack) return false;
+        
+        if (bgTrack.paused) {
+            bgTrack.volume = 0.5;
+            bgTrack.play().then(() => {
+                if (toggleBtn) toggleBtn.innerHTML = '> STATION: ONLINE [PAUSE]';
+            }).catch(e => console.warn('Radio playback blocked by browser:', e));
+            return true;
+        } else {
+            bgTrack.pause();
+            if (toggleBtn) toggleBtn.innerHTML = '> STATION: OFFLINE [PLAY]';
+            return false;
+        }
+    },
+    startRadio: function() {
+        const bgTrack = document.getElementById('bg-radio-track');
+        const toggleBtn = document.getElementById('radio-toggle-btn');
+        if (!bgTrack || !bgTrack.paused) return;
+        bgTrack.volume = 0.5;
+        bgTrack.play().then(() => {
+            if (toggleBtn) toggleBtn.innerHTML = '> STATION: ONLINE [PAUSE]';
+        }).catch(e => {
+            console.warn('Radio autoplay waiting for user interaction:', e);
+        });
+    }
 };
 
-// Sblocco automatico globale al primo click in qualunque punto
-window.addEventListener('click', () => {
+// Sblocco ed avvio automatico al primo click/tasto in qualunque punto del sito (Intro o Terminale)
+let autoRadioStarted = false;
+function handleUserInteractionAudio() {
     if (window.globalPipAudioCtx && window.globalPipAudioCtx.state === 'suspended') {
         window.globalPipAudioCtx.resume();
     }
-});
+    if (!autoRadioStarted) {
+        autoRadioStarted = true;
+        if (window.pipAudio && window.pipAudio.startRadio) {
+            window.pipAudio.startRadio();
+        }
+    }
+}
+
+window.addEventListener('click', handleUserInteractionAudio);
+window.addEventListener('keydown', handleUserInteractionAudio);
+window.addEventListener('touchstart', handleUserInteractionAudio);

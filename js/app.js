@@ -134,8 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Gestione Radio Toggle Button
+    const radioToggleBtn = document.getElementById('radio-toggle-btn');
+    if (radioToggleBtn) {
+        radioToggleBtn.addEventListener('click', () => {
+            if (window.pipAudio) {
+                window.pipAudio.playSelect();
+                window.pipAudio.toggleRadio();
+            }
+        });
+    }
+
     // 4. Gestione HOVER col mouse su tutti gli elementi interattivi -> ui_menu_focus.wav
-    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .special-item, .project-list li, #skip-btn');
+    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .special-item, .project-list li, #skip-btn, .radio-btn');
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
             if (window.pipAudio) window.pipAudio.playFocus();

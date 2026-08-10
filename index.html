@@ -9,13 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=27.0">
-    <link rel="stylesheet" href="css/intro.css?v=27.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=30.0">
+    <link rel="stylesheet" href="css/intro.css?v=30.0">
     
     <!-- Scripts -->
-    <script src="js/audio.js?v=27.0" defer></script>
-    <script src="js/intro.js?v=27.0" defer></script>
-    <script src="js/app.js?v=27.0" defer></script>
+    <script src="js/audio.js?v=30.0" defer></script>
+    <script src="js/intro.js?v=30.0" defer></script>
+    <script src="js/app.js?v=30.0" defer></script>
 </head>
 <body>
     <!-- VIDEO INTRO & TRANSITION OVERLAY -->
@@ -174,8 +174,26 @@
 
             <!-- TAB: RADIO -->
             <div id="radio" class="tab-content">
-                <h2>VIBE-TEC RADIO</h2>
-                <p>> Scanning frequencies...</p>
+                <h2>VIBE-TEC RADIO (FREQUENCY 95.8 MHz)</h2>
+                <div class="radio-container">
+                    <div class="radio-status-box">
+                        <p class="radio-now-playing">> NOW PLAYING: "I Don't Want to Set the World on Fire"</p>
+                        <p class="radio-artist">> ARTIST: The Ink Spots (Fallout 3 Original Soundtrack)</p>
+                        <div class="radio-signal-meter">
+                            <span class="signal-label">> SIGNAL STRENGTH: </span>
+                            <span class="signal-bar">[██████████] 100% SIGNAL</span>
+                        </div>
+                    </div>
+
+                    <div class="radio-controls">
+                        <button id="radio-toggle-btn" class="radio-btn">> STATION: ONLINE [PAUSE]</button>
+                    </div>
+
+                    <!-- Audio Element for Radio Track -->
+                    <audio id="bg-radio-track" loop preload="auto">
+                        <source src="assets/audio/bg_music.webm" type="audio/webm">
+                    </audio>
+                </div>
             </div>
         </section>
 
