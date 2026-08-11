@@ -226,7 +226,7 @@
                     <button class="inv-sub-btn" data-inv="solo">SOLO E2E</button>
                     <button class="inv-sub-btn" data-inv="kizuna">KIZUNA PROJECT</button>
                     <button class="inv-sub-btn" data-inv="ideas">IDEAS & BIZ</button>
-                    <button class="inv-sub-btn" data-inv="classified">CLASSIFIED</button>
+                    <button class="inv-sub-btn" data-inv="classified">ANTEROS</button>
                 </div>
 
                 <!-- SUB-TAB: CONTRACTS -->
@@ -460,29 +460,40 @@
             <!-- TAB: RADIO -->
             <div id="radio" class="tab-content">
                 <h2>VIBE-TEC RADIO (FREQUENCY 95.8 MHz)</h2>
-                <div class="radio-container">
-                    <div class="radio-status-box">
-                        <p class="radio-now-playing">> NOW PLAYING: "I Don't Want to Set the World on Fire (Lo-Fi Remix)"</p>
-                        <div class="radio-signal-meter">
-                            <span class="signal-label">> SIGNAL STRENGTH: </span>
-                            <span class="signal-bar">[██████████] 100% SIGNAL</span>
+                <div class="project-card-layout" style="align-items: center; gap: 30px;">
+                    <div class="project-card-info" style="width: 100%;">
+                        <div class="radio-container">
+                            <div class="radio-status-box">
+                                <p class="radio-now-playing">> NOW PLAYING: "I Don't Want to Set the World on Fire (Lo-Fi Remix)"</p>
+                                <div class="radio-signal-meter">
+                                    <span class="signal-label">> SIGNAL STRENGTH: </span>
+                                    <span class="signal-bar">[██████████] 100% SIGNAL</span>
+                                </div>
+                            </div>
+
+                            <div class="radio-controls">
+                                <button id="radio-toggle-btn" class="radio-btn">> STATION: ONLINE [PAUSE]</button>
+                            </div>
+
+                            <!-- Radio Volume Control -->
+                            <div class="radio-volume-box">
+                                <label for="radio-volume-slider" class="volume-label">> MASTER VOLUME: <span id="radio-volume-val">50%</span></label>
+                                <input type="range" id="radio-volume-slider" min="0" max="100" value="50" class="pip-slider">
+                            </div>
+
+                            <!-- Audio Element for Radio Track -->
+                            <audio id="bg-radio-track" loop preload="auto">
+                                <source src="assets/audio/bg_music_lofi.webm?v=2" type="audio/webm">
+                            </audio>
                         </div>
                     </div>
 
-                    <div class="radio-controls">
-                        <button id="radio-toggle-btn" class="radio-btn">> STATION: ONLINE [PAUSE]</button>
+                    <!-- Right Column: Radio Cat Mascot Icon with Animated Antenna -->
+                    <div class="project-card-media">
+                        <div class="project-icon-box-large radio-cat-box" title="Vibe-Tec 3-Eyed Cat playing with Radio Antenna">
+                            <img src="assets/img/radio_cat_icon.jpg" alt="Vibe-Tec 3-eyed cat playing with radio antenna" class="avatar-svg radio-cat-animated" style="object-fit: cover;">
+                        </div>
                     </div>
-
-                    <!-- Radio Volume Control -->
-                    <div class="radio-volume-box">
-                        <label for="radio-volume-slider" class="volume-label">> MASTER VOLUME: <span id="radio-volume-val">50%</span></label>
-                        <input type="range" id="radio-volume-slider" min="0" max="100" value="50" class="pip-slider">
-                    </div>
-
-                    <!-- Audio Element for Radio Track -->
-                    <audio id="bg-radio-track" loop preload="auto">
-                        <source src="assets/audio/bg_music_lofi.webm?v=2" type="audio/webm">
-                    </audio>
                 </div>
             </div>
         </section>

@@ -1059,6 +1059,35 @@ body {
     cursor: pointer;
 }
 
+/* Dynamic Antenna Wiggle Animation for Radio Cat */
+.radio-cat-animated {
+    animation: radioCatAntennaWiggle 3.5s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+}
+
+@keyframes radioCatAntennaWiggle {
+    0% {
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 8px var(--pip-green-glow));
+    }
+    25% {
+        transform: rotate(1.5deg) scale(1.02);
+        filter: drop-shadow(0 0 12px var(--pip-green-glow));
+    }
+    50% {
+        transform: rotate(-2deg) scale(0.99);
+        filter: drop-shadow(0 0 6px var(--pip-green-glow));
+    }
+    75% {
+        transform: rotate(2.5deg) scale(1.03);
+        filter: drop-shadow(0 0 14px var(--pip-green-glow));
+    }
+    100% {
+        transform: rotate(-1deg) scale(1);
+        filter: drop-shadow(0 0 10px var(--pip-green-glow));
+    }
+}
+
 .radio-apple-link {
     font-size: 1.1rem;
     padding: 10px 18px;
