@@ -77,6 +77,12 @@ window.pipAudio = {
         }).catch(e => {
             console.warn('Radio autoplay waiting for user interaction:', e);
         });
+    },
+    setVolume: function(volPercent) {
+        const bgTrack = document.getElementById('bg-radio-track');
+        if (bgTrack) {
+            bgTrack.volume = Math.max(0, Math.min(1, volPercent / 100));
+        }
     }
 };
 

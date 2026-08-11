@@ -50,16 +50,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 800);
     }
 
+    const startOverlay = document.getElementById('start-overlay');
+
+    // Evento ZERO: Click/Tap su FIRST CLICK BOOT OVERLAY (Raccoglie il primo click fidato dell'utente!)
+    if (startOverlay) {
+        startOverlay.addEventListener('click', () => {
+            // 1. Riproduci suono di avvio iniziale
+            if (window.pipAudio) window.pipAudio.playSelect();
+            
+            // 2. Avvia immediatamente la radio di sottofondo e sblocca l'AudioContext
+            if (window.pipAudio && window.pipAudio.startRadio) {
+                window.pipAudio.startRadio();
+            }
+
+            // 3. Nascondi lo start overlay con dissolvenza
+            startOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                startOverlay.style.display = 'none';
+            }, 600);
+
+            // 4. Mostra il tasto SKIP INTRO ed avvia il video
+            if (skipBtn) skipBtn.classList.remove('hidden-hard');
+            if (introVideo) {
+                introVideo.play().catch(e => console.warn("Video play:", e));
+            }
+        });
+    }
+
     // Evento 1: Il video finisce da solo
     if (introVideo) {
         introVideo.addEventListener('ended', startTransition);
-        // Avvio automatico in mute per garantire riproduzione istantanea su tutti i browser
-        introVideo.muted = true;
-        introVideo.play().then(() => {
-            if (window.pipAudio && window.pipAudio.startRadio) window.pipAudio.startRadio();
-        }).catch(e => {
-            console.warn("Autoplay video:", e);
-        });
     }
 
     // Evento 2: Click sul pulsante SKIP

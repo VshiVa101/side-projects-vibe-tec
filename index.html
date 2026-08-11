@@ -9,23 +9,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=30.0">
-    <link rel="stylesheet" href="css/intro.css?v=30.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=60.0">
+    <link rel="stylesheet" href="css/intro.css?v=60.0">
+    <!-- Leaflet CSS & JS for Pip-Boy Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
-    <script src="js/audio.js?v=30.0" defer></script>
-    <script src="js/intro.js?v=30.0" defer></script>
-    <script src="js/app.js?v=30.0" defer></script>
+    <script src="js/audio.js?v=60.0" defer></script>
+    <script src="js/intro.js?v=60.0" defer></script>
+    <script src="js/map.js?v=60.0" defer></script>
+    <script src="js/app.js?v=60.0" defer></script>
 </head>
 <body>
     <!-- VIDEO INTRO & TRANSITION OVERLAY -->
     <div id="intro-container">
-        <video id="intro-video" muted playsinline autoplay>
+        <!-- FIRST CLICK BOOT OVERLAY (Raccoglitore Click per Audio & Video) -->
+        <div id="start-overlay" class="start-overlay">
+            <h1 class="start-brand-title">VIBE-TEC</h1>
+            <p class="start-subtitle">{ PIP-FOLIO 3000 SYSTEM BOOT }</p>
+            
+            <div class="start-cat-container">
+                <img src="assets/img/cat_logo.svg" alt="Vibe-Tec Sleeping Cat" id="start-cat-logo" class="start-cat-logo">
+            </div>
+
+            <div class="start-prompt">
+                <span class="prompt-text">> TOUCH SCREEN / CLICK TO INITIALIZE SYSTEM <</span>
+            </div>
+        </div>
+
+        <video id="intro-video" muted playsinline preload="auto">
             <!-- Il video AI che sostituisce la generazione -->
             <source src="assets/video/intro.mp4" type="video/mp4">
         </video>
         <!-- Pulsante SKIP INTRO -->
-        <button id="skip-btn">SKIP INTRO [ESC]</button>
+        <button id="skip-btn" class="hidden-hard">SKIP INTRO [ESC]</button>
         <div id="green-flash-overlay"></div>
     </div>
 
@@ -86,12 +104,12 @@
                         <!-- SUB-TAB: SPECIAL (Skills Map & Tech Stack) -->
                         <div id="sub-special" class="sub-tab-content hidden">
                             <ul class="special-list">
-                                <li class="special-item active" data-tech="antigravity"><span class="spec-char">A</span>NTIGRAVITY <span class="spec-bar">[█████████░]</span> <span class="spec-val">9</span></li>
-                                <li class="special-item" data-tech="notion"><span class="spec-char">N</span>OTION <span class="spec-bar">[█████████░]</span> <span class="spec-val">9</span></li>
-                                <li class="special-item" data-tech="figma"><span class="spec-char">F</span>IGMA <span class="spec-bar">[███████░░░]</span> <span class="spec-val">7</span></li>
-                                <li class="special-item" data-tech="html"><span class="spec-char">H</span>TML5 <span class="spec-bar">[████████░░]</span> <span class="spec-val">8</span></li>
-                                <li class="special-item" data-tech="js"><span class="spec-char">J</span>AVASCRIPT <span class="spec-bar">[███████░░░]</span> <span class="spec-val">7</span></li>
-                                <li class="special-item" data-tech="css"><span class="spec-char">C</span>SS3 <span class="spec-bar">[████████░░]</span> <span class="spec-val">8</span></li>
+                                <li class="special-item active" data-tech="antigravity"><span class="spec-char">A</span>NTIGRAVITY <span class="spec-bar">[█████████░]</span></li>
+                                <li class="special-item" data-tech="notion"><span class="spec-char">N</span>OTION <span class="spec-bar">[█████████░]</span></li>
+                                <li class="special-item" data-tech="figma"><span class="spec-char">F</span>IGMA <span class="spec-bar">[███████░░░]</span></li>
+                                <li class="special-item" data-tech="html"><span class="spec-char">H</span>TML5 <span class="spec-bar">[████████░░]</span></li>
+                                <li class="special-item" data-tech="js"><span class="spec-char">J</span>AVASCRIPT <span class="spec-bar">[███████░░░]</span></li>
+                                <li class="special-item" data-tech="css"><span class="spec-char">C</span>SS3 <span class="spec-bar">[████████░░]</span></li>
                             </ul>
                         </div>
 
@@ -150,12 +168,158 @@
 
             <!-- TAB: INV -->
             <div id="inv" class="tab-content">
-                <h2>PROJECT INVENTORY</h2>
-                <ul class="project-list">
-                    <li>> NEO-ONE-ART (Deployment Complete)</li>
-                    <li>> VIBE-TEC ANTEROS (In Development)</li>
-                    <li>> PROGETTO KIZUNA (Planning Phase)</li>
-                </ul>
+                <!-- Sub-nav for INV tab -->
+                <div class="sub-nav" style="overflow-x: auto; white-space: nowrap;">
+                    <button class="inv-sub-btn active" data-inv="contracts">CONTRACTS</button>
+                    <button class="inv-sub-btn" data-inv="solo">SOLO E2E</button>
+                    <button class="inv-sub-btn" data-inv="kizuna">LIFE MISSION</button>
+                    <button class="inv-sub-btn" data-inv="classified">CLASSIFIED</button>
+                    <button class="inv-sub-btn" data-inv="ideas">IDEAS & BIZ</button>
+                </div>
+
+                <!-- SUB-TAB: CONTRACTS -->
+                <div id="inv-sub-contracts" class="inv-sub-content active">
+                    <div class="inv-desc-banner">
+                        > CORPORATE & AGENCY CONTRACTS<br>
+                        [STATUS: OPEN FOR 100% REMOTE CONTRACTS]<br><br>
+                        Dedicated section for corporate collaborations and agency work. Currently available for 100% remote contracts as a Junior UX Designer within structured product engineering teams.<br><br>
+                        > VALUE PROP: Fast AI-Driven Prototyping & Atomic Style Guides<br>
+                        > INTEGRATION: Empathetic team communication & Agile Workflows<br>
+                        > AVAILABILITY: 100% Remote / Full Time & Freelance
+                    </div>
+                    <div class="project-accordion">
+                        <div class="project-accordion-item">
+                            <div class="project-accordion-header">
+                                <span class="proj-name"><span class="proj-tag">[SEARCHING]</span> LOOKING FOR FIRST CONTRACT...</span>
+                                <span class="proj-status yellow-glitch">[AWAITING DATA]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: SOLO E2E -->
+                <div id="inv-sub-solo" class="inv-sub-content hidden">
+                    <div class="inv-desc-banner">
+                        > CORE DIRECTIVES // SOLO END-TO-END PROJECTS<br>
+                        > Repository of solo projects, actively managed from fundamental UX research to full deployment and maintenance.<br><br>
+                        > FOCUS: Creating highly emotional, uncensored products.<br>
+                        > DEV ETHOS: Professionally engineered during off-hours to forge a strong, highly trusted identity in the "uncensored" commercial niche.
+                    </div>
+                    <div class="project-accordion">
+                        <!-- ITEM: NEO-ONE ART -->
+                        <div class="project-accordion-item">
+                            <div class="project-accordion-header">
+                                <span class="proj-name"><span class="proj-tag">[SOLO E2E]</span> NEO-ONE ART</span>
+                                <span class="proj-status">ONLINE</span>
+                            </div>
+                            <div class="project-accordion-body hidden">
+                                <div class="project-card-full">
+                                    <div class="project-card-layout">
+                                        <!-- Text Details Left -->
+                                        <div class="project-card-info">
+                                            <h3 class="detail-title">> NEO-ONE ART</h3>
+                                            <p class="detail-badge green-badge">[STATUS: ONLINE // FLAGSHIP E2E PROJECT]</p>
+                                            <p class="detail-text">My primary business card and technical cornerstone. End-to-End project conceived, designed, and executed 100% solo: from empathetic UX research and design tokens (Atomic Design) to full-stack live code, cloud deployment, and ongoing production maintenance.</p>
+                                            <ul class="detail-specs">
+                                                <li>> UX/UI: Human-Centered Design, Atomic Tokens, Glassmorphism</li>
+                                                <li>> ARCHITECTURE: Modern Web Engine, Micro-Animations, Audio Logic</li>
+                                                <li>> MAINTENANCE: 100% Autonomous Production & Monitoring</li>
+                                            </ul>
+                                            <div class="detail-action">
+                                                <a href="https://www.neo-one.art/" target="_blank" class="pip-btn-link">> LAUNCH WEBSITE: WWW.NEO-ONE.ART</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- 3D Icon Box Right (Top on Mobile) -->
+                                        <div class="project-card-media">
+                                            <div class="project-icon-box-large">
+                                                <iframe title="Fallout Eyebot 3D Model" class="sketchfab-eyebot-frame" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/0061d573eca04d0eb966a5cb1c589cca/embed?autostart=1&transparent=1&ui_controls=0&ui_infos=0&ui_inspector=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: LIFE MISSION -->
+                <div id="inv-sub-kizuna" class="inv-sub-content hidden">
+                    <div class="inv-desc-banner">
+                        > LONG-TERM DIRECTIVES // THE KIZUNA PROTOCOL<br>
+                        > KIZUNA (絆): The bond between people. My Ikigai and ultimate life mission.<br><br>
+                        > OBJECTIVE [2026-2036]: Connect tribal and community societies globally, culminating in a physical ethical village serving as a new aggregation hub.<br>
+                        > PURPOSE: Empower communities to mutually support each other, resist systemic threats, and express their unique cultural identities to the world.
+                    </div>
+                    <div class="project-accordion">
+                        <!-- ITEM: PROGETTO KIZUNA -->
+                        <div class="project-accordion-item">
+                            <div class="project-accordion-header">
+                                <span class="proj-name"><span class="proj-tag">[MISSION]</span> PROGETTO KIZUNA</span>
+                                <span class="proj-status">[2026-2036]</span>
+                            </div>
+                            <div class="project-accordion-body hidden">
+                                <div class="project-card-full">
+                                    <h3 class="detail-title">> PROGETTO KIZUNA</h3>
+                                    <p class="detail-badge green-badge">[STATUS: CORE LIFE MISSION // 2026-2036]</p>
+                                    <p class="detail-text">A long-term core life mission centered on fostering ethical communication, empowerment, and social connection among independent, ethical, and tribal communities worldwide.</p>
+                                    <ul class="detail-specs">
+                                        <li>> ETHICAL NETWORKING: Empowering independent global communities</li>
+                                        <li>> HUMAN CENTRIC: Technology in service of freedom and social bonding</li>
+                                        <li>> TIMELINE: Strategic Rollout (2026 - 2036)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: CLASSIFIED -->
+                <div id="inv-sub-classified" class="inv-sub-content hidden">
+                    <div class="inv-desc-banner">
+                        > ENCRYPTED DATABANKS // NON-DISCLOSURE AGREEMENTS<br>
+                        > Advanced R&D prototypes and locked systems currently under strict confidentiality protocols. Commercial access requires highest security clearance.
+                    </div>
+                    <div class="project-accordion">
+                        <!-- ITEM: VIBE-TEC ANTEROS -->
+                        <div class="project-accordion-item">
+                            <div class="project-accordion-header">
+                                <span class="proj-name"><span class="proj-tag">[SECRET]</span> VIBE-TEC ANTEROS</span>
+                                <span class="proj-status red-glitch">[CENSORED]</span>
+                            </div>
+                            <div class="project-accordion-body hidden">
+                                <div class="project-card-full classified-card">
+                                    <h3 class="detail-title red-glitch">> VIBE-TEC ANTEROS</h3>
+                                    <p class="detail-badge red-badge">[STATUS: CLASSIFIED // TOP SECRET R&D]</p>
+                                    <p class="detail-text">Advanced local architecture for AI visual orchestration (video and photo synth). Active R&D project protected under industrial confidentiality.</p>
+                                    <div class="classified-box">
+                                        <p class="redacted-line">> ACCESS RESTRICTED: ████████████████████</p>
+                                        <p class="classified-subtext">Due to industrial confidentiality and IP rights, commercial specifications and live demonstrations are strictly accessible via private briefing behind closed doors upon direct contact.</p>
+                                    </div>
+                                    <div class="detail-action">
+                                        <button class="pip-btn-link red-btn-link" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: IDEAS & BIZ -->
+                <div id="inv-sub-ideas" class="inv-sub-content hidden">
+                    <div class="inv-desc-banner">
+                        > UNPROCESSED DATA // PERSONAL PROJECTS & BUSINESS IDEAS<br>
+                        > Experimental concepts, early-stage brainstorming, and future commercial trajectories currently in the ideation phase.
+                    </div>
+                    <div class="project-accordion">
+                        <div class="project-accordion-item">
+                            <div class="project-accordion-header">
+                                <span class="proj-name"><span class="proj-tag">[IDEATION]</span> DATABANK EMPTY</span>
+                                <span class="proj-status yellow-glitch">[AWAITING INPUT]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- TAB: DATA -->
@@ -168,8 +332,36 @@
 
             <!-- TAB: MAP -->
             <div id="map" class="tab-content">
-                <h2>WORLD MAP</h2>
-                <p>> Location tracking active...</p>
+                <div class="map-hud-bar">
+                    <div class="map-title-box">
+                        <h2>WORLD MAP // SECTOR: ITALY</h2>
+                        <p class="map-subtitle">> RADAR TRACKING: LOCALIZED ON BOLOGNA HQ [44.4949° N, 11.3426° E]</p>
+                    </div>
+                    <div class="map-hud-controls">
+                        <button id="map-recenter-btn" class="map-hud-btn">> [HQ] BOLOGNA</button>
+                        <button id="map-zoom-in-btn" class="map-hud-btn">[+] ZOOM</button>
+                        <button id="map-zoom-out-btn" class="map-hud-btn">[-] ZOOM</button>
+                    </div>
+                </div>
+
+                <div class="pip-map-container">
+                    <!-- Leaflet Container -->
+                    <div id="leaflet-pip-map"></div>
+
+                    <div class="map-radar-overlay"></div>
+                    
+                    <div class="map-compass-hud">
+                        <span class="compass-dir compass-n">N</span>
+                        <span class="compass-dir compass-w">W</span>
+                        <span class="compass-dir compass-e">E</span>
+                        <span class="compass-dir compass-s">S</span>
+                    </div>
+
+                    <div class="map-status-footer">
+                        <span class="radar-ping">● RADAR ACTIVE</span>
+                        <span class="location-tag">HQ: BOLOGNA, ITALY</span>
+                    </div>
+                </div>
             </div>
 
             <!-- TAB: RADIO -->
@@ -177,8 +369,8 @@
                 <h2>VIBE-TEC RADIO (FREQUENCY 95.8 MHz)</h2>
                 <div class="radio-container">
                     <div class="radio-status-box">
-                        <p class="radio-now-playing">> NOW PLAYING: "I Don't Want to Set the World on Fire"</p>
-                        <p class="radio-artist">> ARTIST: The Ink Spots (Fallout 3 Original Soundtrack)</p>
+                        <p class="radio-now-playing">> NOW PLAYING: "I Don't Want to Set the World on Fire (Lo-Fi Remix)"</p>
+                        <p class="radio-artist">> ARTIST: Fallout 3 Lo-Fi Station (Official Pip-Folio Soundtrack)</p>
                         <div class="radio-signal-meter">
                             <span class="signal-label">> SIGNAL STRENGTH: </span>
                             <span class="signal-bar">[██████████] 100% SIGNAL</span>
@@ -189,9 +381,15 @@
                         <button id="radio-toggle-btn" class="radio-btn">> STATION: ONLINE [PAUSE]</button>
                     </div>
 
+                    <!-- Radio Volume Control -->
+                    <div class="radio-volume-box">
+                        <label for="radio-volume-slider" class="volume-label">> MASTER VOLUME: <span id="radio-volume-val">50%</span></label>
+                        <input type="range" id="radio-volume-slider" min="0" max="100" value="50" class="pip-slider">
+                    </div>
+
                     <!-- Audio Element for Radio Track -->
                     <audio id="bg-radio-track" loop preload="auto">
-                        <source src="assets/audio/bg_music.webm" type="audio/webm">
+                        <source src="assets/audio/bg_music_lofi.webm?v=2" type="audio/webm">
                     </audio>
                 </div>
             </div>

@@ -72,6 +72,103 @@
     opacity: 1;
 }
 
+/* FIRST CLICK BOOT OVERLAY */
+.start-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #020806;
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.start-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.08);
+}
+
+.start-brand-title {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--pip-green);
+    letter-spacing: 6px;
+    margin-bottom: 5px;
+}
+
+.start-subtitle {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    color: var(--pip-green);
+    opacity: 0.8;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.start-cat-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+.start-cat-logo {
+    width: 220px;
+    height: auto;
+    filter: drop-shadow(0 0 12px var(--pip-green-glow));
+    transition: transform 0.3s ease, filter 0.3s ease;
+    animation: catWakeUp 2.5s infinite ease-in-out;
+}
+
+.start-overlay:hover .start-cat-logo {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 22px var(--pip-green-glow));
+}
+
+@keyframes catWakeUp {
+    0% {
+        opacity: 0.4;
+        filter: drop-shadow(0 0 5px var(--pip-green-glow)) blur(1px);
+        transform: scale(0.97);
+    }
+    50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 18px var(--pip-green-glow)) blur(0px);
+        transform: scale(1.03);
+    }
+    100% {
+        opacity: 0.4;
+        filter: drop-shadow(0 0 5px var(--pip-green-glow)) blur(1px);
+        transform: scale(0.97);
+    }
+}
+
+.start-prompt {
+    margin-top: 40px;
+}
+
+.prompt-text {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--pip-green);
+    border: 1px dashed var(--pip-green);
+    padding: 10px 24px;
+    background: rgba(27, 253, 2, 0.05);
+    animation: promptBlink 1.2s infinite ease-in-out;
+}
+
+@keyframes promptBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
 /* Classe di utility per nascondere il container definitivamente */
 .hidden-hard {
     display: none !important;

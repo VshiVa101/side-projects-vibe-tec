@@ -59,12 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const techDescs = {
-        antigravity: "> ANTIGRAVITY [9/10]<br>Early AI pioneer (adopting models since the GPT-3 era) following Google AI standards. Expert Human2AI communicator using Antigravity for E2E project development (e.g. Neo-One Art), system-level OS/Drive/Notion orchestration, and continuous active learning.",
-        notion: "> NOTION [9/10]<br>My Second Brain. Used to structure my entire life: project management, habit tracking, complex documentation, and AI-integrated workflow orchestration.",
-        figma: "> FIGMA [7/10]<br>Used for static wireframes, Atomic Design, and Style Guides. I believe the future of design lies in live functional AI prototyping, focusing my energy on real working outputs while continuously honing Figma as an industry baseline.",
-        html: "> HTML5 [8/10]<br>Coding journey started before the AI era to become a Full-Stack developer. Solid foundation in semantic web architecture, serving as an essential base before finding my true calling (Ikigai) in UX Design.",
-        css: "> CSS3 [8/10]<br>Mastery of layout and visual styling. Guided by Don Norman's Emotional Design philosophy, I craft complex interfaces, micro-animations, and visual systems that blend structural rigor with deep emotional resonance.",
-        js: "> JAVASCRIPT [7/10]<br>Solid grasp of programming logic, DOM event handling, and audio engines. I leverage AI to accelerate development while maintaining full engineering control over core logic."
+        antigravity: "> ANTIGRAVITY<br>Early AI pioneer (adopting models since the GPT-3 era) following Google AI standards. Expert Human2AI communicator using Antigravity for E2E project development (e.g. Neo-One Art), system-level OS/Drive/Notion orchestration, and continuous active learning.",
+        notion: "> NOTION<br>My Second Brain. Used to structure my entire life: project management, habit tracking, complex documentation, and AI-integrated workflow orchestration.",
+        figma: "> FIGMA<br>Used for static wireframes, Atomic Design, and Style Guides. I believe the future of design lies in live functional AI prototyping, focusing my energy on real working outputs while continuously honing Figma as an industry baseline.",
+        html: "> HTML5<br>Coding journey started before the AI era to become a Full-Stack developer. Solid foundation in semantic web architecture, serving as an essential base before finding my true calling (Ikigai) in UX Design.",
+        css: "> CSS3<br>Mastery of layout and visual styling. Guided by Don Norman's Emotional Design philosophy, I craft complex interfaces, micro-animations, and visual systems that blend structural rigor with deep emotional resonance.",
+        js: "> JAVASCRIPT<br>Solid grasp of programming logic, DOM event handling, and audio engines. I leverage AI to accelerate development while maintaining full engineering control over core logic."
     };
 
     subNavButtons.forEach(btn => {
@@ -127,10 +127,45 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    const projectItems = document.querySelectorAll('.project-list li');
-    projectItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (window.pipAudio) window.pipAudio.playHighlight();
+    // 1. Gestione Sotto-Schede INVENTORY (SOLO E2E, CONTRACTS, LIFE MISSION, CLASSIFIED)
+    const invSubButtons = document.querySelectorAll('.inv-sub-btn');
+    const invSubContents = document.querySelectorAll('.inv-sub-content');
+
+    invSubButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (window.pipAudio) window.pipAudio.playTab();
+            invSubButtons.forEach(b => b.classList.remove('active'));
+            invSubContents.forEach(c => c.classList.add('hidden'));
+            
+            btn.classList.add('active');
+            const targetInv = btn.getAttribute('data-inv');
+            const targetContent = document.getElementById(`inv-sub-${targetInv}`);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('active');
+            }
+        });
+    });
+
+    // 2. Gestione Accordion Toggle per singoli progetti all'interno di ciascuna sotto-scheda
+    const accordionHeaders = document.querySelectorAll('.project-accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            if (window.pipAudio) window.pipAudio.playSelect();
+            const parentItem = header.closest('.project-accordion-item');
+            const body = parentItem.querySelector('.project-accordion-body');
+            
+            if (parentItem.classList.contains('active')) {
+                parentItem.classList.remove('active');
+                if (body) body.classList.add('hidden');
+            } else {
+                parentItem.classList.add('active');
+                if (body) body.classList.remove('hidden');
+                if (typeof window.initNeoEye === 'function') {
+                    setTimeout(window.initNeoEye, 150);
+                }
+            }
         });
     });
 
@@ -145,8 +180,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Gestione Radio Volume Slider
+    const volumeSlider = document.getElementById('radio-volume-slider');
+    const volumeVal = document.getElementById('radio-volume-val');
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (volumeVal) volumeVal.textContent = `${val}%`;
+            if (window.pipAudio) {
+                window.pipAudio.setVolume(val);
+            }
+        });
+    }
+
     // 4. Gestione HOVER col mouse su tutti gli elementi interattivi -> ui_menu_focus.wav
-    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .special-item, .project-list li, #skip-btn, .radio-btn');
+    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn');
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
             if (window.pipAudio) window.pipAudio.playFocus();
