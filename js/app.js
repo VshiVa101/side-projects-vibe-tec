@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const techDescs = {
         antigravity: "> ANTIGRAVITY<br>Early AI pioneer (adopting models since the GPT-3 era) following Google AI standards. Expert Human2AI communicator using Antigravity for E2E project development (e.g. Neo-One Art), system-level OS/Drive/Notion orchestration, and continuous active learning.",
         notion: "> NOTION<br>My Second Brain. Used to structure my entire life: project management, habit tracking, complex documentation, and AI-integrated workflow orchestration.",
-        figma: "> FIGMA<br>Used for static wireframes, Atomic Design, and Style Guides. I believe the future of design lies in live functional AI prototyping, focusing my energy on real working outputs while continuously honing Figma as an industry baseline.",
+        figma: "> FIGMA<br>Used for static wireframes, Design Tokens, and UI Layouts. I believe the future of design lies in live functional AI prototyping, focusing my energy on real working outputs while continuously honing Figma as an industry baseline.",
         html: "> HTML5<br>Coding journey started before the AI era to become a Full-Stack developer. Solid foundation in semantic web architecture, serving as an essential base before finding my true calling (Ikigai) in UX Design.",
         css: "> CSS3<br>Mastery of layout and visual styling. Guided by Don Norman's Emotional Design philosophy, I craft complex interfaces, micro-animations, and visual systems that blend structural rigor with deep emotional resonance.",
         js: "> JAVASCRIPT<br>Solid grasp of programming logic, DOM event handling, and audio engines. I leverage AI to accelerate development while maintaining full engineering control over core logic."
@@ -200,4 +200,96 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.pipAudio) window.pipAudio.playFocus();
         });
     });
+
+    // =========================================
+    // 5. PIP-BOY CAT PAW CURSOR & MICRO-ANIMATIONS
+    // =========================================
+    (function initPipCatCursor() {
+        // Disabilitiamo il cursore custom su dispositivi touch puramente mobile
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+
+        // Crea il container DOM per la zampina
+        const cursorEl = document.createElement('div');
+        cursorEl.id = 'pip-cursor';
+        cursorEl.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+              <defs>
+                <filter id="pip-paw-glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="1.2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <g fill="#1bfd02" stroke="#1bfd02" stroke-width="0.8" filter="url(#pip-paw-glow)">
+                <!-- Cuscinetto Principale a Cuoricino (Heart-shaped Main Pad) -->
+                <path d="M 16,18 C 14.5,14.5 9,14.5 9,19 C 9,23.5 16,27.5 16,27.5 C 16,27.5 23,23.5 23,19 C 23,14.5 17.5,14.5 16,18 Z" />
+                <!-- Gommino 1 (Far Left) -->
+                <ellipse cx="6.5" cy="14" rx="2.4" ry="3.2" transform="rotate(-25 6.5 14)" />
+                <!-- Gommino 2 (Top Left) -->
+                <ellipse cx="11.5" cy="8.5" rx="2.5" ry="3.6" transform="rotate(-10 11.5 8.5)" />
+                <!-- Gommino 3 (Top Right - Main Hotspot) -->
+                <ellipse cx="19.5" cy="8.5" rx="2.5" ry="3.6" transform="rotate(10 19.5 8.5)" />
+                <!-- Gommino 4 (Far Right) -->
+                <ellipse cx="24.5" cy="14" rx="2.4" ry="3.2" transform="rotate(25 24.5 14)" />
+              </g>
+            </svg>
+        `;
+        document.body.appendChild(cursorEl);
+
+        let mouseX = -100, mouseY = -100;
+        let isMoving = false;
+
+        function updateCursorPos() {
+            cursorEl.style.left = `${mouseX}px`;
+            cursorEl.style.top = `${mouseY}px`;
+            isMoving = false;
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!cursorEl.classList.contains('active-cursor')) {
+                cursorEl.classList.add('active-cursor');
+            }
+            if (!isMoving) {
+                requestAnimationFrame(updateCursorPos);
+                isMoving = true;
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorEl.classList.remove('active-cursor');
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorEl.classList.add('active-cursor');
+        });
+
+        // Micro-animazione al Click (Squish / Schiacciamento)
+        document.addEventListener('mousedown', () => {
+            cursorEl.classList.add('squeezed');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursorEl.classList.remove('squeezed');
+        });
+
+        // Rilevamento Hover su elementi interattivi
+        const hoverSelector = 'button, a, input, select, textarea, label, [role="button"], .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .interactive';
+
+        document.addEventListener('mouseover', (e) => {
+            if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
+                cursorEl.classList.add('hovering');
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
+                cursorEl.classList.remove('hovering');
+            }
+        });
+    })();
 });
+

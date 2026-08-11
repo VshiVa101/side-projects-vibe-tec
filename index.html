@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +18,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/audio.js?v=60.0" defer></script>
     <script src="js/intro.js?v=60.0" defer></script>
     <script src="js/map.js?v=60.0" defer></script>
+    <script src="js/neo_eye_3d.js?v=60.0" defer></script>
     <script src="js/app.js?v=60.0" defer></script>
 </head>
 <body>
@@ -222,7 +224,7 @@
                 <div class="sub-nav" style="overflow-x: auto; white-space: nowrap;">
                     <button class="inv-sub-btn active" data-inv="contracts">CONTRACTS</button>
                     <button class="inv-sub-btn" data-inv="solo">SOLO E2E</button>
-                    <button class="inv-sub-btn" data-inv="kizuna">LIFE MISSION</button>
+                    <button class="inv-sub-btn" data-inv="kizuna">KIZUNA PROJECT</button>
                     <button class="inv-sub-btn" data-inv="classified">CLASSIFIED</button>
                     <button class="inv-sub-btn" data-inv="ideas">IDEAS & BIZ</button>
                 </div>
@@ -230,12 +232,16 @@
                 <!-- SUB-TAB: CONTRACTS -->
                 <div id="inv-sub-contracts" class="inv-sub-content active">
                     <div class="inv-desc-banner">
-                        > CORPORATE & AGENCY CONTRACTS<br>
-                        [STATUS: OPEN FOR 100% REMOTE CONTRACTS]<br><br>
-                        Dedicated section for corporate collaborations and agency work. Currently available for 100% remote contracts as a Junior UX Designer within structured product engineering teams.<br><br>
-                        > VALUE PROP: Fast AI-Driven Prototyping & Atomic Style Guides<br>
-                        > INTEGRATION: Empathetic team communication & Agile Workflows<br>
-                        > AVAILABILITY: 100% Remote / Full Time & Freelance
+                        <div class="inv-section-title">
+                            > CORPORATE & AGENCY CONTRACTS
+                            <div class="inv-section-status">[STATUS: OPEN FOR 100% REMOTE CONTRACTS]</div>
+                        </div>
+                        <div class="inv-desc-body">
+                            Dedicated section for corporate collaborations and agency work. Currently available for 100% remote contracts as a Junior UX Designer within structured product engineering teams.
+                            <span class="inv-highlight">> VALUE PROP: Emotional UX Design (Don Norman Model) & Rapid AI Prototyping</span>
+                            <span class="inv-highlight">> INTEGRATION: Empathetic team communication & Agile Workflows</span>
+                            <span class="inv-highlight">> AVAILABILITY: 100% Remote / Full Time & Freelance</span>
+                        </div>
                     </div>
                     <div class="project-accordion">
                         <div class="project-accordion-item">
@@ -250,10 +256,13 @@
                 <!-- SUB-TAB: SOLO E2E -->
                 <div id="inv-sub-solo" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        > CORE DIRECTIVES // SOLO END-TO-END PROJECTS<br>
-                        > Repository of solo projects, actively managed from fundamental UX research to full deployment and maintenance.<br><br>
-                        > FOCUS: Creating highly emotional, uncensored products.<br>
-                        > DEV ETHOS: Professionally engineered during off-hours to forge a strong, highly trusted identity in the "uncensored" commercial niche.
+                        <div class="inv-section-title">
+                            > SOLO END-TO-END PROJECTS
+                        </div>
+                        <div class="inv-desc-body">
+                            Repository of solo projects, actively managed from fundamental UX research to full deployment and maintenance. Professionally engineered during off-hours to forge a strong, highly trusted identity in the uncensored commercial niche.
+                            <span class="inv-highlight">> FOCUS: Creating highly emotional, uncensored products</span>
+                        </div>
                     </div>
                     <div class="project-accordion">
                         <!-- ITEM: NEO-ONE ART -->
@@ -269,9 +278,16 @@
                                         <div class="project-card-info">
                                             <h3 class="detail-title">> NEO-ONE ART</h3>
                                             <p class="detail-badge green-badge">[STATUS: ONLINE // FLAGSHIP E2E PROJECT]</p>
-                                            <p class="detail-text">My primary business card and technical cornerstone. End-to-End project conceived, designed, and executed 100% solo: from empathetic UX research and design tokens (Atomic Design) to full-stack live code, cloud deployment, and ongoing production maintenance.</p>
+
+                                            <!-- WARNING: CONTENT ADVISORY -->
+                                            <div class="content-warning-box">
+                                                <div class="content-warning-title">⚠️ WARNING: HIGHLY DISTURBING CONTENT</div>
+                                                <div class="content-warning-text">ADVISORY: Site contains dark art, intense visual themes, and uncensored artistic material. Viewer discretion is strongly advised.</div>
+                                            </div>
+
+                                            <p class="detail-text">My primary business card and technical cornerstone. End-to-End project conceived, designed, and executed 100% solo: from empathetic UX research and emotional design systems to full-stack live code, cloud deployment, and ongoing production maintenance.</p>
                                             <ul class="detail-specs">
-                                                <li>> UX/UI: Human-Centered Design, Atomic Tokens, Glassmorphism</li>
+                                                <li>> UX/UI: Emotional Design (Don Norman), Design Tokens, Glassmorphism</li>
                                                 <li>> ARCHITECTURE: Modern Web Engine, Micro-Animations, Audio Logic</li>
                                                 <li>> MAINTENANCE: 100% Autonomous Production & Monitoring</li>
                                             </ul>
@@ -282,8 +298,7 @@
 
                                         <!-- 3D Icon Box Right (Top on Mobile) -->
                                         <div class="project-card-media">
-                                            <div class="project-icon-box-large">
-                                                <iframe title="Fallout Eyebot 3D Model" class="sketchfab-eyebot-frame" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/0061d573eca04d0eb966a5cb1c589cca/embed?autostart=1&transparent=1&ui_controls=0&ui_infos=0&ui_inspector=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0"></iframe>
+                                            <div class="project-icon-box-large" id="neo-eye-canvas-container" title="50s Retro Sci-Fi Floating Eyeball">
                                             </div>
                                         </div>
                                     </div>
@@ -293,32 +308,24 @@
                     </div>
                 </div>
 
-                <!-- SUB-TAB: LIFE MISSION -->
+                <!-- SUB-TAB: KIZUNA PROJECT -->
                 <div id="inv-sub-kizuna" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        > LONG-TERM DIRECTIVES // THE KIZUNA PROTOCOL<br>
-                        > KIZUNA (絆): The bond between people. My Ikigai and ultimate life mission.<br><br>
-                        > OBJECTIVE [2026-2036]: Connect tribal and community societies globally, culminating in a physical ethical village serving as a new aggregation hub.<br>
-                        > PURPOSE: Empower communities to mutually support each other, resist systemic threats, and express their unique cultural identities to the world.
+                        <div class="inv-section-title">
+                            > KIZUNA PROJECT
+                            <div class="inv-section-status">[CORE LIFE MISSION // 2026-2036]</div>
+                        </div>
+                        <div class="inv-desc-body">
+                            KIZUNA (絆): The bond between people. My Ikigai and ultimate life mission. A long-term core directive centered on fostering ethical communication, empowerment, and social connection among independent, tribal, and community-based societies worldwide — culminating in a physical ethical village serving as a new human aggregation hub.
+                            <span class="inv-highlight">> OBJECTIVE: Connect global communities through technology in service of freedom and social bonding</span>
+                            <span class="inv-highlight">> TIMELINE: Strategic Rollout (2026 - 2036)</span>
+                        </div>
                     </div>
                     <div class="project-accordion">
-                        <!-- ITEM: PROGETTO KIZUNA -->
                         <div class="project-accordion-item">
                             <div class="project-accordion-header">
-                                <span class="proj-name"><span class="proj-tag">[MISSION]</span> PROGETTO KIZUNA</span>
-                                <span class="proj-status">[2026-2036]</span>
-                            </div>
-                            <div class="project-accordion-body hidden">
-                                <div class="project-card-full">
-                                    <h3 class="detail-title">> PROGETTO KIZUNA</h3>
-                                    <p class="detail-badge green-badge">[STATUS: CORE LIFE MISSION // 2026-2036]</p>
-                                    <p class="detail-text">A long-term core life mission centered on fostering ethical communication, empowerment, and social connection among independent, ethical, and tribal communities worldwide.</p>
-                                    <ul class="detail-specs">
-                                        <li>> ETHICAL NETWORKING: Empowering independent global communities</li>
-                                        <li>> HUMAN CENTRIC: Technology in service of freedom and social bonding</li>
-                                        <li>> TIMELINE: Strategic Rollout (2026 - 2036)</li>
-                                    </ul>
-                                </div>
+                                <span class="proj-name"><span class="proj-tag">[MISSION]</span> KIZUNA.ORG</span>
+                                <span class="proj-status yellow-glitch">[COMING SOON]</span>
                             </div>
                         </div>
                     </div>
@@ -326,31 +333,16 @@
 
                 <!-- SUB-TAB: CLASSIFIED -->
                 <div id="inv-sub-classified" class="inv-sub-content hidden">
-                    <div class="inv-desc-banner">
-                        > ENCRYPTED DATABANKS // NON-DISCLOSURE AGREEMENTS<br>
-                        > Advanced R&D prototypes and locked systems currently under strict confidentiality protocols. Commercial access requires highest security clearance.
-                    </div>
-                    <div class="project-accordion">
-                        <!-- ITEM: VIBE-TEC ANTEROS -->
-                        <div class="project-accordion-item">
-                            <div class="project-accordion-header">
-                                <span class="proj-name"><span class="proj-tag">[SECRET]</span> VIBE-TEC ANTEROS</span>
-                                <span class="proj-status red-glitch">[CENSORED]</span>
-                            </div>
-                            <div class="project-accordion-body hidden">
-                                <div class="project-card-full classified-card">
-                                    <h3 class="detail-title red-glitch">> VIBE-TEC ANTEROS</h3>
-                                    <p class="detail-badge red-badge">[STATUS: CLASSIFIED // TOP SECRET R&D]</p>
-                                    <p class="detail-text">Advanced local architecture for AI visual orchestration (video and photo synth). Active R&D project protected under industrial confidentiality.</p>
-                                    <div class="classified-box">
-                                        <p class="redacted-line">> ACCESS RESTRICTED: ████████████████████</p>
-                                        <p class="classified-subtext">Due to industrial confidentiality and IP rights, commercial specifications and live demonstrations are strictly accessible via private briefing behind closed doors upon direct contact.</p>
-                                    </div>
-                                    <div class="detail-action">
-                                        <button class="pip-btn-link red-btn-link" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="inv-desc-banner classified-banner">
+                        <div class="inv-section-title">
+                            > VIBE-TEC ANTEROS
+                            <div class="inv-section-status">[STATUS: CLASSIFIED // TOP SECRET R&D]</div>
+                        </div>
+                        <div class="inv-desc-body">
+                            Advanced local architecture for AI visual orchestration (video and photo synth). An active R&D project protected under industrial confidentiality and non-disclosure agreements. This section does not host public project listings — all prototypes are developed under strict NDA for private clients.
+                            <span class="inv-highlight">> ACCESS RESTRICTED: ████████████████████</span>
+                            <span class="inv-highlight">Due to IP rights and industrial confidentiality, commercial specifications and live demonstrations are strictly accessible via private briefing upon direct contact.</span>
+                            <button class="inv-briefing-btn" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
                         </div>
                     </div>
                 </div>
@@ -358,8 +350,13 @@
                 <!-- SUB-TAB: IDEAS & BIZ -->
                 <div id="inv-sub-ideas" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        > UNPROCESSED DATA // PERSONAL PROJECTS & BUSINESS IDEAS<br>
-                        > Experimental concepts, early-stage brainstorming, and future commercial trajectories currently in the ideation phase.
+                        <div class="inv-section-title">
+                            > IDEAS & BUSINESS TRAJECTORIES
+                            <div class="inv-section-status">[STATUS: IDEATION PHASE]</div>
+                        </div>
+                        <div class="inv-desc-body">
+                            Experimental concepts, early-stage brainstorming, and future commercial trajectories currently in the ideation phase. This databank will be populated as new ventures move from concept to prototype.
+                        </div>
                     </div>
                     <div class="project-accordion">
                         <div class="project-accordion-item">
