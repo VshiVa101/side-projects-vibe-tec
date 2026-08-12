@@ -1223,6 +1223,11 @@ body {
 
 .footer-disclaimer-btn {
     display: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
     color: var(--pip-green);
     font-family: var(--font-heading), 'VT323', monospace;
     font-size: 1.3rem;
@@ -1232,6 +1237,7 @@ body {
     text-shadow: 0 0 5px var(--pip-green-glow);
     padding: 2px 8px;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body.data-tab-active .footer-disclaimer-btn,

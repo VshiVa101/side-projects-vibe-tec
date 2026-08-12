@@ -443,22 +443,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Gestione Toggle Legal Disclaimer (Footer - Visibile solo in DATA tab)
-        if (disclaimerBtn && disclaimerDrawer) {
-            disclaimerBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
+        const toggleDisclaimer = (e) => {
+            const btn = e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn');
+            if (btn) {
+                const drawer = document.getElementById('disclaimer-drawer');
+                if (!drawer) return;
                 if (window.pipAudio) window.pipAudio.playSelect();
-                const isOpen = disclaimerDrawer.style.display === 'block';
+                const isOpen = drawer.style.display === 'block';
                 if (isOpen) {
-                    disclaimerDrawer.style.display = 'none';
-                    disclaimerDrawer.classList.remove('open');
-                    disclaimerBtn.classList.remove('active');
+                    drawer.style.display = 'none';
+                    drawer.classList.remove('open');
+                    btn.classList.remove('active');
                 } else {
-                    disclaimerDrawer.style.display = 'block';
-                    disclaimerDrawer.classList.add('open');
-                    disclaimerBtn.classList.add('active');
+                    drawer.style.display = 'block';
+                    drawer.classList.add('open');
+                    btn.classList.add('active');
                 }
-            });
-        }
+            }
+        };
+
+        document.addEventListener('click', toggleDisclaimer);
+        document.addEventListener('pointerdown', (e) => {
+            if (e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn')) {
+                toggleDisclaimer(e);
+            }
+        }, { passive: true });
 
         // Micro-interazione: Clic/Touch su CTA in DATA fa lampeggiare i link di contatto sopra
         let isActivatingCta = false;
