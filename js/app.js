@@ -125,7 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 targetSubTab.classList.add('active');
             }
 
-            // Se siamo in SPECIAL, nascondi l'avatar e proietta il logo 3D + Descrizione
+            // Reset all toggle descriptions when switching sub-tabs
+            document.querySelectorAll('#stat .inv-toggle-btn').forEach(t => t.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('#stat .inv-desc-collapsible').forEach(d => d.classList.remove('expanded'));
+
             if (targetSubId === 'special') {
                 avatarImg.classList.add('hidden');
                 projectionArea.classList.remove('hidden');
@@ -139,11 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (specialDescBanner) specialDescBanner.innerHTML = techDescs[tech] || '';
                 }
             } else {
-                // Altrimenti mostra l'avatar e nascondi la proiezione/descrizione
+                // STATUS o PERKS: mostra l'avatar e nascondi la proiezione/descrizione
                 projectionArea.classList.add('hidden');
                 if (specialDescBanner) specialDescBanner.classList.add('hidden');
                 
-                // Se siamo in PERKS usa l'avatar kawaii col gatto sulla spalla, altrimenti usa l'avatar originale
                 if (targetSubId === 'perks') {
                     avatarImg.src = 'assets/img/perks_avatar.jpg?v=26.0';
                 } else {

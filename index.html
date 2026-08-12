@@ -190,32 +190,104 @@
 
                         <!-- SUB-TAB: PERKS -->
                         <div id="sub-perks" class="sub-tab-content hidden">
-                            <ul class="perks-list">
-                                <li>
-                                    <span class="perk-title">> UX DESIGN CERTIFIED</span><br>
-                                    Certified Web & UX Designer focused on Don Norman's Emotional Design and functional user experience.
-                                </li>
-                                <li>
-                                    <span class="perk-title">> ATOMIC PRECISION</span><br>
-                                    Attention to detail forged in Michelin-star kitchens, applied to pixel-perfect UI and flaw-free micro-interactions.
-                                </li>
-                                <li>
-                                    <span class="perk-title">> LATERAL THINKER</span><br>
-                                    Out-of-the-box problem solving for complex UX challenges and ultra-fast adaptation to emerging AI tools.
-                                </li>
-                                <li>
-                                    <span class="perk-title">> LEADERSHIP & EMPATHY</span><br>
-                                    Effective team communication, active listening, and empathetic direction focused on human-centered design and collaboration.
-                                </li>
-                                <li>
-                                    <span class="perk-title">> FORDIST EFFICIENCY</span><br>
-                                    Optimized work design and strict time management for high-speed prototyping and project delivery.
-                                </li>
-                                <li>
-                                    <span class="perk-title">> HIGH FLUID INTELLECT</span><br>
-                                    Certified high fluid intelligence (Raven SPM38 48 pts) & multi-language fluency (Native IT, Proficient EN, Intermediate ES).
-                                </li>
-                             </ul>
+                            <!-- Lista Perks con la stessa logica di INV (titoli, toggle e descrizioni collassabili) -->
+                            <div class="perks-accordion">
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-1">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> UX DESIGN CERTIFIED</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-1" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Certified Web &amp; UX Designer focused on Don Norman's Emotional Design and functional user experience.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-2">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> ATOMIC PRECISION</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-2" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Attention to detail forged in Michelin-star kitchens, applied to pixel-perfect UI and flaw-free micro-interactions.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-3">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> LATERAL THINKER</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-3" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Out-of-the-box problem solving for complex UX challenges and ultra-fast adaptation to emerging AI tools.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-4">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> LEADERSHIP &amp; EMPATHY</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-4" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Effective team communication, active listening, and empathetic direction focused on human-centered design and collaboration.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-5">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> FORDIST EFFICIENCY</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-5" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Optimized work design and strict time management for high-speed prototyping and project delivery.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="perk-item inv-desc-banner">
+                                    <div class="inv-banner-header">
+                                        <div class="inv-banner-title-col">
+                                            <button class="inv-toggle-btn" aria-expanded="false" aria-controls="perk-desc-6">
+                                                <span class="inv-toggle-icon">▶</span>
+                                                <span class="inv-toggle-title">> HIGH FLUID INTELLECT</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="perk-desc-6" class="inv-desc-collapsible">
+                                        <div class="inv-desc-body">
+                                            Certified high fluid intelligence (Raven SPM38 48 pts) &amp; multi-language fluency (Native IT, Proficient EN, Intermediate ES).
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
