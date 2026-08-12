@@ -271,6 +271,11 @@ body {
     box-shadow: 0 0 10px rgba(27, 253, 2, 0.08);
     transition: all 0.2s ease;
     cursor: pointer;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .data-cta-banner:hover {

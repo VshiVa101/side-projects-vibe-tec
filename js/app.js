@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Gestione Toggle Legal Disclaimer (Footer - Visibile solo in DATA tab)
-        const toggleDisclaimer = (e) => {
+        document.addEventListener('click', (e) => {
             const btn = e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn');
             if (btn) {
                 const drawer = document.getElementById('disclaimer-drawer');
@@ -460,39 +460,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     btn.classList.add('active');
                 }
             }
-        };
+        });
 
-        document.addEventListener('click', toggleDisclaimer);
-        document.addEventListener('pointerdown', (e) => {
-            if (e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn')) {
-                toggleDisclaimer(e);
-            }
-        }, { passive: true });
-
-        // Micro-interazione: Clic/Touch su CTA in DATA fa lampeggiare i link di contatto sopra
-        let isActivatingCta = false;
-        const triggerContactGlow = (e) => {
+        // Micro-interazione: Clic su CTA in DATA fa lampeggiare i link di contatto sopra
+        document.addEventListener('click', (e) => {
             const banner = e.target.closest('.data-cta-banner');
-            if (banner && !isActivatingCta) {
-                isActivatingCta = true;
+            if (banner) {
                 if (window.pipAudio) window.pipAudio.playSelect();
                 const contactLines = document.querySelectorAll('#data p');
                 contactLines.forEach(line => {
                     line.classList.remove('contact-highlight-blink');
-                    // Force reflow for animation restart
                     void line.offsetWidth;
                     line.classList.add('contact-highlight-blink');
                 });
 
                 setTimeout(() => {
                     contactLines.forEach(line => line.classList.remove('contact-highlight-blink'));
-                    isActivatingCta = false;
                 }, 1100);
             }
-        };
-
-        document.addEventListener('pointerdown', triggerContactGlow, { passive: true });
-        document.addEventListener('click', triggerContactGlow);
+        });
     })();
 
     // Ripristina la posizione del contenitore destro (stat-right) al ridimensionamento
