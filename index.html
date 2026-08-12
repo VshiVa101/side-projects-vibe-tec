@@ -11,33 +11,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=70.0">
-    <link rel="stylesheet" href="css/intro.css?v=70.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=71.0">
+    <link rel="stylesheet" href="css/intro.css?v=71.0">
     <!-- Leaflet CSS & JS for Pip-Boy Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/audio.js?v=70.0" defer></script>
-    <script src="js/intro.js?v=70.0" defer></script>
-    <script src="js/map.js?v=70.0" defer></script>
-    <script src="js/neo_eye_3d.js?v=70.0" defer></script>
-    <script src="js/app.js?v=70.0" defer></script>
+    <script src="js/audio.js?v=71.0" defer></script>
+    <script src="js/intro.js?v=71.0" defer></script>
+    <script src="js/map.js?v=71.0" defer></script>
+    <script src="js/neo_eye_3d.js?v=71.0" defer></script>
+    <script src="js/app.js?v=71.0" defer></script>
     <!-- Critical inline CSS fallback for INV toggle (prevents browser default button styling) -->
     <style>
         .inv-toggle-btn{background:transparent!important;border:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1bfd02!important;font-family:'VT323',monospace!important;padding:0!important;margin:0!important;box-shadow:none!important;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;text-align:left}
-        .inv-toggle-icon{color:#1bfd02!important;text-shadow:0 0 8px rgba(27,253,2,0.6);font-size:1rem;transition:transform .3s ease;flex-shrink:0}
+        .inv-toggle-icon{color:#1bfd02!important;text-shadow:0 0 8px rgba(27,253,2,0.6);font-size:1rem;transition:transform .3s ease;flex-shrink:0;display:inline-block;animation:inv-arrow-pulse 1.8s infinite ease-in-out}
         .inv-toggle-title{color:#1bfd02!important;font-size:1.3rem;letter-spacing:1.5px;text-shadow:0 0 10px rgba(27,253,2,0.6)}
         .inv-toggle-btn[aria-expanded="true"] .inv-toggle-icon{transform:rotate(90deg)}
-        .inv-banner-header{display:flex!important;align-items:center;justify-content:space-between;padding:14px;gap:20px}
+        .inv-banner-header{display:flex!important;align-items:center;justify-content:space-between;padding:14px;gap:20px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:background-color .2s ease}
+        .inv-banner-header:hover{background-color:rgba(27,253,2,0.04)}
+        .classified-banner .inv-banner-header:hover{background-color:rgba(255,51,51,0.04)}
         .inv-banner-title-col{flex:1;min-width:0}
         .inv-banner-icon-col{flex-shrink:0;display:flex;justify-content:center;align-items:center}
         .inv-desc-collapsible{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease,padding .3s ease;border-top:1px dashed rgba(27,253,2,0.2);padding:0 14px}
         .inv-desc-collapsible.expanded{max-height:600px;opacity:1;padding:12px 14px}
         .classified-banner .inv-toggle-btn{color:#ff3333!important}
-        .classified-banner .inv-toggle-icon{color:#ff3333!important;text-shadow:0 0 8px rgba(255,51,51,0.6)}
+        .classified-banner .inv-toggle-icon{color:#ff3333!important;text-shadow:0 0 8px rgba(255,51,51,0.6);animation:inv-arrow-pulse-classified 1.8s infinite ease-in-out}
         .classified-banner .inv-toggle-title{color:#ff3333!important;text-shadow:0 0 10px rgba(255,51,51,0.6)}
+        @keyframes inv-arrow-pulse{0%,100%{opacity:1;text-shadow:0 0 6px rgba(27,253,2,0.6);filter:drop-shadow(0 0 2px #1bfd02)}50%{opacity:0.5;text-shadow:0 0 16px rgba(27,253,2,0.9),0 0 24px #1bfd02;filter:drop-shadow(0 0 8px #1bfd02)}}
+        @keyframes inv-arrow-pulse-classified{0%,100%{opacity:1;text-shadow:0 0 6px rgba(255,51,51,0.6);filter:drop-shadow(0 0 2px #ff3333)}50%{opacity:0.5;text-shadow:0 0 16px rgba(255,51,51,0.9),0 0 24px #ff3333;filter:drop-shadow(0 0 8px #ff3333)}}
         @media(max-width:768px){.inv-banner-header{flex-direction:column;align-items:center;text-align:center}.inv-banner-icon-col{order:-1;margin-bottom:12px}.inv-banner-title-col{width:100%;display:flex;flex-direction:column;align-items:center}.inv-toggle-btn{justify-content:center}.inv-toggle-title{font-size:1.1rem}}
     </style>
 </head>

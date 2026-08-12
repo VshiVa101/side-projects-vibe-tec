@@ -192,12 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-    // 1b. Gestione Toggle Descrizione nelle sotto-schede INV
-    const invToggleBtns = document.querySelectorAll('.inv-toggle-btn');
+    // 1b. Gestione Toggle Descrizione nelle sotto-schede INV (clic sull'intero banner header)
+    const invBannerHeaders = document.querySelectorAll('.inv-banner-header');
 
-    invToggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    invBannerHeaders.forEach(header => {
+        header.addEventListener('click', () => {
             if (window.pipAudio) window.pipAudio.playSelect();
+            const btn = header.querySelector('.inv-toggle-btn');
+            if (!btn) return;
             const targetId = btn.getAttribute('aria-controls');
             const targetDesc = document.getElementById(targetId);
             if (!targetDesc) return;
