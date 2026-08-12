@@ -234,6 +234,18 @@ body {
     box-shadow: inset 0 0 10px rgba(27, 253, 2, 0.05);
 }
 
+.tab-content a {
+    color: var(--pip-green);
+    text-decoration: underline;
+    transition: all 0.2s ease;
+}
+
+.tab-content a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--pip-green);
+    background-color: var(--pip-green-hover);
+}
+
 /* Tab Specific Layouts */
 .stat-layout {
     display: flex;

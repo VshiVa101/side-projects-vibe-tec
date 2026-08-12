@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Per ora uso il targetId come placeholder (es: perk-desc-1.jpg)
                     const avatarImg = document.getElementById('stat-avatar');
                     if (avatarImg) {
-                        avatarImg.src = `assets/img/${targetId}.jpg?v=27.0`;
+                        avatarImg.src = `assets/img/${targetId}.jpg?v=${Date.now()}`;
                     }
                     
                     // Spostiamo stat-right dentro il perk selezionato se su mobile
