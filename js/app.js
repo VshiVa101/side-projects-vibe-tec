@@ -126,8 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Reset all toggle descriptions when switching sub-tabs
-            document.querySelectorAll('#stat .inv-toggle-btn').forEach(t => t.setAttribute('aria-expanded', 'false'));
-            document.querySelectorAll('#stat .inv-desc-collapsible').forEach(d => d.classList.remove('expanded'));
+            document.querySelectorAll('#stat .inv-toggle-btn, .special-item-header').forEach(t => t.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('#stat .inv-desc-collapsible, .special-mobile-container').forEach(d => d.classList.remove('expanded'));
+
+            // Sposta statRight indietro al statLayout se era in un accordion mobile
+            const statRight = document.querySelector('.stat-right');
+            const statLayout = document.querySelector('.stat-layout');
+            if (statRight && statLayout && statRight.parentElement !== statLayout) {
+                statLayout.appendChild(statRight);
+            }
 
             if (targetSubId === 'special') {
                 avatarImg.classList.add('hidden');
@@ -159,7 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Gestione Elementi Interni (Tech Stack SPECIAL, Liste Progetti, ecc.) -> ui_pipboy_highlight.wav
     const specialItems = document.querySelectorAll('.special-item');
     specialItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            // Se il clic proviene dall'interno del container espanso (es. testo o stat-right), ignoralo
+            if (e.target.closest('.special-mobile-container')) return;
+
             if (window.pipAudio) window.pipAudio.playHighlight();
             specialItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
@@ -167,6 +177,34 @@ document.addEventListener("DOMContentLoaded", () => {
             const tech = item.getAttribute('data-tech');
             projectedLogo.innerHTML = techLogos[tech] || '';
             if (specialDescBanner) specialDescBanner.innerHTML = techDescs[tech] || '';
+
+            // Gestione layout mobile/ridotto (come PERKS ma sopra il toggle)
+            if (window.innerWidth <= 768) {
+                const header = item.querySelector('.special-item-header');
+                const targetDesc = item.querySelector('.special-mobile-container');
+                const isExpanded = header.getAttribute('aria-expanded') === 'true';
+                
+                // Chiudi tutti gli altri
+                document.querySelectorAll('.special-item-header').forEach(h => h.setAttribute('aria-expanded', 'false'));
+                document.querySelectorAll('.special-mobile-container').forEach(c => c.classList.remove('expanded'));
+
+                if (!isExpanded) {
+                    header.setAttribute('aria-expanded', 'true');
+                    targetDesc.classList.add('expanded');
+                    
+                    const statRight = document.querySelector('.stat-right');
+                    if (statRight) {
+                        targetDesc.appendChild(statRight);
+                    }
+                } else {
+                    // Se lo stiamo chiudendo, rimettiamo stat-right nel stat-layout
+                    const statRight = document.querySelector('.stat-right');
+                    const statLayout = document.querySelector('.stat-layout');
+                    if (statRight && statLayout) {
+                        statLayout.appendChild(statRight);
+                    }
+                }
+            }
         });
     });
 

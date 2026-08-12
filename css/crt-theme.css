@@ -678,8 +678,9 @@ body {
 
 .special-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     cursor: pointer;
     transition: all 0.2s ease;
     padding: 6px 10px;
@@ -687,6 +688,14 @@ body {
     margin-bottom: 5px;
     background: transparent;
 }
+
+.special-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 
 .special-item:hover, .special-item.active {
     background: transparent;
