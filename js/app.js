@@ -441,45 +441,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 cursorEl.classList.remove('hovering');
             }
         });
-
-        // Gestione Toggle Legal Disclaimer (Footer - Visibile solo in DATA tab)
-        document.addEventListener('click', (e) => {
-            const btn = e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn');
-            if (btn) {
-                const drawer = document.getElementById('disclaimer-drawer');
-                if (!drawer) return;
-                if (window.pipAudio) window.pipAudio.playSelect();
-                const isOpen = drawer.style.display === 'block';
-                if (isOpen) {
-                    drawer.style.display = 'none';
-                    drawer.classList.remove('open');
-                    btn.classList.remove('active');
-                } else {
-                    drawer.style.display = 'block';
-                    drawer.classList.add('open');
-                    btn.classList.add('active');
-                }
-            }
-        });
-
-        // Micro-interazione: Clic su CTA in DATA fa lampeggiare i link di contatto sopra
-        document.addEventListener('click', (e) => {
-            const banner = e.target.closest('.data-cta-banner');
-            if (banner) {
-                if (window.pipAudio) window.pipAudio.playSelect();
-                const contactLines = document.querySelectorAll('#data p');
-                contactLines.forEach(line => {
-                    line.classList.remove('contact-highlight-blink');
-                    void line.offsetWidth;
-                    line.classList.add('contact-highlight-blink');
-                });
-
-                setTimeout(() => {
-                    contactLines.forEach(line => line.classList.remove('contact-highlight-blink'));
-                }, 1100);
-            }
-        });
     })();
+
+    // =========================================
+    // 6. GESTIONE LEGAL DISCLAIMER & CTA (Fuori dal cursore - funziona su TUTTI i dispositivi)
+    // =========================================
+
+    // Gestione Toggle Legal Disclaimer (Footer - Visibile solo in DATA tab)
+    document.addEventListener('click', (e) => {
+        const btn = e.target && e.target.closest && e.target.closest('#disclaimer-toggle-btn');
+        if (btn) {
+            const drawer = document.getElementById('disclaimer-drawer');
+            if (!drawer) return;
+            if (window.pipAudio) window.pipAudio.playSelect();
+            const isOpen = drawer.style.display === 'block';
+            if (isOpen) {
+                drawer.style.display = 'none';
+                drawer.classList.remove('open');
+                btn.classList.remove('active');
+            } else {
+                drawer.style.display = 'block';
+                drawer.classList.add('open');
+                btn.classList.add('active');
+            }
+        }
+    });
+
+    // Micro-interazione: Clic su CTA in DATA fa lampeggiare i link di contatto sopra
+    document.addEventListener('click', (e) => {
+        const banner = e.target && e.target.closest && e.target.closest('.data-cta-banner');
+        if (banner) {
+            if (window.pipAudio) window.pipAudio.playSelect();
+            const contactLines = document.querySelectorAll('#data p');
+            contactLines.forEach(line => {
+                line.classList.remove('contact-highlight-blink');
+                void line.offsetWidth;
+                line.classList.add('contact-highlight-blink');
+            });
+
+            setTimeout(() => {
+                contactLines.forEach(line => line.classList.remove('contact-highlight-blink'));
+            }, 1100);
+        }
+    });
 
     // Ripristina la posizione del contenitore destro (stat-right) al ridimensionamento
     window.addEventListener('resize', () => {
@@ -492,4 +496,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
