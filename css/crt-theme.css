@@ -601,11 +601,14 @@ body {
 
 .centered-name {
     font-family: var(--font-heading);
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 4.5vw, 2.3rem);
+    letter-spacing: clamp(0.5rem, 0.5rem + 0.8vw, 0.75rem);
+    line-height: 1.1;
     margin-bottom: 15px;
     border-bottom: 1px solid var(--pip-green);
     text-align: center;
     width: 100%;
+    text-transform: uppercase;
     text-shadow: 0 0 10px var(--pip-green-glow), 0 0 2px var(--pip-green);
 }
 
@@ -1345,9 +1348,11 @@ body:has(#data.active) .footer-disclaimer-btn {
         order: -1;
         width: 100%;
         max-width: 320px;
-        height: 240px;
+        height: auto;
+        min-height: 240px;
         margin: 0 auto;
         flex-shrink: 0;
+        position: static;
     }
 
     .stat-left {
@@ -1435,7 +1440,8 @@ body:has(#data.active) .footer-disclaimer-btn {
     }
 
     .centered-name {
-        font-size: 1.6rem;
+        font-size: clamp(1.2rem, 5vw, 1.7rem);
+        letter-spacing: clamp(0.35rem, 0.35rem + 0.5vw, 0.55rem);
     }
 
     .footer-layout {

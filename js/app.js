@@ -207,11 +207,53 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!targetDesc) return;
 
             const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            const isPerk = header.closest('.perks-accordion') !== null;
+            const statRight = document.querySelector('.stat-right');
+            const statLayout = document.querySelector('.stat-layout');
 
             if (isExpanded) {
                 btn.setAttribute('aria-expanded', 'false');
                 targetDesc.classList.remove('expanded');
+                
+                // Se chiudiamo un perk, ripristiniamo l'avatar di default dei perks
+                if (isPerk) {
+                    const avatarImg = document.getElementById('stat-avatar');
+                    if (avatarImg) {
+                        avatarImg.src = 'assets/img/perks_avatar.jpg?v=26.0';
+                    }
+                    
+                    // Ripristiniamo la posizione originale dell'immagine
+                    if (statRight && statLayout) {
+                        statLayout.appendChild(statRight);
+                    }
+                }
             } else {
+                // Se è un perk, chiudiamo prima tutti gli altri
+                if (isPerk) {
+                    const allPerkBtns = document.querySelectorAll('.perks-accordion .inv-toggle-btn');
+                    const allPerkDescs = document.querySelectorAll('.perks-accordion .inv-desc-collapsible');
+                    allPerkBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
+                    allPerkDescs.forEach(d => d.classList.remove('expanded'));
+
+                    // Aggiorniamo l'immagine dell'avatar in base al perk.
+                    // Per ora uso il targetId come placeholder (es: perk-desc-1.jpg)
+                    const avatarImg = document.getElementById('stat-avatar');
+                    if (avatarImg) {
+                        avatarImg.src = `assets/img/${targetId}.jpg?v=27.0`;
+                    }
+                    
+                    // Spostiamo stat-right dentro il perk selezionato se su mobile
+                    if (statRight && window.innerWidth <= 768) {
+                        const descBody = targetDesc.querySelector('.inv-desc-body');
+                        if (descBody) {
+                            targetDesc.insertBefore(statRight, descBody);
+                        }
+                    } else if (statRight && statLayout) {
+                        // Altrimenti lo teniamo nella posizione di default
+                        statLayout.appendChild(statRight);
+                    }
+                }
+
                 btn.setAttribute('aria-expanded', 'true');
                 targetDesc.classList.add('expanded');
             }
@@ -380,5 +422,16 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     })();
+
+    // Ripristina la posizione del contenitore destro (stat-right) al ridimensionamento
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            const statRight = document.querySelector('.stat-right');
+            const statLayout = document.querySelector('.stat-layout');
+            if (statRight && statLayout && statRight.parentNode !== statLayout) {
+                statLayout.appendChild(statRight);
+            }
+        }
+    });
 });
 
