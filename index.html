@@ -11,26 +11,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=60.0">
-    <link rel="stylesheet" href="css/intro.css?v=60.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=70.0">
+    <link rel="stylesheet" href="css/intro.css?v=70.0">
     <!-- Leaflet CSS & JS for Pip-Boy Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/audio.js?v=60.0" defer></script>
-    <script src="js/intro.js?v=60.0" defer></script>
-    <script src="js/map.js?v=60.0" defer></script>
-    <script src="js/neo_eye_3d.js?v=60.0" defer></script>
-    <script src="js/app.js?v=60.0" defer></script>
+    <script src="js/audio.js?v=70.0" defer></script>
+    <script src="js/intro.js?v=70.0" defer></script>
+    <script src="js/map.js?v=70.0" defer></script>
+    <script src="js/neo_eye_3d.js?v=70.0" defer></script>
+    <script src="js/app.js?v=70.0" defer></script>
+    <!-- Critical inline CSS fallback for INV toggle (prevents browser default button styling) -->
+    <style>
+        .inv-toggle-btn{background:transparent!important;border:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1bfd02!important;font-family:'VT323',monospace!important;padding:0!important;margin:0!important;box-shadow:none!important;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;text-align:left}
+        .inv-toggle-icon{color:#1bfd02!important;text-shadow:0 0 8px rgba(27,253,2,0.6);font-size:1rem;transition:transform .3s ease;flex-shrink:0}
+        .inv-toggle-title{color:#1bfd02!important;font-size:1.3rem;letter-spacing:1.5px;text-shadow:0 0 10px rgba(27,253,2,0.6)}
+        .inv-toggle-btn[aria-expanded="true"] .inv-toggle-icon{transform:rotate(90deg)}
+        .inv-banner-header{display:flex!important;align-items:center;justify-content:space-between;padding:14px;gap:20px}
+        .inv-banner-title-col{flex:1;min-width:0}
+        .inv-banner-icon-col{flex-shrink:0;display:flex;justify-content:center;align-items:center}
+        .inv-desc-collapsible{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease,padding .3s ease;border-top:1px dashed rgba(27,253,2,0.2);padding:0 14px}
+        .inv-desc-collapsible.expanded{max-height:600px;opacity:1;padding:12px 14px}
+        .classified-banner .inv-toggle-btn{color:#ff3333!important}
+        .classified-banner .inv-toggle-icon{color:#ff3333!important;text-shadow:0 0 8px rgba(255,51,51,0.6)}
+        .classified-banner .inv-toggle-title{color:#ff3333!important;text-shadow:0 0 10px rgba(255,51,51,0.6)}
+        @media(max-width:768px){.inv-banner-header{flex-direction:column;align-items:center;text-align:center}.inv-banner-icon-col{order:-1;margin-bottom:12px}.inv-banner-title-col{width:100%;display:flex;flex-direction:column;align-items:center}.inv-toggle-btn{justify-content:center}.inv-toggle-title{font-size:1.1rem}}
+    </style>
 </head>
 <body>
     <!-- VIDEO INTRO & TRANSITION OVERLAY -->
     <div id="intro-container">
         <!-- FIRST CLICK BOOT OVERLAY (Raccoglitore Click per Audio & Video) -->
         <div id="start-overlay" class="start-overlay">
-            <h1 class="start-brand-title">VIBE-TEC</h1>
+            <div class="start-brand-wrapper">
+                <h1 class="start-brand-title">VIBE-TEC</h1>
+                <div class="start-brand-subtext">CORPORATION</div>
+            </div>
             <p class="start-subtitle">{ PIP-FOLIO 3000 SYSTEM BOOT }</p>
             
             <div class="start-cat-container">
@@ -38,7 +57,7 @@
             </div>
 
             <div class="start-prompt">
-                <span class="prompt-text">> TOUCH SCREEN / CLICK TO INITIALIZE SYSTEM <</span>
+                <div class="prompt-text">> TOUCH SCREEN / CLICK TO INITIALIZE SYSTEM <</div>
             </div>
         </div>
 
@@ -232,23 +251,26 @@
                 <!-- SUB-TAB: CONTRACTS -->
                 <div id="inv-sub-contracts" class="inv-sub-content active">
                     <div class="inv-desc-banner">
-                        <div class="inv-section-title">
-                            > CORPORATE & AGENCY CONTRACTS
-                            <div class="inv-section-status">[STATUS: OPEN FOR 100% REMOTE CONTRACTS]</div>
-                        </div>
-                        <div class="project-card-layout" style="padding: 14px;">
-                            <div class="project-card-info">
-                                <div class="inv-desc-body" style="padding: 0;">
-                                    Dedicated section for corporate collaborations and agency work. Currently available for 100% remote contracts as a Junior UX Designer within structured product engineering teams.
-                                    <span class="inv-highlight">> VALUE PROP: Emotional UX Design (Don Norman Model) & Rapid AI Prototyping</span>
-                                    <span class="inv-highlight">> INTEGRATION: Empathetic team communication & Agile Workflows</span>
-                                    <span class="inv-highlight">> AVAILABILITY: 100% Remote / Full Time & Freelance</span>
-                                </div>
+                        <div class="inv-banner-header">
+                            <div class="inv-banner-title-col">
+                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-contracts">
+                                    <span class="inv-toggle-icon">▶</span>
+                                    <span class="inv-toggle-title">> CORPORATE & AGENCY CONTRACTS</span>
+                                </button>
+                                <div class="inv-section-status">[STATUS: OPEN FOR 100% REMOTE CONTRACTS]</div>
                             </div>
-                            <div class="project-card-media">
+                            <div class="inv-banner-icon-col">
                                 <div class="project-icon-box-large" title="Corporate Contracts: Handshake with CEO & 3-eyed Cat with Doberman">
                                     <img src="assets/img/inv_contracts_handshake.jpg" alt="Leonardo Handshake with CEO and 3-eyed Cat with Doberman" class="avatar-svg" style="object-fit: cover;">
                                 </div>
+                            </div>
+                        </div>
+                        <div id="inv-desc-contracts" class="inv-desc-collapsible">
+                            <div class="inv-desc-body">
+                                Dedicated section for corporate collaborations and agency work. Currently available for 100% remote contracts as a Junior UX Designer within structured product engineering teams.
+                                <span class="inv-highlight">> VALUE PROP: Emotional UX Design (Don Norman Model) & Rapid AI Prototyping</span>
+                                <span class="inv-highlight">> INTEGRATION: Empathetic team communication & Agile Workflows</span>
+                                <span class="inv-highlight">> AVAILABILITY: 100% Remote / Full Time & Freelance</span>
                             </div>
                         </div>
                     </div>
@@ -265,21 +287,24 @@
                 <!-- SUB-TAB: SOLO E2E -->
                 <div id="inv-sub-solo" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        <div class="inv-section-title">
-                            > SOLO END-TO-END PROJECTS
-                            <div class="inv-section-status">[STATUS: ACTIVE PRODUCTION & DEPLOYMENT]</div>
-                        </div>
-                        <div class="project-card-layout" style="padding: 14px;">
-                            <div class="project-card-info">
-                                <div class="inv-desc-body" style="padding: 0;">
-                                    Repository of solo projects, actively managed from fundamental UX research to full deployment and maintenance. Professionally engineered during off-hours to forge a strong, highly trusted identity in the uncensored commercial niche.
-                                    <span class="inv-highlight">> FOCUS: Creating highly emotional, uncensored products</span>
-                                </div>
+                        <div class="inv-banner-header">
+                            <div class="inv-banner-title-col">
+                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-solo">
+                                    <span class="inv-toggle-icon">▶</span>
+                                    <span class="inv-toggle-title">> SOLO END-TO-END PROJECTS</span>
+                                </button>
+                                <div class="inv-section-status">[STATUS: ACTIVE PRODUCTION & DEPLOYMENT]</div>
                             </div>
-                            <div class="project-card-media">
+                            <div class="inv-banner-icon-col">
                                 <div class="project-icon-box-large" title="Solo E2E: Negotiating with Brahmin Artist & Censored Nude Canvas">
                                     <img src="assets/img/inv_solo_e2e_icon.jpg" alt="Leonardo and 3-eyed cat negotiating with Brahmin artist" class="avatar-svg" style="object-fit: cover;">
                                 </div>
+                            </div>
+                        </div>
+                        <div id="inv-desc-solo" class="inv-desc-collapsible">
+                            <div class="inv-desc-body">
+                                Repository of solo projects, actively managed from fundamental UX research to full deployment and maintenance. Professionally engineered during off-hours to forge a strong, highly trusted identity in the uncensored commercial niche.
+                                <span class="inv-highlight">> FOCUS: Creating highly emotional, uncensored products</span>
                             </div>
                         </div>
                     </div>
@@ -330,22 +355,25 @@
                 <!-- SUB-TAB: KIZUNA PROJECT -->
                 <div id="inv-sub-kizuna" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        <div class="inv-section-title">
-                            > KIZUNA PROJECT
-                            <div class="inv-section-status">[CORE LIFE MISSION // 2026-2036]</div>
-                        </div>
-                        <div class="project-card-layout" style="padding: 14px;">
-                            <div class="project-card-info">
-                                <div class="inv-desc-body" style="padding: 0;">
-                                    KIZUNA (絆): The bond between people. My Ikigai and ultimate life mission. A long-term core directive centered on fostering ethical communication, empowerment, and social connection among independent, tribal, and community-based societies worldwide — culminating in a physical ethical village serving as a new human aggregation hub.
-                                    <span class="inv-highlight">> OBJECTIVE: Connect global communities through technology in service of freedom and social bonding</span>
-                                    <span class="inv-highlight">> TIMELINE: Strategic Rollout (2026 - 2036)</span>
-                                </div>
+                        <div class="inv-banner-header">
+                            <div class="inv-banner-title-col">
+                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-kizuna">
+                                    <span class="inv-toggle-icon">▶</span>
+                                    <span class="inv-toggle-title">> KIZUNA PROJECT</span>
+                                </button>
+                                <div class="inv-section-status">[CORE LIFE MISSION // 2026-2036]</div>
                             </div>
-                            <div class="project-card-media">
+                            <div class="inv-banner-icon-col">
                                 <div class="project-icon-box-large" title="Kizuna Project: Campfire Community & Futuristic Yurts with Kanji Banner">
                                     <img src="assets/img/inv_kizuna_icon.jpg" alt="Leonardo and 3-eyed cat around campfire with community and Kizuna banner" class="avatar-svg" style="object-fit: cover;">
                                 </div>
+                            </div>
+                        </div>
+                        <div id="inv-desc-kizuna" class="inv-desc-collapsible">
+                            <div class="inv-desc-body">
+                                KIZUNA (絆): The bond between people. My Ikigai and ultimate life mission. A long-term core directive centered on fostering ethical communication, empowerment, and social connection among independent, tribal, and community-based societies worldwide — culminating in a physical ethical village serving as a new human aggregation hub.
+                                <span class="inv-highlight">> OBJECTIVE: Connect global communities through technology in service of freedom and social bonding</span>
+                                <span class="inv-highlight">> TIMELINE: Strategic Rollout (2026 - 2036)</span>
                             </div>
                         </div>
                     </div>
@@ -362,20 +390,23 @@
                 <!-- SUB-TAB: IDEAS & BIZ -->
                 <div id="inv-sub-ideas" class="inv-sub-content hidden">
                     <div class="inv-desc-banner">
-                        <div class="inv-section-title">
-                            > IDEAS & BUSINESS TRAJECTORIES
-                            <div class="inv-section-status">[STATUS: IDEATION PHASE]</div>
-                        </div>
-                        <div class="project-card-layout" style="padding: 14px;">
-                            <div class="project-card-info">
-                                <div class="inv-desc-body" style="padding: 0;">
-                                    Experimental concepts, early-stage brainstorming, and future commercial trajectories currently in the ideation phase. This databank will be populated as new ventures move from concept to prototype.
-                                </div>
+                        <div class="inv-banner-header">
+                            <div class="inv-banner-title-col">
+                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-ideas">
+                                    <span class="inv-toggle-icon">▶</span>
+                                    <span class="inv-toggle-title">> IDEAS & BUSINESS TRAJECTORIES</span>
+                                </button>
+                                <div class="inv-section-status">[STATUS: IDEATION PHASE]</div>
                             </div>
-                            <div class="project-card-media">
+                            <div class="inv-banner-icon-col">
                                 <div class="project-icon-box-large" title="Ideas & Biz: Relaxing in Hammock at Oasis with Thought Bubble Lightbulb">
                                     <img src="assets/img/inv_ideas_icon.jpg" alt="Leonardo in hammock with lightbulb thought bubble and 3-eyed cat bathing in oasis" class="avatar-svg" style="object-fit: cover;">
                                 </div>
+                            </div>
+                        </div>
+                        <div id="inv-desc-ideas" class="inv-desc-collapsible">
+                            <div class="inv-desc-body">
+                                Experimental concepts, early-stage brainstorming, and future commercial trajectories currently in the ideation phase. This databank will be populated as new ventures move from concept to prototype.
                             </div>
                         </div>
                     </div>
@@ -392,23 +423,26 @@
                 <!-- SUB-TAB: CLASSIFIED -->
                 <div id="inv-sub-classified" class="inv-sub-content hidden">
                     <div class="inv-desc-banner classified-banner">
-                        <div class="inv-section-title">
-                            > VIBE-TEC ANTEROS
-                            <div class="inv-section-status">[STATUS: CLASSIFIED // TOP SECRET R&D]</div>
-                        </div>
-                        <div class="project-card-layout" style="padding: 14px;">
-                            <div class="project-card-info">
-                                <div class="inv-desc-body" style="padding: 0;">
-                                    Advanced local architecture for AI visual orchestration (video and photo synth). An active R&D project protected under industrial confidentiality and non-disclosure agreements. This section does not host public project listings — all prototypes are developed under strict NDA for private clients.
-                                    <span class="inv-highlight">> ACCESS RESTRICTED: ████████████████████</span>
-                                    <span class="inv-highlight">Due to IP rights and industrial confidentiality, commercial specifications and live demonstrations are strictly accessible via private briefing upon direct contact.</span>
-                                    <button class="inv-briefing-btn" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
-                                </div>
+                        <div class="inv-banner-header">
+                            <div class="inv-banner-title-col">
+                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-classified">
+                                    <span class="inv-toggle-icon">▶</span>
+                                    <span class="inv-toggle-title">> VIBE-TEC ANTEROS</span>
+                                </button>
+                                <div class="inv-section-status">[STATUS: CLASSIFIED // TOP SECRET R&D]</div>
                             </div>
-                            <div class="project-card-media">
+                            <div class="inv-banner-icon-col">
                                 <div class="project-icon-box-large" title="Vibe-Tec Anteros: Classified Trench Coat & Cupid Putto 3-Eyed Cat">
                                     <img src="assets/img/inv_classified_icon.jpg" alt="Leonardo opening trench coat with sunglasses and 3-eyed putto cat shooting Cupid arrow" class="avatar-svg" style="object-fit: cover;">
                                 </div>
+                            </div>
+                        </div>
+                        <div id="inv-desc-classified" class="inv-desc-collapsible">
+                            <div class="inv-desc-body">
+                                Advanced local architecture for AI visual orchestration (video and photo synth). An active R&D project protected under industrial confidentiality and non-disclosure agreements. This section does not host public project listings — all prototypes are developed under strict NDA for private clients.
+                                <span class="inv-highlight">> ACCESS RESTRICTED: ████████████████████</span>
+                                <span class="inv-highlight">Due to IP rights and industrial confidentiality, commercial specifications and live demonstrations are strictly accessible via private briefing upon direct contact.</span>
+                                <button class="inv-briefing-btn" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
                             </div>
                         </div>
                     </div>
@@ -442,18 +476,6 @@
                     <div id="leaflet-pip-map"></div>
 
                     <div class="map-radar-overlay"></div>
-                    
-                    <div class="map-compass-hud">
-                        <span class="compass-dir compass-n">N</span>
-                        <span class="compass-dir compass-w">W</span>
-                        <span class="compass-dir compass-e">E</span>
-                        <span class="compass-dir compass-s">S</span>
-                    </div>
-
-                    <div class="map-status-footer">
-                        <span class="radar-ping">● RADAR ACTIVE</span>
-                        <span class="location-tag">HQ: BOLOGNA, ITALY</span>
-                    </div>
                 </div>
             </div>
 
@@ -500,10 +522,20 @@
 
         <!-- Footer / Action Bar -->
         <footer class="terminal-footer">
+            <div id="disclaimer-drawer" class="disclaimer-drawer" style="display: none;">
+                <p>> LEGAL DISCLAIMER: This portfolio is a fan-made homage inspired by the Fallout series. Not affiliated with, endorsed, or sponsored by Bethesda Softworks or Microsoft. All Fallout copyrights and trademarks are the property of their respective owners.</p>
+            </div>
             <div class="footer-layout">
                 <div class="footer-left">
                     <span id="real-time-clock">--:--:--</span>
                     <span class="apocalyptic-date"> - --.--.2326</span>
+                </div>
+                <div class="footer-center">
+                    <span id="disclaimer-toggle-btn" class="footer-disclaimer-btn interactive">[LEGAL DISCLAIMER]</span>
+                    <div id="map-footer-status" class="map-footer-status" style="display: none;">
+                        <span class="radar-ping">● RADAR ACTIVE</span>
+                        <span class="location-tag">HQ: BOLOGNA, ITALY</span>
+                    </div>
                 </div>
                 <div class="footer-right">
                     <span class="footer-brand">VIBE-TEC CORPORATION</span>

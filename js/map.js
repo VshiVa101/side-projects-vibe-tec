@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="pip-popup-body">
                         <p class="pip-popup-row"><span class="pip-label">> OPERATOR:</span> <span class="pip-val">LEONARDO SORRENTINO</span></p>
                         <p class="pip-popup-row"><span class="pip-label">> ROLE:</span> <span class="pip-val">UX DESIGNER JUNIOR & STRATEGIST</span></p>
-                        <p class="pip-popup-row"><span class="pip-label">> VEHICLE:</span> <span class="pip-val">VAULT-TEC MOBILE HQ</span></p>
+                        <p class="pip-popup-row"><span class="pip-label">> VEHICLE:</span> <span class="pip-val">VRIHAT-VIBE-TEC</span></p>
                         <p class="pip-popup-row"><span class="pip-label">> RADAR STATUS:</span> <span class="pip-val-active">100% ONLINE [FAST TRAVEL OK]</span></p>
                     </div>
                 </div>
@@ -114,11 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 className: 'pip-boy-custom-popup',
                 maxWidth: 320
             });
-
-            // Automatically open main Bologna popup on load
-            setTimeout(() => {
-                if (bolognaMarker) bolognaMarker.openPopup();
-            }, 600);
 
             bolognaMarker.on('click', () => {
                 if (window.pipAudio) window.pipAudio.playSelect();
@@ -170,9 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.pipAudio) window.pipAudio.playSelect();
             if (pipMap) {
                 pipMap.flyTo(BOLOGNA_COORDS, DEFAULT_ZOOM, { duration: 1.2 });
-                setTimeout(() => {
-                    if (bolognaMarker) bolognaMarker.openPopup();
-                }, 1000);
             }
         });
     }

@@ -97,25 +97,49 @@ body {
     margin-bottom: 20px;
 }
 
+.brand-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
 .brand-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: clamp(4px, 2vw, 15px);
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .brand-text {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
-    letter-spacing: 2px;
+    font-size: clamp(0.95rem, 5vw, 2.5rem);
+    letter-spacing: clamp(0.5px, 0.5vw, 2px);
     line-height: 1;
     color: var(--pip-green);
+    white-space: nowrap;
 }
 
 .brand-logo {
-    height: 63px;
+    height: clamp(24px, 8vw, 63px);
     width: auto;
     filter: drop-shadow(0 0 5px var(--pip-green-glow));
+    flex-shrink: 0;
+}
+
+.brand-subtext {
+    font-family: var(--font-heading);
+    font-size: clamp(0.45rem, 1.8vw, 0.85rem);
+    letter-spacing: clamp(2px, 1.2vw, 7px);
+    color: var(--pip-green);
+    opacity: 0.85;
+    margin-top: 4px;
+    text-shadow: 0 0 4px var(--pip-green-glow);
+    text-transform: uppercase;
 }
 
 /* --- NAVIGATION --- */
@@ -302,6 +326,120 @@ body {
     line-height: 1.5;
     letter-spacing: 0.5px;
     overflow: hidden;
+}
+
+/* === INV Banner Header: Title (left) + Icon (right) === */
+.inv-banner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+    gap: 20px;
+}
+
+.inv-banner-title-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.inv-banner-icon-col {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Toggle Button — full reset to kill browser defaults */
+.inv-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    color: var(--pip-green);
+    text-align: left;
+    width: 100%;
+    box-shadow: none;
+}
+
+.inv-toggle-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.inv-toggle-btn:hover .inv-toggle-title {
+    text-shadow: 0 0 14px var(--pip-green-glow);
+}
+
+.inv-toggle-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    color: var(--pip-green);
+    text-shadow: 0 0 8px var(--pip-green-glow);
+}
+
+.inv-toggle-btn[aria-expanded="true"] .inv-toggle-icon {
+    transform: rotate(90deg);
+}
+
+.inv-toggle-title {
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+    color: var(--pip-green);
+    text-shadow: 0 0 10px var(--pip-green-glow);
+    transition: text-shadow 0.2s ease;
+}
+
+/* Collapsible Description — uses max-height animation, NO display:none */
+.inv-desc-collapsible {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+    border-top: 1px dashed rgba(27, 253, 2, 0.2);
+    padding: 0 14px;
+    /* NOT using .hidden class because display:none kills transitions */
+}
+
+.inv-desc-collapsible.expanded {
+    max-height: 600px;
+    opacity: 1;
+    padding: 12px 14px;
+}
+
+/* Classified variant for toggle */
+.classified-banner .inv-toggle-btn {
+    color: #ff3333;
+}
+
+.classified-banner .inv-toggle-icon {
+    text-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
+}
+
+.classified-banner .inv-toggle-title {
+    text-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+}
+
+.classified-banner .inv-toggle-btn:hover .inv-toggle-title {
+    text-shadow: 0 0 14px rgba(255, 51, 51, 0.8);
+}
+
+.classified-banner .inv-desc-collapsible {
+    border-top-color: rgba(255, 51, 51, 0.2);
+}
+
+.classified-banner .inv-section-status {
+    color: #ff3333;
 }
 
 .inv-section-title {
@@ -905,7 +1043,69 @@ body {
 .terminal-footer {
     margin-top: auto; /* Spinge il footer sempre in fondo alla griglia del terminale */
     border-top: 2px solid var(--pip-green);
-    padding-top: 15px;
+    padding-top: 12px;
+    position: relative;
+}
+
+/* Container espandibile sopra la barra del footer */
+.disclaimer-drawer {
+    display: none;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed var(--pip-green);
+    font-size: 0.95rem;
+    color: var(--pip-green);
+    text-shadow: 0 0 5px var(--pip-green-glow);
+    text-align: center;
+    line-height: 1.4;
+    background: rgba(27, 253, 2, 0.04);
+}
+
+.disclaimer-drawer.open {
+    display: block !important;
+    animation: expandFooterDrawer 0.25s ease-out;
+}
+
+@keyframes expandFooterDrawer {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-center {
+    text-align: center;
+    flex: 1;
+}
+
+.footer-disclaimer-btn {
+    display: none;
+    color: var(--pip-green);
+    font-family: var(--font-heading), 'VT323', monospace;
+    font-size: 1.3rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 5px var(--pip-green-glow);
+    padding: 2px 8px;
+    user-select: none;
+}
+
+body.data-tab-active .footer-disclaimer-btn,
+body:has(#data.active) .footer-disclaimer-btn {
+    display: inline-block !important;
+}
+
+.footer-disclaimer-btn:hover,
+.footer-disclaimer-btn.active {
+    background: var(--pip-green);
+    color: #000;
+    box-shadow: 0 0 10px var(--pip-green-glow);
+    text-shadow: none;
 }
 
 .footer-layout {
@@ -1144,18 +1344,56 @@ body {
         margin-bottom: 15px;
     }
 
+    /* INV Banner Mobile: icon on top centered, title+toggle below */
+    .inv-banner-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .inv-banner-icon-col {
+        order: -1;
+        margin-bottom: 12px;
+    }
+
+    .inv-banner-title-col {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inv-toggle-btn {
+        justify-content: center;
+    }
+
+    .inv-toggle-title {
+        font-size: 1.1rem;
+    }
+
     .avatar-svg {
         max-height: 220px;
         width: auto;
         margin: 0 auto;
     }
 
+    .brand-container {
+        gap: 10px;
+    }
+
     .brand-text {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
+        letter-spacing: 1.5px;
     }
 
     .brand-logo {
-        height: 48px;
+        height: 42px;
+    }
+
+    .brand-subtext {
+        font-size: 0.65rem;
+        letter-spacing: 5px;
+        margin-top: 2px;
     }
 
     .terminal-nav {
@@ -1186,6 +1424,46 @@ body {
     }
 }
 
+@media (max-width: 480px) {
+    .brand-container {
+        gap: 6px;
+    }
+
+    .brand-text {
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+    }
+
+    .brand-logo {
+        height: 32px;
+    }
+
+    .brand-subtext {
+        font-size: 0.55rem;
+        letter-spacing: 3.5px;
+    }
+}
+
+@media (max-width: 380px) {
+    .brand-container {
+        gap: 4px;
+    }
+
+    .brand-text {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .brand-logo {
+        height: 26px;
+    }
+
+    .brand-subtext {
+        font-size: 0.5rem;
+        letter-spacing: 2px;
+    }
+}
+
 /* =========================================
    PIP-BOY WORLD MAP & RADAR STYLES
    ========================================= */
@@ -1206,15 +1484,21 @@ body {
 }
 
 .map-hud-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--pip-bg);
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid var(--pip-green);
+    padding-top: 4px;
     padding-bottom: 8px;
     margin-bottom: 10px;
     flex-wrap: wrap;
     gap: 10px;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 .map-title-box h2 {
@@ -1467,45 +1751,26 @@ body {
     z-index: 400;
 }
 
-.map-compass-hud {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
+.map-footer-status {
+    display: none;
     align-items: center;
-    justify-content: space-between;
-    width: 40px;
-    height: 40px;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(27, 253, 2, 0.08);
     border: 1px solid var(--pip-green);
-    border-radius: 50%;
-    background: rgba(2, 8, 6, 0.8);
-    z-index: 401;
-    font-size: 0.65rem;
-    font-weight: bold;
-    pointer-events: none;
+    padding: 3px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    color: var(--pip-green);
     box-shadow: 0 0 8px var(--pip-green-glow);
+    text-shadow: 0 0 5px var(--pip-green-glow);
+    user-select: none;
 }
 
-.compass-n { margin-top: 2px; }
-.compass-s { margin-bottom: 2px; }
-.compass-w { position: absolute; left: 4px; top: 12px; }
-.compass-e { position: absolute; right: 4px; top: 12px; }
-
-.map-status-footer {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(2, 8, 6, 0.85);
-    border: 1px solid var(--pip-green);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    z-index: 401;
-    display: flex;
-    gap: 12px;
-    pointer-events: none;
-    box-shadow: 0 0 8px var(--pip-green-glow);
+body.map-tab-active .map-footer-status,
+body:has(#map.active) .map-footer-status {
+    display: inline-flex !important;
 }
 
 .radar-ping {

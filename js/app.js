@@ -24,6 +24,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabContents = document.querySelectorAll('.tab-content');
 
     // 1. Gestione Navigazione Tab Principali (STAT, INV, ecc.) -> ui_pipboy_select.wav
+    const disclaimerBtn = document.getElementById('disclaimer-toggle-btn');
+    const disclaimerDrawer = document.getElementById('disclaimer-drawer');
+
+    function updateFooterDisclaimerVisibility() {
+        const disclaimerBtn = document.getElementById('disclaimer-toggle-btn');
+        const disclaimerDrawer = document.getElementById('disclaimer-drawer');
+        const mapStatus = document.getElementById('map-footer-status');
+        const dataTab = document.getElementById('data');
+        const mapTab = document.getElementById('map');
+
+        const isDataActive = dataTab && dataTab.classList.contains('active');
+        const isMapActive = mapTab && mapTab.classList.contains('active');
+
+        if (disclaimerBtn && disclaimerDrawer) {
+            if (isDataActive) {
+                document.body.classList.add('data-tab-active');
+                disclaimerBtn.style.display = 'inline-block';
+            } else {
+                document.body.classList.remove('data-tab-active');
+                disclaimerBtn.style.display = 'none';
+                disclaimerDrawer.style.display = 'none';
+                disclaimerDrawer.classList.remove('open');
+                disclaimerBtn.classList.remove('active');
+            }
+        }
+
+        if (mapStatus) {
+            if (isMapActive) {
+                document.body.classList.add('map-tab-active');
+                mapStatus.style.display = 'inline-flex';
+            } else {
+                document.body.classList.remove('map-tab-active');
+                mapStatus.style.display = 'none';
+            }
+        }
+    }
+
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             if (window.pipAudio) window.pipAudio.playSelect();
@@ -37,8 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (targetTab) {
                 targetTab.classList.add('active');
             }
+
+            updateFooterDisclaimerVisibility();
         });
     });
+
+    updateFooterDisclaimerVisibility();
 
     // 2. Gestione Sotto-Tab (STATUS, SPECIAL, PERKS) -> ui_pipboy_tab.wav
     const subNavButtons = document.querySelectorAll('.sub-nav-btn');
@@ -136,6 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.pipAudio) window.pipAudio.playTab();
             invSubButtons.forEach(b => b.classList.remove('active'));
             invSubContents.forEach(c => c.classList.add('hidden'));
+            // Reset all toggle descriptions when switching sub-tabs
+            document.querySelectorAll('.inv-toggle-btn').forEach(t => t.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('.inv-desc-collapsible').forEach(d => {
+                d.classList.remove('expanded');
+            });
             
             btn.classList.add('active');
             const targetInv = btn.getAttribute('data-inv');
@@ -143,6 +189,27 @@ document.addEventListener("DOMContentLoaded", () => {
             if (targetContent) {
                 targetContent.classList.remove('hidden');
                 targetContent.classList.add('active');
+            }
+        });
+    });
+    // 1b. Gestione Toggle Descrizione nelle sotto-schede INV
+    const invToggleBtns = document.querySelectorAll('.inv-toggle-btn');
+
+    invToggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (window.pipAudio) window.pipAudio.playSelect();
+            const targetId = btn.getAttribute('aria-controls');
+            const targetDesc = document.getElementById(targetId);
+            if (!targetDesc) return;
+
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                btn.setAttribute('aria-expanded', 'false');
+                targetDesc.classList.remove('expanded');
+            } else {
+                btn.setAttribute('aria-expanded', 'true');
+                targetDesc.classList.add('expanded');
             }
         });
     });
@@ -290,6 +357,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 cursorEl.classList.remove('hovering');
             }
         });
+
+        // Gestione Toggle Legal Disclaimer (Footer - Visibile solo in DATA tab)
+        if (disclaimerBtn && disclaimerDrawer) {
+            disclaimerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.pipAudio) window.pipAudio.playSelect();
+                const isOpen = disclaimerDrawer.style.display === 'block';
+                if (isOpen) {
+                    disclaimerDrawer.style.display = 'none';
+                    disclaimerDrawer.classList.remove('open');
+                    disclaimerBtn.classList.remove('active');
+                } else {
+                    disclaimerDrawer.style.display = 'block';
+                    disclaimerDrawer.classList.add('open');
+                    disclaimerBtn.classList.add('active');
+                }
+            });
+        }
     })();
 });
 
