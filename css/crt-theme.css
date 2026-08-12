@@ -278,21 +278,45 @@ body {
     text-shadow: 0 0 8px var(--pip-green-glow);
 }
 
+#data p, #data a, .data-cta-banner {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* CRT Contact Link Text Glow Pulse Animation */
+@-webkit-keyframes crtTextGlowPulse {
+    0%, 100% {
+        text-shadow: 0 0 8px var(--pip-green-glow);
+        color: var(--pip-green);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 20px #1bfd02, 0 0 35px #1bfd02, 0 0 4px #ffffff;
+        color: #60ff48 !important;
+        -webkit-transform: scale(1.03);
+        transform: scale(1.03);
+    }
+}
+
 @keyframes crtTextGlowPulse {
     0%, 100% {
         text-shadow: 0 0 8px var(--pip-green-glow);
         color: var(--pip-green);
+        transform: scale(1);
     }
     50% {
-        text-shadow: 0 0 18px var(--pip-green-glow), 0 0 25px var(--pip-green), 0 0 2px #ffffff;
+        text-shadow: 0 0 20px #1bfd02, 0 0 35px #1bfd02, 0 0 4px #ffffff;
         color: #60ff48 !important;
+        transform: scale(1.03);
     }
 }
 
 .contact-highlight-blink,
 .contact-highlight-blink a {
-    animation: crtTextGlowPulse 0.6s ease-in-out 2 !important;
+    -webkit-animation: crtTextGlowPulse 0.5s ease-in-out 2 !important;
+    animation: crtTextGlowPulse 0.5s ease-in-out 2 !important;
+    display: inline-block;
+    will-change: transform, text-shadow;
 }
 
 /* Tab Specific Layouts */
