@@ -459,6 +459,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+
+        // Micro-interazione: Clic su CTA in DATA fa lampeggiare i link di contatto sopra
+        document.addEventListener('click', (e) => {
+            const banner = e.target.closest('.data-cta-banner');
+            if (banner) {
+                if (window.pipAudio) window.pipAudio.playSelect();
+                const contactLines = document.querySelectorAll('#data p');
+                contactLines.forEach(line => {
+                    line.classList.remove('contact-highlight-blink');
+                    // Force reflow for animation restart
+                    void line.offsetWidth;
+                    line.classList.add('contact-highlight-blink');
+                });
+
+                setTimeout(() => {
+                    contactLines.forEach(line => line.classList.remove('contact-highlight-blink'));
+                }, 1300);
+            }
+        });
     })();
 
     // Ripristina la posizione del contenitore destro (stat-right) al ridimensionamento

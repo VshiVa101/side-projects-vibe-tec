@@ -180,6 +180,8 @@ body {
 
 .terminal-content {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     padding-right: 10px;
 }
@@ -222,16 +224,15 @@ body {
 
 .tab-content > h2 {
     display: inline-block;
-    background: rgba(27, 253, 2, 0.15);
-    border-left: 4px solid var(--pip-green);
-    padding: 6px 14px;
+    background: transparent;
+    border-left: none;
+    padding: 0;
     font-family: var(--font-heading);
     font-size: 1.7rem;
     color: var(--pip-green);
     letter-spacing: 1.5px;
     margin-bottom: 18px;
     text-shadow: 0 0 8px var(--pip-green-glow);
-    box-shadow: inset 0 0 10px rgba(27, 253, 2, 0.05);
 }
 
 .tab-content a {
@@ -244,6 +245,54 @@ body {
     color: #ffffff;
     text-shadow: 0 0 10px var(--pip-green);
     background-color: var(--pip-green-hover);
+}
+
+/* DATA Tab Layout & CTA Banner */
+#data.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    min-height: 100%;
+}
+
+.data-cta-banner {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    padding: 12px 18px;
+    border: 1px dashed rgba(27, 253, 2, 0.4);
+    background: rgba(27, 253, 2, 0.03);
+    color: var(--pip-green);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    letter-spacing: 1.2px;
+    box-shadow: 0 0 10px rgba(27, 253, 2, 0.08);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.data-cta-banner:hover {
+    border-color: var(--pip-green);
+    background: rgba(27, 253, 2, 0.08);
+    text-shadow: 0 0 8px var(--pip-green-glow);
+}
+
+/* CRT Contact Link Text Glow Pulse Animation */
+@keyframes crtTextGlowPulse {
+    0%, 100% {
+        text-shadow: 0 0 8px var(--pip-green-glow);
+        color: var(--pip-green);
+    }
+    50% {
+        text-shadow: 0 0 18px var(--pip-green-glow), 0 0 25px var(--pip-green), 0 0 2px #ffffff;
+        color: #60ff48 !important;
+    }
+}
+
+.contact-highlight-blink,
+.contact-highlight-blink a {
+    animation: crtTextGlowPulse 0.6s ease-in-out 2 !important;
 }
 
 /* Tab Specific Layouts */
@@ -270,6 +319,32 @@ body {
     margin-bottom: 20px;
     border-bottom: 1px solid var(--pip-green);
     display: inline-block;
+}
+
+.status-cta-btn {
+    display: block;
+    margin-top: 22px;
+    margin-bottom: 25px;
+    background: rgba(27, 253, 2, 0.04);
+    border: 1px dashed rgba(27, 253, 2, 0.5);
+    color: var(--pip-green);
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    padding: 10px 14px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.status-cta-btn:hover {
+    background: rgba(27, 253, 2, 0.12);
+    border-style: solid;
+    border-color: var(--pip-green);
+    text-shadow: 0 0 8px var(--pip-green-glow);
+    box-shadow: 0 0 12px rgba(27, 253, 2, 0.25);
 }
 
 .stat-right {
