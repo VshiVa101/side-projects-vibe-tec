@@ -1133,6 +1133,16 @@ body:has(#data.active) .footer-disclaimer-btn {
     text-shadow: none;
 }
 
+.footer-disclaimer-btn.active .inv-toggle-icon {
+    transform: rotate(90deg);
+}
+
+.footer-disclaimer-btn:hover .inv-toggle-icon,
+.footer-disclaimer-btn.active .inv-toggle-icon {
+    color: #000;
+    text-shadow: none;
+}
+
 .footer-layout {
     display: flex;
     justify-content: space-between;
