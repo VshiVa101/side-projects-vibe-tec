@@ -310,24 +310,39 @@
             box-shadow: 0 0 10px rgba(27, 253, 2, 0.15);
         }
         .danger-box {
-            background-color: var(--pip-green);
-            color: #020806;
+            background-color: rgba(27, 253, 2, 0.06);
+            border: 2px solid var(--pip-green);
+            color: var(--pip-green);
             padding: 20px;
             margin-top: 35px;
-            font-weight: bold;
             border-radius: 4px;
-            text-shadow: none;
-            box-shadow: 0 0 20px rgba(27, 253, 2, 0.5);
+            box-shadow: 0 0 15px rgba(27, 253, 2, 0.2), inset 0 0 15px rgba(27, 253, 2, 0.05);
         }
         .danger-box h3 {
             font-family: var(--font-heading);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             letter-spacing: 2px;
-            margin-bottom: 10px;
+            color: var(--pip-green);
+            text-shadow: 0 0 8px var(--pip-green-glow);
+            border-bottom: 1px dashed rgba(27, 253, 2, 0.4);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
         }
         .danger-box p, .danger-box li {
-            color: #020806;
-            font-size: 1.05rem;
+            color: var(--pip-green);
+            font-size: 1.02rem;
+            line-height: 1.5;
+        }
+        .danger-box ul {
+            padding-left: 20px;
+            margin-top: 12px;
+        }
+        .danger-box li {
+            margin-bottom: 10px;
+        }
+        .danger-box strong {
+            color: #ffffff;
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
         }
 
         /* --- LINKS & BUTTONS --- */
@@ -613,12 +628,14 @@
         </ul>
 
         <div class="danger-box">
-            <h3 style="margin-top:0;">! WARNING: TIMELINE POLICY !</h3>
-            <p>MANDATORY use of Shared Calendar (Notion). Timelines depend on timely client feedback. In case of repeated delays or unresponsive communication beyond 10 business days, VIBE-TEC reserves the right to apply a project hold fee:</p>
-            <ul style="margin-top: 10px;">
-                <li><span>+ €300 / MONTH (projects > 3 pages)</span></li>
-                <li><span>+ €200 / MONTH (projects ≤ 3 pages)</span></li>
+            <h3 style="margin-top:0;">! CRITICAL: CLIENT RESPONSIVENESS POLICY !</h3>
+            <p>All projects operate under a <strong>Shared Notion Workspace</strong> with mandatory milestone tracking. Project timelines are contractually binding and contingent on timely client feedback. Failure to comply triggers the following escalation protocol:</p>
+            <ul style="margin-top: 12px;">
+                <li><span><strong>TIER 1 — GRACE PERIOD (7 business days):</strong> Written notice sent. No additional charges. Client must respond within 7 business days of any feedback request or milestone review.</span></li>
+                <li><span><strong>TIER 2 — PROJECT HOLD FEE (day 8+):</strong> If no response is received after 7 business days, the project enters HOLD status. A mandatory retention fee of <strong>15% of total project value / month</strong> is applied to reserve your slot in the production queue.</span></li>
+                <li><span><strong>TIER 3 — CONTRACT TERMINATION (day 30+):</strong> If communication remains unresponsive for 30+ calendar days, VIBE-TEC reserves the right to <strong>terminate the contract immediately</strong>. All deposits are non-refundable. Partial deliverables remain property of VIBE-TEC until full settlement.</span></li>
             </ul>
+            <p style="margin-top: 12px; opacity: 0.85;"><em>> This policy exists to protect both parties. Clear communication = on-time delivery. No exceptions.</em></p>
         </div>
 
         <h2>> [ Contact & Portfolio ]</h2>
