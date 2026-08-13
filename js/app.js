@@ -495,4 +495,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
+    // Auto-open target tab & sub-tab on page load (e.g. index.html#inv-solo)
+    function handleUrlHashNavigation() {
+        const hash = window.location.hash;
+        if (hash === '#inv-solo' || hash === '#e2e') {
+            const invNavBtn = document.querySelector('.nav-btn[data-target="inv"]');
+            if (invNavBtn) invNavBtn.click();
+            const soloSubBtn = document.querySelector('.inv-sub-btn[data-inv="solo"]');
+            if (soloSubBtn) soloSubBtn.click();
+        }
+    }
+    handleUrlHashNavigation();
 });
