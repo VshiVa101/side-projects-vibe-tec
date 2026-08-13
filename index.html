@@ -11,12 +11,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script>
-        if (window.location.hash || window.location.search.indexOf('tab=') !== -1 || window.location.search.indexOf('sub=') !== -1) {
+        // INSTANT BOOT BYPASS: fires before any CSS or rendering
+        if (window.location.hash || window.location.search) {
+            document.write('<style>#intro-container,.start-overlay{display:none!important}#pip-boy-terminal{display:flex!important}</style>');
             document.documentElement.classList.add('skip-boot');
         }
     </script>
     <style>
-        html.skip-boot #intro-container { display: none !important; }
+        html.skip-boot #intro-container,
+        html.skip-boot .start-overlay { display: none !important; }
         html.skip-boot #pip-boy-terminal { display: flex !important; }
     </style>
     <!-- Main CRT Theme -->
