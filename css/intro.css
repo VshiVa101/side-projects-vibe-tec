@@ -160,14 +160,19 @@
 /* Post-typing smooth reveal elements */
 .start-cat-container,
 .start-prompt {
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .start-cat-container.boot-element-hidden,
 .start-prompt.boot-element-hidden {
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(16px) !important;
+    pointer-events: none !important;
+    transition: none !important;
 }
 
 .start-cat-container {
