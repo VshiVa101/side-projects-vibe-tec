@@ -400,8 +400,8 @@
             pointer-events: none;
             background-repeat: repeat-x;
             background-position: 0 6px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='50'%3E%3Cg fill='%231bfd02' fill-opacity='0.15'%3E%3Cellipse cx='40' cy='28' rx='30' ry='14'/%3E%3Cellipse cx='70' cy='20' rx='20' ry='11'/%3E%3Cellipse cx='15' cy='25' rx='16' ry='9'/%3E%3Cellipse cx='160' cy='30' rx='26' ry='12'/%3E%3Cellipse cx='190' cy='22' rx='18' ry='10'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 240px 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='50'%3E%3Cg fill='%231bfd02' fill-opacity='0.2'%3E%3Cellipse cx='40' cy='28' rx='35' ry='14'/%3E%3Cellipse cx='75' cy='20' rx='25' ry='11'/%3E%3Cellipse cx='15' cy='25' rx='20' ry='10'/%3E%3Cellipse cx='180' cy='30' rx='30' ry='12'/%3E%3Cellipse cx='215' cy='22' rx='22' ry='10'/%3E%3Cellipse cx='300' cy='15' rx='40' ry='8'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 360px 50px;
         }
         #ground-layer {
             position: absolute;
@@ -410,8 +410,8 @@
             pointer-events: none;
             background-repeat: repeat-x;
             background-position: 0 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24'%3E%3Cg fill='%231bfd02' fill-opacity='0.45'%3E%3Ccircle cx='15' cy='8' r='2.4'/%3E%3Ccircle cx='10.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='19.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='15' cy='15' r='2.4'/%3E%3Ccircle cx='15' cy='11.5' r='1.8' fill-opacity='0.8'/%3E%3Crect x='14' y='15' width='2' height='8'/%3E%3Ccircle cx='65' cy='10' r='2'/%3E%3Ccircle cx='61' cy='13' r='2'/%3E%3Ccircle cx='69' cy='13' r='2'/%3E%3Ccircle cx='65' cy='16' r='2'/%3E%3Crect x='64' y='16' width='1.6' height='6'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 100px 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24'%3E%3Cg fill='%231bfd02' fill-opacity='0.5'%3E%3Cpath d='M0,15 Q5,10 10,15 T20,15 T30,12 T40,15 T50,18 T60,15 T70,10 T80,15 T90,12 T100,15 T110,18 T120,15 L120,24 L0,24 Z' opacity='0.3'/%3E%3Ccircle cx='15' cy='8' r='2.4'/%3E%3Ccircle cx='10.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='19.5' cy='11.5' r='2.4'/%3E%3Ccircle cx='15' cy='15' r='2.4'/%3E%3Ccircle cx='15' cy='11.5' r='1.8' fill-opacity='0.8'/%3E%3Crect x='14' y='15' width='2' height='8'/%3E%3Ccircle cx='65' cy='10' r='2'/%3E%3Ccircle cx='61' cy='13' r='2'/%3E%3Ccircle cx='69' cy='13' r='2'/%3E%3Ccircle cx='65' cy='16' r='2'/%3E%3Crect x='64' y='16' width='1.6' height='6'/%3E%3Ccircle cx='95' cy='18' r='1.5'/%3E%3Ccircle cx='35' cy='20' r='1'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 120px 24px;
         }
         #finish-line {
             position: absolute;
@@ -421,6 +421,7 @@
             width: 5px;
             background: repeating-linear-gradient(to bottom, var(--pip-green), var(--pip-green) 10px, transparent 10px, transparent 20px);
             opacity: 0.8;
+            box-shadow: 0 0 10px var(--pip-green);
         }
         #game-msg {
             position: absolute;
@@ -432,12 +433,14 @@
             text-shadow: 0 0 6px #010401, 0 0 6px #010401;
         }
         #game-cat, #game-butterfly { position: absolute; bottom: 22px; left: 0; will-change: transform; }
+        #game-cat { filter: drop-shadow(-8px 0px 4px rgba(27,253,2,0.3)); }
         #cat-visual { transform-origin: center bottom; }
-        #game-cat svg { fill: #000; color: var(--pip-green); width: 60px; height: 50px; }
-        #game-butterfly svg { fill: currentColor; color: var(--pip-green); width: 40px; height: 40px; }
-        .wing { transform-origin: center; animation: flap 0.08s infinite alternate; }
-        @keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(0.2); } }
-        @keyframes cat-tap { 0% { transform: scale(1, 1); } 35% { transform: scale(1.18, 0.82); } 100% { transform: scale(1, 1); } }
+        #game-cat svg { fill: #000; color: var(--pip-green); width: 65px; height: 55px; }
+        #game-butterfly svg { fill: currentColor; color: var(--pip-green); width: 45px; height: 45px; animation: flutter 0.4s infinite ease-in-out; filter: drop-shadow(0 0 5px var(--pip-green)); }
+        .wing { transform-origin: center; animation: flap 0.05s infinite alternate; }
+        @keyframes flap { from { transform: scaleY(1) rotate(-5deg); } to { transform: scaleY(0.2) rotate(5deg); } }
+        @keyframes flutter { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(5deg); } 100% { transform: translateY(0px) rotate(-5deg); } }
+        @keyframes cat-tap { 0% { transform: scale(1, 1); } 35% { transform: scale(1.18, 0.82) rotate(2deg); } 100% { transform: scale(1, 1); } }
         .cat-tap-anim { animation: cat-tap 0.16s ease-out; }
     </style>
 </head>
@@ -660,12 +663,9 @@
             <div id="game-cat">
                 <div id="cat-visual">
                 <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 70 Q 10 40 40 40 L 70 40 Q 90 40 90 70 Z" fill="#000" stroke="currentColor" stroke-width="3"/>
+                    <path d="M10 70 Q 10 40 40 40 L 60 40 Q 80 40 80 70 Z" fill="#000" stroke="currentColor" stroke-width="3"/>
                     <path d="M10 65 Q -10 50 5 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M70 50 C45 50 30 35 32 15 L25 10 L30 5 L35 5 L45 0 L40 -20 L65 -5 C75 -8 90 -8 100 -5 L125 -20 L120 0 L130 5 L125 10 L132 15 C130 35 115 50 70 50 Z" transform="scale(0.55) translate(65, 45)" fill="#000" stroke="currentColor" stroke-width="4"/>
-                    <ellipse cx="73" cy="30" rx="3" ry="5" fill="currentColor"/>
-                    <ellipse cx="58" cy="40" rx="4" ry="6" fill="currentColor"/>
-                    <ellipse cx="88" cy="40" rx="4" ry="6" fill="currentColor"/>
+                    <image href="assets/img/cat_logo.svg" x="38" y="-4" width="62" height="62"/>
                 </svg>
                 </div>
             </div>
@@ -707,12 +707,12 @@
         const groundLayer = document.getElementById('ground-layer');
         const msg = document.getElementById('game-msg');
 
-        const TRACK_LENGTH = 1800;   
+        const TRACK_LENGTH = 4500;   
         const START_GAP = 220;       
         const CAT_SCREEN_X = 40;     
-        const CAT_STEP = 22;         
+        const CAT_STEP = 38;         
         const CAT_EASE = 14;         
-        const BUTTERFLY_SPEED = 300; 
+        const BUTTERFLY_SPEED = 210; 
         const CATCH_DISTANCE = 34;   
 
         let catWorldX = 0;
