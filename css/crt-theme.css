@@ -2006,4 +2006,21 @@ body:has(#map.active) .map-footer-status {
     }
 }
 
+/* =========================================
+   ACCESSIBILITY: RETRO CRT PHOSPHOR FOCUS INDICATOR
+   ========================================= */
+:focus-visible {
+    outline: 2px dashed var(--pip-green) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 12px var(--pip-green-glow), inset 0 0 6px rgba(27, 253, 2, 0.2) !important;
+    transition: outline-offset 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+
 

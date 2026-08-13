@@ -509,4 +509,148 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     handleUrlHashNavigation();
     window.addEventListener('hashchange', handleUrlHashNavigation);
+
+    // =========================================
+    // 7. CANONICAL PIP-BOY KEYBOARD HOTKEYS
+    // =========================================
+    document.addEventListener('keydown', (e) => {
+        // Non intercettare se l'utente sta scrivendo in campi form o se l'intro è ancora attivo
+        const introContainer = document.getElementById('intro-container');
+        const isIntroActive = introContainer && introContainer.style.display !== 'none' && !introContainer.classList.contains('hidden-hard');
+        if (isIntroActive) return;
+
+        if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+        const mainNavBtns = Array.from(document.querySelectorAll('.nav-btn'));
+        const activeNavIndex = mainNavBtns.findIndex(b => b.classList.contains('active'));
+
+        // 1-5: Selezione diretta Tab Principali (STAT, INV, DATA, MAP, RADIO)
+        if (e.key >= '1' && e.key <= '5') {
+            const index = parseInt(e.key, 10) - 1;
+            if (mainNavBtns[index]) {
+                mainNavBtns[index].click();
+            }
+            return;
+        }
+
+        // Q / E o Frecce Sinistra / Destra: Navigazione Tab Principali
+        if (e.key === 'q' || e.key === 'Q' || e.key === 'ArrowLeft') {
+            if (activeNavIndex > 0) {
+                mainNavBtns[activeNavIndex - 1].click();
+            } else if (activeNavIndex === 0) {
+                mainNavBtns[mainNavBtns.length - 1].click();
+            }
+            return;
+        }
+
+        if (e.key === 'e' || e.key === 'E' || e.key === 'ArrowRight') {
+            if (activeNavIndex < mainNavBtns.length - 1) {
+                mainNavBtns[activeNavIndex + 1].click();
+            } else if (activeNavIndex === mainNavBtns.length - 1) {
+                mainNavBtns[0].click();
+            }
+            return;
+        }
+
+        // Frecce Su / Giù o Tasti A / D: Navigazione Sotto-Tab (STAT o INV)
+        const activeMainTab = document.querySelector('.tab-content.active');
+        if (activeMainTab) {
+            let subBtns = [];
+            if (activeMainTab.id === 'stat') {
+                subBtns = Array.from(document.querySelectorAll('.sub-nav-btn'));
+            } else if (activeMainTab.id === 'inv') {
+                subBtns = Array.from(document.querySelectorAll('.inv-sub-btn'));
+            }
+
+            if (subBtns.length > 0) {
+                const activeSubIndex = subBtns.findIndex(b => b.classList.contains('active'));
+                if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (activeSubIndex > 0) {
+                        subBtns[activeSubIndex - 1].click();
+                    } else if (activeSubIndex === 0) {
+                        subBtns[subBtns.length - 1].click();
+                    }
+                    return;
+                }
+                if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (activeSubIndex < subBtns.length - 1) {
+                        subBtns[activeSubIndex + 1].click();
+                    } else if (activeSubIndex === subBtns.length - 1) {
+                        subBtns[0].click();
+                    }
+                    return;
+                }
+            }
+        }
+
+        // Tasto M: Toggle Rapido Radio (Mute / Play)
+        if (e.key === 'm' || e.key === 'M') {
+            if (window.pipAudio) {
+                window.pipAudio.playSelect();
+                window.pipAudio.toggleRadio();
+            }
+            return;
+        }
+    });
+
+    // =========================================
+    // 8. MOBILE TOUCH SWIPE GESTURES
+    // =========================================
+    (function initTouchSwipeNav() {
+        const terminalEl = document.getElementById('pip-boy-terminal');
+        if (!terminalEl) return;
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        const SWIPE_THRESHOLD = 45; // min distance in px
+
+        terminalEl.addEventListener('touchstart', (e) => {
+            // Ignora swipe su mappa Leaflet o canvas 3D
+            if (e.target.closest('#leaflet-pip-map') || e.target.closest('#neo-eye-canvas-container')) return;
+            
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        terminalEl.addEventListener('touchend', (e) => {
+            if (e.target.closest('#leaflet-pip-map') || e.target.closest('#neo-eye-canvas-container')) return;
+
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipeGesture();
+        }, { passive: true });
+
+        function handleSwipeGesture() {
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            // Assicurati che sia prevalentemente orizzontale
+            if (Math.abs(diffX) > Math.abs(diffY) * 1.3 && Math.abs(diffX) > SWIPE_THRESHOLD) {
+                const mainNavBtns = Array.from(document.querySelectorAll('.nav-btn'));
+                const activeNavIndex = mainNavBtns.findIndex(b => b.classList.contains('active'));
+                if (activeNavIndex === -1) return;
+
+                if (diffX < 0) {
+                    // Swipe Sinistra -> Prossimo Tab
+                    if (activeNavIndex < mainNavBtns.length - 1) {
+                        mainNavBtns[activeNavIndex + 1].click();
+                    } else {
+                        mainNavBtns[0].click();
+                    }
+                } else {
+                    // Swipe Destra -> Tab Precedente
+                    if (activeNavIndex > 0) {
+                        mainNavBtns[activeNavIndex - 1].click();
+                    } else {
+                        mainNavBtns[mainNavBtns.length - 1].click();
+                    }
+                }
+            }
+        }
+    })();
 });
+
