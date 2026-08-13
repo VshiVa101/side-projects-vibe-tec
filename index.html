@@ -10,9 +10,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script>
+        if (window.location.hash || window.location.search.indexOf('tab=') !== -1 || window.location.search.indexOf('sub=') !== -1) {
+            document.documentElement.classList.add('skip-boot');
+        }
+    </script>
+    <style>
+        html.skip-boot #intro-container { display: none !important; }
+        html.skip-boot #pip-boy-terminal { display: flex !important; }
+    </style>
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=82.0">
-    <link rel="stylesheet" href="css/intro.css?v=73.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=84.0">
+    <link rel="stylesheet" href="css/intro.css?v=84.0">
     <!-- Leaflet CSS & JS for Pip-Boy Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -20,10 +29,10 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/audio.js?v=71.0" defer></script>
-    <script src="js/intro.js?v=83.0" defer></script>
+    <script src="js/intro.js?v=84.0" defer></script>
     <script src="js/map.js?v=71.0" defer></script>
     <script src="js/neo_eye_3d.js?v=71.0" defer></script>
-    <script src="js/app.js?v=83.0" defer></script>
+    <script src="js/app.js?v=84.0" defer></script>
     <!-- Critical inline CSS fallback for INV toggle (prevents browser default button styling) -->
     <style>
         .inv-toggle-btn{background:transparent!important;border:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1bfd02!important;font-family:'VT323',monospace!important;padding:0!important;margin:0!important;box-shadow:none!important;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;text-align:left}

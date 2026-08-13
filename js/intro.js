@@ -7,10 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const greenFlash = document.getElementById('green-flash-overlay');
     const terminal = document.getElementById('pip-boy-terminal');
 
-    // Se c'è un hash nell'URL (navigazione di ritorno), bypassiamo completamente l'intro
-    if (window.location.hash) {
-        if (introContainer) introContainer.style.display = 'none';
-        if (terminal) terminal.style.display = 'flex';
+    // Se c'è un hash o query param nell'URL (navigazione di ritorno), bypassiamo completamente l'intro
+    if (window.location.hash || window.location.search.indexOf('tab=') !== -1 || document.documentElement.classList.contains('skip-boot')) {
+        if (introContainer) {
+            introContainer.style.display = 'none';
+            introContainer.classList.add('hidden-hard');
+        }
+        if (terminal) {
+            terminal.style.display = 'flex';
+        }
         return; // Interrompe il setup dell'intro
     }
 

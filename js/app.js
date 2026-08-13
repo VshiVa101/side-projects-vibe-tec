@@ -496,10 +496,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Auto-open target tab & sub-tab on page load (e.g. index.html#inv-solo)
+    // Auto-open target tab & sub-tab on page load (e.g. index.html#inv-solo or index.html?tab=inv&sub=solo)
     function handleUrlHashNavigation() {
         const hash = window.location.hash;
-        if (hash === '#inv-solo' || hash === '#e2e') {
+        const search = window.location.search;
+        if (hash === '#inv-solo' || hash === '#e2e' || hash.indexOf('solo') !== -1 || search.indexOf('sub=solo') !== -1 || search.indexOf('tab=inv') !== -1 || hash.indexOf('inv') !== -1) {
             const invNavBtn = document.querySelector('.nav-btn[data-target="inv"]');
             if (invNavBtn) invNavBtn.click();
             const soloSubBtn = document.querySelector('.inv-sub-btn[data-inv="solo"]');
@@ -507,4 +508,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     handleUrlHashNavigation();
+    window.addEventListener('hashchange', handleUrlHashNavigation);
 });
