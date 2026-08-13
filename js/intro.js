@@ -141,8 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const current = sequence[sequenceIndex];
             if (!current) {
                 isCompleted = true;
+                // 1. Schermo e digitazione completati: rivela prima il logo del gatto
                 if (catContainer) catContainer.classList.remove('boot-element-hidden');
-                if (promptEl) promptEl.classList.remove('boot-element-hidden');
+                // 2. Rivela il tasto di inizializzazione per ultimo dopo una pausa scenica di 450ms
+                setTimeout(() => {
+                    if (promptEl) promptEl.classList.remove('boot-element-hidden');
+                }, 450);
                 return;
             }
 
