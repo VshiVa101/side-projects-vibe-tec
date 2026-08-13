@@ -721,6 +721,7 @@
 
         let gameActive = false;
         let gameOver = false;
+        let gameWon = false;
         let time = 0;
         let lastFrame = performance.now();
         let rafId = null;
@@ -750,17 +751,33 @@
 
                 if (butterflyWorldX - catWorldX <= CATCH_DISTANCE) {
                     gameOver = true;
+                    gameWon = true;
                     catWorldX = butterflyWorldX - CATCH_DISTANCE;
                     render();
-                    msg.innerText = "> ANOMALY CAPTURED! EXCELLENT REFLEXES.";
+                    msg.innerHTML = '> ANOMALY CAPTURED! EXCELLENT REFLEXES. <span id="win-reset-btn" style="pointer-events: auto; cursor: pointer; border: 1px solid var(--pip-green); background: rgba(27,253,2,0.25); padding: 2px 8px; border-radius: 3px; display: inline-block; margin-left: 8px; text-shadow: 0 0 6px var(--pip-green-glow); color: #fff;">[ TAP HERE TO RESTART ]</span>';
                     rafId = null;
+
+                    setTimeout(() => {
+                        const winBtn = document.getElementById('win-reset-btn');
+                        if (winBtn) {
+                            winBtn.addEventListener('click', (ev) => {
+                                ev.stopPropagation();
+                                resetGame();
+                            });
+                            winBtn.addEventListener('touchstart', (ev) => {
+                                ev.stopPropagation();
+                                resetGame();
+                            });
+                        }
+                    }, 50);
                     return;
                 }
 
                 if (butterflyWorldX >= TRACK_LENGTH) {
                     gameOver = true;
+                    gameWon = false;
                     render();
-                    msg.innerText = "> GAME OVER. THE ANOMALY ESCAPED THROUGH THE RIFT. TAP TO RETRY.";
+                    msg.innerHTML = "> GAME OVER. THE ANOMALY ESCAPED THROUGH THE RIFT. TAP TO RETRY.";
                     rafId = null;
                     return;
                 }
@@ -779,12 +796,13 @@
         function resetGame() {
             gameActive = false;
             gameOver = false;
+            gameWon = false;
             catWorldX = 0;
             catTargetWorldX = 0;
             butterflyWorldX = START_GAP;
 
             render();
-            msg.innerText = "> [STATUS: ANOMALY DETECTED] - TAP TO INITIALIZE CHASE...";
+            msg.innerHTML = "> [STATUS: ANOMALY DETECTED] - TAP TO INITIALIZE CHASE...";
 
             startLoop();
         }
@@ -794,18 +812,23 @@
         function interact(e) {
             if (e.type === 'keydown' && e.repeat) return;
 
-            const now = performance.now();
-            if (now - lastInteractTime < 16) return;
-            lastInteractTime = now;
+            // Se l'utente ha vinto, ignora tutti i click/tap generici per evitare riavvii accidentali da mashing
+            if (gameWon) {
+                return;
+            }
 
             if (gameOver) {
                 resetGame();
                 return;
             }
 
+            const now = performance.now();
+            if (now - lastInteractTime < 16) return;
+            lastInteractTime = now;
+
             if (!gameActive) {
                 gameActive = true;
-                msg.innerText = "> CHASE IN PROGRESS! MASH BUTTONS AS FAST AS YOU CAN!";
+                msg.innerHTML = "> CHASE IN PROGRESS! MASH BUTTONS AS FAST AS YOU CAN!";
             }
 
             catTargetWorldX += CAT_STEP;
