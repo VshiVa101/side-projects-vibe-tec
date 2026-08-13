@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script>
-        // INSTANT BOOT BYPASS: fires before any CSS or rendering
-        if (window.location.hash || window.location.search) {
+        // INSTANT BOOT BYPASS: fires before any CSS or rendering only if explicit tab is in hash/query
+        if (window.location.hash || window.location.search.indexOf('tab=') !== -1) {
             document.write('<style>#intro-container,.start-overlay{display:none!important}#pip-boy-terminal{display:flex!important}</style>');
             document.documentElement.classList.add('skip-boot');
         }
@@ -23,16 +23,16 @@
         html.skip-boot #pip-boy-terminal { display: flex !important; }
     </style>
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=84.0">
-    <link rel="stylesheet" href="css/intro.css?v=84.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=86.0">
+    <link rel="stylesheet" href="css/intro.css?v=86.0">
     <!-- Leaflet CSS & JS for Pip-Boy Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/audio.js?v=71.0" defer></script>
-    <script src="js/intro.js?v=84.0" defer></script>
+    <script src="js/audio.js?v=86.0" defer></script>
+    <script src="js/intro.js?v=86.0" defer></script>
     <script src="js/map.js?v=71.0" defer></script>
     <script src="js/neo_eye_3d.js?v=71.0" defer></script>
     <script src="js/app.js?v=84.0" defer></script>
@@ -63,10 +63,10 @@
         <!-- FIRST CLICK BOOT OVERLAY (Raccoglitore Click per Audio & Video) -->
         <div id="start-overlay" class="start-overlay">
             <div class="start-brand-wrapper">
-                <h1 class="start-brand-title">VIBE-TEC</h1>
-                <div class="start-brand-subtext">CORPORATION</div>
+                <h1 class="start-brand-title" data-text="VIBE-TEC">VIBE-TEC</h1>
+                <div class="start-brand-subtext" data-text="CORPORATION">CORPORATION</div>
             </div>
-            <p class="start-subtitle">{ PIP-FOLIO 3000 SYSTEM BOOT }</p>
+            <p class="start-subtitle" data-text="{ PIP-FOLIO 3000 SYSTEM BOOT }">{ PIP-FOLIO 3000 SYSTEM BOOT }</p>
             
             <div class="start-cat-container">
                 <img src="assets/img/cat_logo.svg" alt="Vibe-Tec Sleeping Cat" id="start-cat-logo" class="start-cat-logo">

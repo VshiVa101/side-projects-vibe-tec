@@ -113,6 +113,7 @@
     margin-bottom: 2px;
     white-space: nowrap;
     line-height: 1.1;
+    min-height: 1.1em;
 }
 
 .start-brand-subtext {
@@ -124,6 +125,7 @@
     margin-bottom: 12px;
     text-shadow: 0 0 5px var(--pip-green-glow);
     text-transform: uppercase;
+    min-height: 1.2em;
 }
 
 .start-subtitle {
@@ -135,6 +137,37 @@
     margin-bottom: clamp(10px, 2vh, 20px);
     text-align: center;
     max-width: 90%;
+    min-height: 1.4em;
+}
+
+/* RETRO TERMINAL TYPEWRITER CURSOR */
+.typing-cursor {
+    display: inline-block;
+    width: 0.52em;
+    height: 0.85em;
+    background-color: var(--pip-green);
+    box-shadow: 0 0 8px var(--pip-green-glow);
+    vertical-align: middle;
+    margin-left: 3px;
+    animation: cursorBlink 0.6s infinite steps(2, start);
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Post-typing smooth reveal elements */
+.start-cat-container,
+.start-prompt {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.start-cat-container.boot-element-hidden,
+.start-prompt.boot-element-hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
 }
 
 .start-cat-container {
