@@ -7,7 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const greenFlash = document.getElementById('green-flash-overlay');
     const terminal = document.getElementById('pip-boy-terminal');
 
-    // Assicuriamo che il terminale sia nascosto all'inizio
+    // Se c'è un hash nell'URL (navigazione di ritorno), bypassiamo completamente l'intro
+    if (window.location.hash) {
+        if (introContainer) introContainer.style.display = 'none';
+        if (terminal) terminal.style.display = 'flex';
+        return; // Interrompe il setup dell'intro
+    }
+
+    // Assicuriamo che il terminale sia nascosto all'inizio (Normale Boot)
     if (terminal) {
         terminal.style.display = 'none';
     }
