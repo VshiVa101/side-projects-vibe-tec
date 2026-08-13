@@ -987,15 +987,19 @@ body {
 
 .detail-title {
     display: block;
-    background: transparent;
+    background: transparent !important;
     border-left: 3px solid var(--pip-green);
-    padding: 4px 10px;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    padding: 2px 0 2px 10px;
     font-family: var(--font-heading);
     font-size: 1.5rem;
     color: var(--pip-green);
     margin-bottom: 10px;
-    text-shadow: 0 0 6px rgba(27, 253, 2, 0.5);
+    text-shadow: 0 0 6px rgba(27, 253, 2, 0.6);
     letter-spacing: 1.5px;
+    box-shadow: none !important;
 }
 
 .detail-badge {
