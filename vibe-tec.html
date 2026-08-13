@@ -722,6 +722,7 @@
         let gameActive = false;
         let gameOver = false;
         let gameWon = false;
+        let winCount = 0;
         let time = 0;
         let lastFrame = performance.now();
         let rafId = null;
@@ -752,9 +753,15 @@
                 if (butterflyWorldX - catWorldX <= CATCH_DISTANCE) {
                     gameOver = true;
                     gameWon = true;
+                    winCount++;
                     catWorldX = butterflyWorldX - CATCH_DISTANCE;
                     render();
-                    msg.innerHTML = '> ANOMALY CAPTURED! EXCELLENT REFLEXES. <em style="opacity: 0.85; font-size: 0.85rem; margin-left: 4px;">(Now try with just 2 fingers...)</em> <span id="win-reset-btn" style="pointer-events: auto; cursor: pointer; border: 1px solid var(--pip-green); background: rgba(27,253,2,0.25); padding: 2px 8px; border-radius: 3px; display: inline-block; margin-left: 8px; text-shadow: 0 0 6px var(--pip-green-glow); color: #fff;">[ TAP HERE TO RESTART ]</span>';
+
+                    const challengeText = winCount === 1 
+                        ? '(Now try with just 2 fingers...)' 
+                        : "(If you can do this with just 1 finger, you're in the top 10% of tryhard gamers!)";
+
+                    msg.innerHTML = `> ANOMALY CAPTURED! EXCELLENT REFLEXES. <em style="opacity: 0.85; font-size: 0.85rem; margin-left: 4px;">${challengeText}</em> <span id="win-reset-btn" style="pointer-events: auto; cursor: pointer; border: 1px solid var(--pip-green); background: rgba(27,253,2,0.25); padding: 2px 8px; border-radius: 3px; display: inline-block; margin-left: 8px; text-shadow: 0 0 6px var(--pip-green-glow); color: #fff;">[ TAP HERE TO RESTART ]</span>`;
                     rafId = null;
 
                     setTimeout(() => {
