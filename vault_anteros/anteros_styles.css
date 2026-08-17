@@ -1,0 +1,87 @@
+/* ==========================================================================
+   STILI CSS PER VIBE-TEC ANTEROS (CLASSIFIED VARIANT)
+   Questi stili gestiscono i colori rossi d'allerta CRT, l'animazione pulsante
+   della freccia e i box riservati / top secret.
+   ========================================================================== */
+
+/* Inline CSS Fallback (utilizzato in index.html <style>) */
+.classified-banner .inv-banner-header:hover {
+    background-color: rgba(255, 51, 51, 0.04);
+}
+
+.classified-banner .inv-toggle-btn {
+    color: #ff3333 !important;
+}
+
+.classified-banner .inv-toggle-icon {
+    color: #ff3333 !important;
+    text-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
+    animation: inv-arrow-pulse-classified 1.8s infinite ease-in-out;
+}
+
+.classified-banner .inv-toggle-title {
+    color: #ff3333 !important;
+    text-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+}
+
+@keyframes inv-arrow-pulse-classified {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 6px rgba(255, 51, 51, 0.6);
+        filter: drop-shadow(0 0 2px #ff3333);
+    }
+    50% {
+        opacity: 0.5;
+        text-shadow: 0 0 16px rgba(255, 51, 51, 0.9), 0 0 24px #ff3333;
+        filter: drop-shadow(0 0 8px #ff3333);
+    }
+}
+
+/* Stili Estesi da crt-theme.css */
+.inv-desc-banner.classified-banner {
+    border-color: rgba(255, 51, 51, 0.5);
+    background: rgba(255, 51, 51, 0.02);
+}
+
+.inv-desc-banner.classified-banner .inv-section-title {
+    background: rgba(255, 51, 51, 0.15);
+    border-bottom-color: rgba(255, 51, 51, 0.4);
+    color: #ff3333;
+    text-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+}
+
+.inv-desc-banner.classified-banner .inv-desc-body {
+    color: #ff9999;
+}
+
+.inv-desc-banner.classified-banner .inv-highlight {
+    color: #ff3333;
+    text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+}
+
+.inv-desc-banner.classified-banner .redacted-line {
+    color: #ff3333;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    margin-top: 12px;
+}
+
+.classified-banner .inv-desc-collapsible {
+    border-top-color: rgba(255, 51, 51, 0.2);
+}
+
+.classified-banner .inv-section-status {
+    color: #ff3333;
+}
+
+.classified-card {
+    border-color: rgba(255, 51, 51, 0.5);
+    background: rgba(255, 51, 51, 0.02);
+}
+
+.classified-box {
+    border: 1px dashed rgba(255, 51, 51, 0.4);
+    padding: 12px;
+    margin: 15px 0;
+    background: rgba(255, 51, 51, 0.05);
+}

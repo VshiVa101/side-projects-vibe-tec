@@ -1,0 +1,39 @@
+<!-- ==========================================================================
+     VIBE-TEC ANTEROS / CLASSIFIED SNIPPET DI BACKUP
+     Per reinserire Anteros nel Pip-Folio:
+     1. Inserisci il BOTTONE all'interno del blocco <div class="sub-nav"> in index.html
+     2. Inserisci il CONTAINER SUB-TAB prima della chiusura </div> di <!-- TAB: INV -->
+     ========================================================================== -->
+
+<!-- 1. BOTTONE DA INSERIRE IN .sub-nav (dopo 'IDEAS & BIZ') -->
+<button class="inv-sub-btn" data-inv="classified">ANTEROS</button>
+
+
+<!-- 2. CONTENUTO DELLA SCHEDA DA INSERIRE PRIMA DELLA CHIUSURA DI #inv -->
+<!-- SUB-TAB: CLASSIFIED -->
+<div id="inv-sub-classified" class="inv-sub-content hidden">
+    <div class="inv-desc-banner classified-banner">
+        <div class="inv-banner-header">
+            <div class="inv-banner-title-col">
+                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-classified">
+                    <span class="inv-toggle-icon">▶</span>
+                    <span class="inv-toggle-title">> VIBE-TEC ANTEROS</span>
+                </button>
+                <div class="inv-section-status">[STATUS: CLASSIFIED // TOP SECRET R&D]</div>
+            </div>
+            <div class="inv-banner-icon-col">
+                <div class="project-icon-box-large" title="Vibe-Tec Anteros: Classified Trench Coat & Cupid Putto 3-Eyed Cat">
+                    <img src="assets/img/inv_classified_icon.jpg" alt="Leonardo opening trench coat with sunglasses and 3-eyed putto cat shooting Cupid arrow" class="avatar-svg" style="object-fit: cover;">
+                </div>
+            </div>
+        </div>
+        <div id="inv-desc-classified" class="inv-desc-collapsible">
+            <div class="inv-desc-body">
+                Advanced local architecture for AI visual orchestration (video and photo synth). An active R&D project protected under industrial confidentiality and non-disclosure agreements. This section does not host public project listings — all prototypes are developed under strict NDA for private clients.
+                <span class="inv-highlight">> ACCESS RESTRICTED: ████████████████████</span>
+                <span class="inv-highlight">Due to IP rights and industrial confidentiality, commercial specifications and live demonstrations are strictly accessible via private briefing upon direct contact.</span>
+                <button class="inv-briefing-btn" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
+            </div>
+        </div>
+    </div>
+</div>

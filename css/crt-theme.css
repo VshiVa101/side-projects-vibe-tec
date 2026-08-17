@@ -1422,32 +1422,491 @@ body:has(#data.active) .footer-disclaimer-btn {
     cursor: pointer;
 }
 
-/* Dynamic Antenna Wiggle Animation for Radio Cat */
-.radio-cat-animated {
-    animation: radioCatAntennaWiggle 3.5s ease-in-out infinite alternate;
-    transform-origin: bottom center;
+/* ==========================================================================
+   PIP-BOY 3000 VINTAGE TURNTABLE & VINYL PLAYER (FALLOUT HI-FI SYSTEM)
+   ========================================================================== */
+
+.pip-turntable-deck {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle at center, rgba(14, 30, 14, 0.95) 0%, rgba(3, 10, 3, 0.98) 100%);
+    border: 2px solid var(--pip-green);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(27, 253, 2, 0.2), inset 0 0 25px rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-@keyframes radioCatAntennaWiggle {
+.pip-turntable-deck:hover {
+    border-color: #60ff48;
+    box-shadow: 0 0 25px var(--pip-green-glow), inset 0 0 25px rgba(0, 0, 0, 0.8);
+}
+
+/* Industrial Screws at Corners */
+.pip-turntable-screw {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #555 30%, #111 90%);
+    border: 1px solid rgba(27, 253, 2, 0.4);
+    border-radius: 50%;
+    z-index: 5;
+    pointer-events: none;
+}
+.pip-turntable-screw.tl { top: 6px; left: 6px; }
+.pip-turntable-screw.tr { top: 6px; right: 6px; }
+.pip-turntable-screw.bl { bottom: 6px; left: 6px; }
+.pip-turntable-screw.br { bottom: 6px; right: 6px; }
+
+.pip-turntable-screw::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: rgba(27, 253, 2, 0.6);
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* Platter Base */
+.pip-turntable-platter {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: 14px;
+    top: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1a2a1a 0%, #0d150d 70%, #050805 100%);
+    border: 3px solid rgba(27, 253, 2, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Rotating Vinyl Record */
+.pip-vinyl-record {
+    position: relative;
+    width: 188px;
+    height: 188px;
+    border-radius: 50%;
+    background: #080a08;
+    box-shadow: 
+        inset 0 0 0 2px #111,
+        inset 0 0 0 4px rgba(27, 253, 2, 0.12),
+        inset 0 0 0 10px #0a0e0a,
+        inset 0 0 0 12px rgba(27, 253, 2, 0.08),
+        inset 0 0 0 22px #0a0e0a,
+        inset 0 0 0 24px rgba(27, 253, 2, 0.1),
+        inset 0 0 0 36px #080c08,
+        inset 0 0 0 38px rgba(27, 253, 2, 0.08),
+        inset 0 0 0 48px #080c08,
+        0 0 10px rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transform-origin: center center;
+    transition: transform 0.2s ease, filter 0.3s ease;
+}
+
+/* Vinyl Grooves Micro-Lines Texture */
+.pip-vinyl-grooves {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        transparent 0,
+        transparent 3px,
+        rgba(27, 253, 2, 0.04) 4px,
+        transparent 5px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Conic Specular Sheen (Vinyl Light Reflection) */
+.pip-vinyl-sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        rgba(27, 253, 2, 0.15) 12%,
+        transparent 25%,
+        transparent 50%,
+        rgba(27, 253, 2, 0.15) 62%,
+        transparent 75%
+    );
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: screen;
+}
+
+/* Center Label (Album Artwork) */
+.pip-vinyl-label {
+    position: relative;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--pip-green);
+    background: #020602;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    box-shadow: 0 0 8px rgba(27, 253, 2, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.pip-vinyl-label-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.1) brightness(0.95);
+    transition: filter 0.3s ease;
+}
+
+.pip-vinyl-label-rim {
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    border: 1px dashed rgba(27, 253, 2, 0.35);
+    pointer-events: none;
+}
+
+/* Spindle Hole in Center */
+.pip-vinyl-spindle-hole {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #020602 40%, #2b442b 85%, var(--pip-green) 100%);
+    border: 1.5px solid #1bfd02;
+    border-radius: 50%;
+    z-index: 4;
+    box-shadow: 0 0 4px var(--pip-green-glow), inset 0 0 3px #000;
+}
+
+/* Spin Animation */
+@keyframes pipVinylSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.pip-turntable-deck.is-playing .pip-vinyl-record {
+    animation: pipVinylSpin 3.2s linear infinite;
+}
+
+.pip-turntable-deck.is-paused .pip-vinyl-record {
+    animation: pipVinylSpin 3.2s linear infinite;
+    animation-play-state: paused;
+}
+
+/* ==========================================================================
+   PIP-BOY MECHANICAL ARTICULATED FOLDING TONEARM (NEO-ONE STYLE)
+   ========================================================================== */
+
+.pip-tonearm-assembly {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* Interactive Base Pivot */
+.pip-tonearm-pivot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #4a5c4a 0%, #152215 60%, #070d07 100%);
+    border: 2px solid var(--pip-green);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 8px rgba(27, 253, 2, 0.3);
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.pip-tonearm-pivot:hover {
+    transform: scale(1.12);
+    border-color: #60ff48;
+    box-shadow: 0 0 15px var(--pip-green-glow);
+}
+
+.pip-tonearm-pivot:active {
+    transform: scale(0.95);
+}
+
+.pip-tonearm-pivot-core {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #85bb85 0%, #1a331a 80%, #091309 100%);
+    border: 1px solid var(--pip-green);
+    box-shadow: inset 0 0 4px #000, 0 0 4px var(--pip-green-glow);
+}
+
+
+
+/* Segment 1: Upper Arm (Pivoting at Base Center) */
+.pip-tonearm-upper-arm {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 5px;
+    background: linear-gradient(180deg, #d2ebd2 0%, #5c755c 40%, #1c2b1c 100%);
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    transform-origin: 0% 50%;
+    /* At rest: points down-rightwards along safe inner boundary */
+    transform: rotate(58deg);
+    transition: transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1) 0.1s;
+    z-index: 16;
+}
+
+.pip-turntable-deck.is-playing .pip-tonearm-upper-arm {
+    /* When playing: points to the outer RIGHT side dark vinyl grooves (ore 3:30) */
+    transform: rotate(84deg);
+    transition: transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+
+/* Counterweight behind the base pivot */
+.pip-tonearm-counterweight {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 11px;
+    background: linear-gradient(180deg, #111 0%, #3a4e3a 40%, #1a2a1a 80%, #0d150d 100%);
+    border: 1px solid rgba(27, 253, 2, 0.6);
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.pip-tonearm-counterweight::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 1px;
+    background: var(--pip-green);
+    opacity: 0.6;
+}
+
+/* Phosphor Audio Wire along Arm */
+.pip-tonearm-wire {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    right: 2px;
+    height: 1px;
+    background: rgba(27, 253, 2, 0.9);
+    filter: drop-shadow(0 0 2px var(--pip-green-glow));
+}
+
+/* Articulated Elbow Joint at end of Upper Arm */
+.pip-tonearm-elbow {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #557055 0%, #1a2a1a 75%, #0d150d 100%);
+    border: 1.5px solid var(--pip-green);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 18;
+}
+
+.pip-tonearm-elbow-core {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #1bfd02;
+    box-shadow: 0 0 3px var(--pip-green-glow);
+}
+
+/* Segment 2: Forearm (Incernierato al centro del Gomito) */
+.pip-tonearm-forearm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 32px;
+    height: 5px;
+    background: linear-gradient(180deg, #d2ebd2 0%, #5c755c 40%, #1c2b1c 100%);
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    transform-origin: 0% 50%;
+    /* At rest: FOLDS BACK completely (-166deg) along upper arm into chassis */
+    transform: translateY(-50%) rotate(-166deg);
+    transition: transform 0.7s cubic-bezier(0.34, 1.25, 0.64, 1);
+    z-index: 19;
+}
+
+.pip-turntable-deck.is-playing .pip-tonearm-forearm {
+    /* When playing: UNFOLDS cleanly into the middle of the right groove track */
+    transform: translateY(-50%) rotate(18deg);
+    transition: transform 0.8s cubic-bezier(0.34, 1.25, 0.64, 1) 0.15s;
+}
+
+/* Headshell & Cartridge located STRICTLY at distal end (left: 100%) of Forearm */
+.pip-tonearm-headshell {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transform-origin: 0% 50%;
+    width: 18px;
+    height: 11px;
+    z-index: 21;
+    transition: transform 0.8s cubic-bezier(0.34, 1.25, 0.64, 1) 0.15s;
+}
+
+.pip-turntable-deck.is-playing .pip-tonearm-headshell {
+    /* When playing: angles tangentially along groove */
+    transform: translateY(-50%) rotate(24deg);
+}
+
+.pip-tonearm-cartridge {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2b3d2b 0%, #0d170d 100%);
+    border: 1.5px solid var(--pip-green);
+    border-radius: 2px 3px 3px 2px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px 2px;
+}
+
+/* Headshell Status LED */
+.pip-tonearm-led {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #441111;
+    border: 1px solid #ff3333;
+    box-shadow: 0 0 3px rgba(255, 51, 51, 0.6);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pip-turntable-deck.is-playing .pip-tonearm-led {
+    background: #1bfd02;
+    border-color: #60ff48;
+    box-shadow: 0 0 8px #1bfd02, 0 0 14px var(--pip-green-glow);
+    animation: pipLedPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes pipLedPulse {
     0% {
-        transform: rotate(0deg) scale(1);
-        filter: drop-shadow(0 0 8px var(--pip-green-glow));
-    }
-    25% {
-        transform: rotate(1.5deg) scale(1.02);
-        filter: drop-shadow(0 0 12px var(--pip-green-glow));
-    }
-    50% {
-        transform: rotate(-2deg) scale(0.99);
-        filter: drop-shadow(0 0 6px var(--pip-green-glow));
-    }
-    75% {
-        transform: rotate(2.5deg) scale(1.03);
-        filter: drop-shadow(0 0 14px var(--pip-green-glow));
+        box-shadow: 0 0 6px #1bfd02, 0 0 10px var(--pip-green-glow);
     }
     100% {
-        transform: rotate(-1deg) scale(1);
-        filter: drop-shadow(0 0 10px var(--pip-green-glow));
+        box-shadow: 0 0 12px #60ff48, 0 0 20px #1bfd02;
+    }
+}
+
+/* Stylus / Needle at distal tip of Cartridge */
+.pip-tonearm-needle {
+    position: absolute;
+    bottom: -4px;
+    right: 3px;
+    width: 2px;
+    height: 5px;
+    background: linear-gradient(to bottom, #ffffff 0%, #1bfd02 100%);
+    box-shadow: 0 0 3px var(--pip-green-glow);
+    transform: rotate(10deg);
+    transform-origin: top center;
+    border-radius: 0 0 1px 1px;
+}
+
+/* HUD Badge in Turntable Corner */
+.pip-turntable-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--pip-green);
+    opacity: 0.75;
+    letter-spacing: 1px;
+    pointer-events: none;
+    line-height: 1.1;
+    text-shadow: 0 0 4px var(--pip-green-glow);
+}
+
+.turntable-rpm {
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.turntable-model {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* Mobile Responsiveness for Turntable */
+@media (max-width: 768px) {
+    .pip-turntable-deck {
+        width: 210px;
+        height: 210px;
+        margin: 0 auto;
+    }
+    .pip-turntable-platter {
+        width: 172px;
+        height: 172px;
+        left: 10px;
+        top: 18px;
+    }
+    .pip-vinyl-record {
+        width: 162px;
+        height: 162px;
+    }
+    .pip-vinyl-label {
+        width: 66px;
+        height: 66px;
+    }
+    .pip-tonearm-assembly {
+        right: 10px;
+        top: 10px;
+        transform: scale(0.88);
+        transform-origin: top right;
     }
 }
 

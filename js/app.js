@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 1. Gestione Sotto-Schede INVENTORY (SOLO E2E, CONTRACTS, LIFE MISSION, CLASSIFIED)
+    // 1. Gestione Sotto-Schede INVENTORY (CONTRACTS, SOLO E2E, KIZUNA PROJECT, IDEAS & BIZ)
     const invSubButtons = document.querySelectorAll('.inv-sub-btn');
     const invSubContents = document.querySelectorAll('.inv-sub-content');
 
@@ -331,6 +331,53 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Sincronizzazione automatica Giradischi Pip-Boy con Audio Radio
+    const bgRadioTrack = document.getElementById('bg-radio-track');
+    const turntableDeck = document.getElementById('pip-turntable');
+    const tonearmPivot = document.getElementById('pip-tonearm-pivot');
+    const vinylRecord = document.getElementById('pip-vinyl-record');
+
+    function updateTurntableState(isPlaying) {
+        if (!turntableDeck) return;
+        if (isPlaying) {
+            turntableDeck.classList.add('is-playing');
+            turntableDeck.classList.remove('is-paused');
+        } else {
+            turntableDeck.classList.remove('is-playing');
+            turntableDeck.classList.add('is-paused');
+        }
+    }
+
+    if (bgRadioTrack) {
+        bgRadioTrack.addEventListener('play', () => updateTurntableState(true));
+        bgRadioTrack.addEventListener('playing', () => updateTurntableState(true));
+        bgRadioTrack.addEventListener('pause', () => updateTurntableState(false));
+        bgRadioTrack.addEventListener('ended', () => updateTurntableState(false));
+        // Imposta stato iniziale
+        updateTurntableState(!bgRadioTrack.paused);
+    }
+
+    // Interattività Giradischi: Click su Perno Braccio o Vinile per Play/Pausa
+    if (tonearmPivot) {
+        tonearmPivot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.pipAudio) {
+                window.pipAudio.playSelect();
+                window.pipAudio.toggleRadio();
+            }
+        });
+    }
+
+    if (vinylRecord) {
+        vinylRecord.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.pipAudio) {
+                window.pipAudio.playSelect();
+                window.pipAudio.toggleRadio();
+            }
+        });
+    }
+
     // Gestione Radio Volume Slider
     const volumeSlider = document.getElementById('radio-volume-slider');
     const volumeVal = document.getElementById('radio-volume-val');
@@ -345,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 4. Gestione HOVER col mouse su tutti gli elementi interattivi -> ui_menu_focus.wav
-    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn');
+    const interactiveElements = document.querySelectorAll('button, .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .pip-tonearm-pivot, .pip-vinyl-record');
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
             if (window.pipAudio) window.pipAudio.playFocus();
@@ -428,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Rilevamento Hover su elementi interattivi
-        const hoverSelector = 'button, a, input, select, textarea, label, [role="button"], .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .interactive, .leaflet-interactive, .leaflet-marker-icon, .map-hud-btn, .pip-van-img, .pip-outpost-dot';
+        const hoverSelector = 'button, a, input, select, textarea, label, [role="button"], .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .pip-tonearm-pivot, .pip-vinyl-record, .pip-turntable-deck, .interactive, .leaflet-interactive, .leaflet-marker-icon, .map-hud-btn, .pip-van-img, .pip-outpost-dot';
 
         document.addEventListener('mouseover', (e) => {
             if (e.target && e.target.closest && e.target.closest(hoverSelector)) {

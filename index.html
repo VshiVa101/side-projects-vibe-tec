@@ -23,19 +23,19 @@
         html.skip-boot #pip-boy-terminal { display: flex !important; }
     </style>
     <!-- Main CRT Theme -->
-    <link rel="stylesheet" href="css/crt-theme.css?v=91.0">
-    <link rel="stylesheet" href="css/intro.css?v=91.0">
+    <link rel="stylesheet" href="css/crt-theme.css?v=98.0">
+    <link rel="stylesheet" href="css/intro.css?v=98.0">
     <!-- Leaflet CSS & JS for Pip-Boy Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/audio.js?v=91.0" defer></script>
-    <script src="js/intro.js?v=91.0" defer></script>
-    <script src="js/map.js?v=91.0" defer></script>
-    <script src="js/neo_eye_3d.js?v=91.0" defer></script>
-    <script src="js/app.js?v=91.0" defer></script>
+    <script src="js/audio.js?v=98.0" defer></script>
+    <script src="js/intro.js?v=98.0" defer></script>
+    <script src="js/map.js?v=98.0" defer></script>
+    <script src="js/neo_eye_3d.js?v=98.0" defer></script>
+    <script src="js/app.js?v=98.0" defer></script>
     <!-- Critical inline CSS fallback for INV toggle (prevents browser default button styling) -->
     <style>
         .inv-toggle-btn{background:transparent!important;border:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1bfd02!important;font-family:'VT323',monospace!important;padding:0!important;margin:0!important;box-shadow:none!important;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;text-align:left}
@@ -354,7 +354,6 @@
                     <button class="inv-sub-btn" data-inv="solo">SOLO E2E</button>
                     <button class="inv-sub-btn" data-inv="kizuna">KIZUNA PROJECT</button>
                     <button class="inv-sub-btn" data-inv="ideas">IDEAS & BIZ</button>
-                    <button class="inv-sub-btn" data-inv="classified">ANTEROS</button>
                 </div>
 
                 <!-- SUB-TAB: CONTRACTS -->
@@ -558,33 +557,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-TAB: CLASSIFIED -->
-                <div id="inv-sub-classified" class="inv-sub-content hidden">
-                    <div class="inv-desc-banner classified-banner">
-                        <div class="inv-banner-header">
-                            <div class="inv-banner-title-col">
-                                <button class="inv-toggle-btn" aria-expanded="false" aria-controls="inv-desc-classified">
-                                    <span class="inv-toggle-icon">▶</span>
-                                    <span class="inv-toggle-title">> VIBE-TEC ANTEROS</span>
-                                </button>
-                                <div class="inv-section-status">[STATUS: CLASSIFIED // TOP SECRET R&D]</div>
-                            </div>
-                            <div class="inv-banner-icon-col">
-                                <div class="project-icon-box-large" title="Vibe-Tec Anteros: Classified Trench Coat & Cupid Putto 3-Eyed Cat">
-                                    <img src="assets/img/inv_classified_icon.jpg" alt="Leonardo opening trench coat with sunglasses and 3-eyed putto cat shooting Cupid arrow" class="avatar-svg" style="object-fit: cover;">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="inv-desc-classified" class="inv-desc-collapsible">
-                            <div class="inv-desc-body">
-                                Advanced local architecture for AI visual orchestration (video and photo synth). An active R&D project protected under industrial confidentiality and non-disclosure agreements. This section does not host public project listings — all prototypes are developed under strict NDA for private clients.
-                                <span class="inv-highlight">> ACCESS RESTRICTED: ████████████████████</span>
-                                <span class="inv-highlight">Due to IP rights and industrial confidentiality, commercial specifications and live demonstrations are strictly accessible via private briefing upon direct contact.</span>
-                                <button class="inv-briefing-btn" onclick="document.querySelector('[data-target=\'data\']').click()">> REQUEST PRIVATE BRIEFING (CONTACT)</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <!-- TAB: DATA -->
@@ -652,10 +625,70 @@
                         </div>
                     </div>
 
-                    <!-- Right Column: Radio Cat Mascot Icon with Animated Antenna -->
+                    <!-- Right Column: Pip-Boy Vintage Vinyl Turntable Player -->
                     <div class="project-card-media">
-                        <div class="project-icon-box-large radio-cat-box" title="Vibe-Tec 3-Eyed Cat playing with Radio Antenna">
-                            <img src="assets/img/radio_cat_icon.jpg" alt="Vibe-Tec 3-eyed cat playing with radio antenna" class="avatar-svg radio-cat-animated" style="object-fit: cover;">
+                        <div class="pip-turntable-deck is-playing" id="pip-turntable" title="Pip-Boy 3000 Hi-Fi Vinyl System // Click Tonearm or Vinyl to Toggle Playback">
+                            <!-- Turntable Platter Base -->
+                            <div class="pip-turntable-platter">
+                                <!-- Rotating Vinyl Record -->
+                                <div class="pip-vinyl-record" id="pip-vinyl-record">
+                                    <!-- Grooves (Scanalature concentriche) -->
+                                    <div class="pip-vinyl-grooves"></div>
+                                    <!-- Dynamic specular light sheen -->
+                                    <div class="pip-vinyl-sheen"></div>
+                                    <!-- Center Vinyl Label -->
+                                    <div class="pip-vinyl-label">
+                                        <img src="assets/img/radio_cat_icon.jpg" alt="Vibe-Tec 3-Eyed Cat Vinyl Label" class="pip-vinyl-label-img">
+                                        <div class="pip-vinyl-label-rim"></div>
+                                        <div class="pip-vinyl-spindle-hole"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pip-Boy Articulated Folding Tonearm Assembly (Neo-One Inspired) -->
+                            <div class="pip-tonearm-assembly" id="pip-tonearm-assembly">
+                                <!-- Tonearm Pivot Base (Clickable interactive control) -->
+                                <div class="pip-tonearm-pivot" id="pip-tonearm-pivot" title="Click to Toggle Radio Playback">
+                                    <div class="pip-tonearm-pivot-core"></div>
+                                </div>
+
+                                <!-- Segment 1: Upper Arm (Pivoting at Base Center) -->
+                                <div class="pip-tonearm-upper-arm" id="pip-tonearm-upper-arm">
+                                    <!-- Counterweight behind the base pivot -->
+                                    <div class="pip-tonearm-counterweight"></div>
+                                    <div class="pip-tonearm-wire"></div>
+                                    
+                                    <!-- Articulated Elbow Joint (Perno del gomito all'estremità dell'asta superiore) -->
+                                    <div class="pip-tonearm-elbow">
+                                        <div class="pip-tonearm-elbow-core"></div>
+                                        
+                                        <!-- Segment 2: Forearm (Incernierato sul gomito) -->
+                                        <div class="pip-tonearm-forearm" id="pip-tonearm-forearm">
+                                            <div class="pip-tonearm-wire"></div>
+
+                                            <!-- Headshell & Cartridge all'APICE (estremità distale dell'avambraccio) -->
+                                            <div class="pip-tonearm-headshell">
+                                                <div class="pip-tonearm-cartridge">
+                                                    <div class="pip-tonearm-led" id="pip-tonearm-led"></div>
+                                                    <div class="pip-tonearm-needle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Industrial Chassis Screws -->
+                            <div class="pip-turntable-screw tl"></div>
+                            <div class="pip-turntable-screw tr"></div>
+                            <div class="pip-turntable-screw bl"></div>
+                            <div class="pip-turntable-screw br"></div>
+
+                            <!-- Turntable Vintage HUD Badge -->
+                            <div class="pip-turntable-badge">
+                                <span class="turntable-rpm">33⅓ RPM</span>
+                                <span class="turntable-model">VAULT-HI-FI</span>
+                            </div>
                         </div>
                     </div>
                 </div>
