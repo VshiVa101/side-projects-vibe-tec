@@ -475,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Rilevamento Hover su elementi interattivi
-        const hoverSelector = 'button, a, input, select, textarea, label, [role="button"], .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .pip-tonearm-pivot, .pip-vinyl-record, .pip-turntable-deck, .interactive, .leaflet-interactive, .leaflet-marker-icon, .map-hud-btn, .pip-van-img, .pip-outpost-dot';
+        const hoverSelector = 'button, a, input, select, textarea, label, [role="button"], .nav-btn, .sub-nav-btn, .inv-sub-btn, .special-item, .project-accordion-header, #skip-btn, .radio-btn, .pip-tonearm-pivot, .pip-vinyl-record, .pip-turntable-deck, .interactive, .leaflet-interactive, .leaflet-marker-icon, .map-hud-btn, .pip-van-img, .pip-outpost-dot, .leaflet-popup-close-button';
 
         document.addEventListener('mouseover', (e) => {
             if (e.target && e.target.closest && e.target.closest(hoverSelector)) {

@@ -112,7 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             bolognaMarker.bindPopup(bolognaPopupHtml, {
                 className: 'pip-boy-custom-popup',
-                maxWidth: 320
+                maxWidth: 260,
+                minWidth: 180,
+                autoPan: true,
+                autoPanPadding: [20, 20]
             });
 
             bolognaMarker.on('click', () => {
@@ -140,7 +143,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="pip-popup-divider"></div>
                         <p class="pip-popup-body">${loc.desc}</p>
                     </div>
-                `, { className: 'pip-boy-custom-popup', maxWidth: 260 });
+                `, {
+                    className: 'pip-boy-custom-popup',
+                    maxWidth: 220,
+                    minWidth: 150,
+                    autoPan: true,
+                    autoPanPadding: [20, 20]
+                });
 
                 marker.on('click', () => {
                     if (window.pipAudio) window.pipAudio.playHighlight();
